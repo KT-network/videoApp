@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">咖啡猫</string>
+    
+    <!--底部功能栏 名字-->
+    <string name="home">Home</string>
+    <string name="select">Select</string>
+    <string name="collect">Collect</string>
+    <string name="info">Info</string>
+    
+    
+    <!--home-home 轮播图下功能文字-->
+    <string name="home_home_banner_below_1">值得看</string>
+    <string name="home_home_banner_below_2">资讯</string>
+    <string name="home_home_banner_below_3">还有啥？</string>
+    <string name="home_home_banner_below_4">收藏榜</string>
+    <string name="home_home_banner_below_5">推荐官</string>
+
+</resources>

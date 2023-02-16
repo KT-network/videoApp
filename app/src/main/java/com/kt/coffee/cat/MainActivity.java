@@ -11,14 +11,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.drake.statusbar.StatusBarKt;
 import com.kt.coffee.cat.Fragment.MainPagerFragment.CollectFragment;
 import com.kt.coffee.cat.Fragment.MainPagerFragment.HomeFragment;
 import com.kt.coffee.cat.Fragment.MainPagerFragment.InfoFragment;
 import com.kt.coffee.cat.Fragment.MainPagerFragment.SelectFragment;
-import com.kt.coffee.cat.utils.Tool;
 
 import nl.joery.animatedbottombar.AnimatedBottomBar;
+import xyz.doikki.videoplayer.ijk.IjkPlayerFactory;
+import xyz.doikki.videoplayer.player.VideoViewConfig;
+import xyz.doikki.videoplayer.player.VideoViewManager;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -51,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         initView();
 
         initEvent();
+
+        VideoViewManager.setConfig(VideoViewConfig.newBuilder().setPlayerFactory(IjkPlayerFactory.create()).build());
 
 
         bottom_bar.setOnTabSelectListener(new AnimatedBottomBar.OnTabSelectListener() {

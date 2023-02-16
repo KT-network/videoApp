@@ -15,4 +15,48 @@
     <string name="home_home_banner_below_4">收藏榜</string>
     <string name="home_home_banner_below_5">推荐官</string>
 
+    <!--  -->
+    <string name="home_home_item_out_title">首页推荐</string>
+
+    <!-- 通用（item_general）item 布局默认文字 -->
+    <string name="item_general_update">更新至2240集</string>
+    <string name="item_general_name">节目名称</string>
+
+    <!-- play 界面 -->
+    <string name="play_speed_default">倍数</string>
+    <string name="play_speed_0_5">0.5X</string>
+    <string name="play_speed_0_75">0.75X</string>
+    <string name="play_speed_1_0">1.0X</string>
+    <string name="play_speed_1_25">1.25X</string>
+    <string name="play_speed_1_5">1.5X</string>
+    <string name="play_speed_2_0">2.0X</string>
+
+
+
+    <string name="player_unlocked">已解锁</string>
+    <string name="player_locked">已锁定</string>
+    <string name="player_lock_tip">请先解锁屏幕！</string>
+    <string name="play_forward_select">选集</string>
+
+
+    <string name="play_more_play_setting">播放设置</string>
+    <string name="play_more_play_setting_mirror_reversal">镜像反转</string>
+    <string name="play_more_play_setting_fenestrule">悬浮小窗</string>
+    <string name="play_more_play_setting_projection_screen">电视投屏</string>
+    
+    <string name="play_more_play_method">播放方式</string>
+    <string name="play_more_play_method_list">列表循环</string>
+    <string name="play_more_play_method_single">单集循环</string>
+    <string name="play_more_play_method_suspend">播完暂停</string>
+
+    <string name="play_more_play_frames_size">画面尺寸</string>
+    <string name="play_more_play_frames_size_adapt">适应</string>
+    <string name="play_more_play_frames_size_stretch">拉伸</string>
+    <string name="play_more_play_frames_size_fill">填充</string>
+    <string name="play_more_play_frames_size_16_9">16 : 9</string>
+    <string name="play_more_play_frames_size_4_3">4 : 3</string>
+    <string name="play_more_play_frames_size_original">原始</string>
+
+
+
 </resources>

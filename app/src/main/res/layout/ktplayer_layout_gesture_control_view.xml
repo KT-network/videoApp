@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/center_container"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:background="@drawable/ktplayer_shape_gesture_control_background"
+        android:layout_gravity="center"
+        tools:visibility="visible"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="15dp"
+            tools:src="@drawable/dkplayer_ic_action_volume_up"/>
+
+
+        <ProgressBar
+            android:id="@+id/pro_percent"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="150dp"
+            android:layout_height="3dp"
+            android:max="100"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/iv_icon"
+            android:layout_marginEnd="20dp"
+            android:progressDrawable="@drawable/ktplayer_layer_progress_bar" />
+
+        <TextView
+            android:id="@+id/tv_percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/iv_icon"
+            android:text="@string/play_speed_0_5"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            tools:visibility="gone"/>
+
+    </RelativeLayout>
+
+<!--
+    <LinearLayout
+        android:id="@+id/center_container"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:background="@drawable/ktplayer_shape_gesture_control_background"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="20dp"
+            tools:src="@drawable/dkplayer_ic_action_volume_up" />
+
+        &lt;!&ndash;<TextView
+            android:id="@+id/tv_percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:text="100" />&ndash;&gt;
+
+        &lt;!&ndash;<TextView
+            android:id="@+id/tv_percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/play_speed_0_5"
+            android:textColor="@color/white"
+            android:textSize="15sp"/>&ndash;&gt;
+
+
+        <ProgressBar
+            android:id="@+id/pro_percent"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="150dp"
+            android:layout_height="3dp"
+            android:max="100"
+            android:progressDrawable="@drawable/dkplayer_layer_progress_bar" />
+
+    </LinearLayout>-->
+
+
+</FrameLayout>

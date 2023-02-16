@@ -61,7 +61,7 @@ dependencies {
     implementation 'com.github.xiaohaibin:XBanner:androidx_v1.2.6'
 
     // 状态栏
-    implementation 'com.github.liangjingkanji:StatusBar:2.0.2'
+//    implementation 'com.github.liangjingkanji:StatusBar:2.0.2'
 
     // Gaon
     implementation 'com.google.code.gson:gson:2.8.5'
@@ -71,23 +71,35 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
 
+//    implementation project(':ktplayer-ui')
 
 
+//    # 必选内部默认使用系统mediaplayer进行解码
+    implementation 'xyz.doikki.android.dkplayer:dkplayer-java:3.3.7'
 
-////    # 必选内部默认使用系统mediaplayer进行解码
-//    implementation 'xyz.doikki.android.dkplayer:dkplayer-java:3.3.7'
-//
-////    # 可选包含StandardVideoController的实现
-//    implementation 'xyz.doikki.android.dkplayer:dkplayer-ui:3.3.7'
-//
-////    # 可选使用exoplayer进行解码
-//    implementation 'xyz.doikki.android.dkplayer:player-exo:3.3.7'
-//
-////    # 可选使用ijkplayer进行解码
-//    implementation 'xyz.doikki.android.dkplayer:player-ijk:3.3.7'
-//
-////    # 可选如需要缓存或者抖音预加载功能请引入此库
-//    implementation 'xyz.doikki.android.dkplayer:videocache:3.3.7'
+//    # 可选包含StandardVideoController的实现
+    implementation 'xyz.doikki.android.dkplayer:dkplayer-ui:3.3.7'
+
+//    # 可选使用exoplayer进行解码
+    implementation 'xyz.doikki.android.dkplayer:player-exo:3.3.7'
+
+//    # 可选使用ijkplayer进行解码
+    implementation 'xyz.doikki.android.dkplayer:player-ijk:3.3.7'
+
+//    # 可选如需要缓存或者抖音预加载功能请引入此库
+    implementation 'xyz.doikki.android.dkplayer:videocache:3.3.7'
+
+
+    // 电池电量
+//    implementation 'com.sjx.batteryview:BatteryView:1.0.0'
+    implementation project(path: ':batteryviewlibrary')
+
+    // 拖动条
+//    implementation 'com.github.warkiz.widget:indicatorseekbar:2.1.2'
+    implementation 'com.github.shangmengmeng:IndicatorSeekBar:v2.1.1.2'
+
+
+//    implementation 'com.agrawalsuneet.androidlibs:loaderspack:1.2.3'
 
 
 }

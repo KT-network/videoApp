@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    
+    <LinearLayout
+        android:id="@+id/title_container"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@drawable/ktplayer_shape_standard_controller_top_bg"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp">
+
+            <TextView
+                android:id="@+id/sys_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12:00"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:layout_centerInParent="true"/>
+
+            <com.sjx.batteryviewlibrary.BatteryView
+                android:id="@+id/battery"
+                android:layout_width="26dp"
+                android:layout_height="12dp"
+                app:bv_orientation="horizontal_right"
+                app:bv_power_color_low="@color/error"
+                app:bv_power_color_high="@color/high"
+                app:bv_no_charging_color_high="@color/white"
+                app:bv_border_color="@color/white"
+                app:bv_border_padding="1.5dp"
+                app:bv_border_width="1dp"
+                app:bv_header_width="2dp"
+                app:bv_radis="1dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="20dp"/>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                android:layout_marginStart="15dp"/>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/app_name"
+                android:layout_marginStart="5dp"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:singleLine="true"/>
+
+            <ImageView
+                android:id="@+id/more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_more_horiz_24"
+                android:layout_marginEnd="15dp"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

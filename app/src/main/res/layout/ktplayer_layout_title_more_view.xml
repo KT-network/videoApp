@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/more_container"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="end"
+        android:background="@color/lucencyBlack_85">
+        <TextView
+            android:id="@+id/more_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/play_more_play_setting"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/more_mirror_reversal"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="@string/play_more_play_setting_mirror_reversal"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/more_fenestrule"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:text="@string/play_more_play_setting_fenestrule"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/more_projection_screen"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:text="@string/play_more_play_setting_projection_screen"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/more_method"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/play_more_play_method"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/more_method_list"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="@string/play_more_play_method_list"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/more_method_single"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="@string/play_more_play_method_single"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/more_method_suspend"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="@string/play_more_play_method_suspend"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="15sp"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/more_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/play_more_play_frames_size"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/more_size_adapt"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="@string/play_more_play_frames_size_adapt"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/more_size_stretch"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="@string/play_more_play_frames_size_stretch"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/more_size_fill"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="@string/play_more_play_frames_size_fill"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="15sp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/more_size_16_9"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="@string/play_more_play_frames_size_16_9"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/more_size_4_3"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="@string/play_more_play_frames_size_4_3"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/more_size_original"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="@string/play_more_play_frames_size_original"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="15sp"/>
+
+
+
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

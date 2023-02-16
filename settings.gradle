@@ -11,7 +11,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven { url 'https://jitpack.io'}
+        maven {
+            url  "https://dl.bintray.com/swallowsonny/ext"
+        }
 
     }
 }
@@ -24,3 +27,4 @@ include ':app'
 //include ':dkplayer-sample'
 //include ':dkplayer-ui'
 //include ':dkplayer-videocache'
+include ':batteryviewlibrary'

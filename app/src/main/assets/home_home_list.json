@@ -1,0 +1,142 @@
+{
+  "compilations": [
+    {
+      "title": "热门推荐",
+      "id": "0",
+      "data": [
+        {
+          "name": "死神",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rML4H.jpeg"
+        },
+        {
+          "name": "转生成为魔剑了",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMMIQ.jpeg"
+        },
+        {
+          "name": "三体",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMJvF.jpeg"
+        },
+        {
+          "name": "狂飙",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMoP5.jpeg"
+        },
+        {
+          "name": "海贼王",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMvW8.jpeg"
+        },
+        {
+          "name": "死神",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rML4H.jpeg"
+        },
+        {
+          "name": "转生成为魔剑了",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMMIQ.jpeg"
+        }
+      ]
+    },
+    {
+      "title": "电影推荐",
+      "id": "1",
+      "data": [
+        {
+          "name": "三体",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMJvF.jpeg"
+        },
+        {
+          "name": "狂飙",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMoP5.jpeg"
+        },
+        {
+          "name": "海贼王",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMvW8.jpeg"
+        },
+        {
+          "name": "死神",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rML4H.jpeg"
+        },
+        {
+          "name": "转生成为魔剑了",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMMIQ.jpeg"
+        }
+      ]
+    },
+    {
+      "title": "TV剧推荐",
+      "id": "2",
+      "data": [
+        {
+          "name": "三体",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMJvF.jpeg"
+        },
+        {
+          "name": "狂飙",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMoP5.jpeg"
+        },
+        {
+          "name": "海贼王",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMvW8.jpeg"
+        },
+        {
+          "name": "死神",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rML4H.jpeg"
+        },
+        {
+          "name": "转生成为魔剑了",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMMIQ.jpeg"
+        }
+      ]
+    },
+    {
+      "title": "综艺推荐",
+      "id": "3",
+      "data": [
+        {
+          "name": "三体",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMJvF.jpeg"
+        },
+        {
+          "name": "狂飙",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMoP5.jpeg"
+        },
+        {
+          "name": "海贼王",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMvW8.jpeg"
+        },
+        {
+          "name": "死神",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rML4H.jpeg"
+        },
+        {
+          "name": "转生成为魔剑了",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMMIQ.jpeg"
+        }
+      ]
+    },
+    {
+      "title": "动漫推荐",
+      "id": "4",
+      "data": [
+        {
+          "name": "三体",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMJvF.jpeg"
+        },
+        {
+          "name": "狂飙",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMoP5.jpeg"
+        },
+        {
+          "name": "海贼王",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMvW8.jpeg"
+        },
+        {
+          "name": "死神",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rML4H.jpeg"
+        },
+        {
+          "name": "转生成为魔剑了",
+          "imageUrl": "https://i.328888.xyz/2023/02/07/rMMIQ.jpeg"
+        }
+      ]
+    }
+  ]
+}

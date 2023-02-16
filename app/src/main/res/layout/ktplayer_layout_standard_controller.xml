@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/lock_1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center|start"
+        android:layout_margin="24dp"
+        android:background="@drawable/dkplayer_shape_back_bg"
+        android:padding="10dp"
+        android:src="@drawable/dkplayer_selector_lock_button"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <com.agrawalsuneet.loaderspack.loaders.PulseLoader
+        android:layout_gravity="center"
+        android:id="@+id/loading"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        app:pulse_LineThickness="4dp"
+        app:pulse_normalIncrementalValue="4.0"
+        app:pulse_pulseColor="@color/white"
+        app:pulse_pulseIncrementalValue="10.0"
+        app:pulse_sideLength="50dp" />
+
+    
+<!--    <LinearLayout-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:orientation="vertical">-->
+
+<!--    </LinearLayout>-->
+
+
+    <ImageView
+        android:id="@+id/lock_2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center|end"
+        android:layout_margin="24dp"
+        android:background="@drawable/dkplayer_shape_back_bg"
+        android:padding="10dp"
+        android:src="@drawable/dkplayer_selector_lock_button"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+
+</FrameLayout>

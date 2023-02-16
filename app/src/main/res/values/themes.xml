@@ -24,11 +24,21 @@
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+<!--        <item name="fontFamily">@font/smileysansoblique</item>-->
+
+
     </style>
 
 <!--    <style name="Theme.cat.NoActionBar">-->
 <!--        <item name="windowActionBar">false</item>-->
 <!--        <item name="windowNoTitle">true</item>-->
 <!--    </style>-->
+
+    <style name="qwe">
+        <item name="fontFamily">@font/smileysansoblique</item>
+    </style>
+    
+    
 
 </resources>

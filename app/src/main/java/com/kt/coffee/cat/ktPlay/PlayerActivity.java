@@ -9,12 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.kt.coffee.cat.R;
+import com.kt.coffee.cat.ktPlay.ui.KsLandscapeView;
 import com.kt.coffee.cat.ktPlay.ui.KsStandardVideoController;
 import com.kt.coffee.cat.ktPlay.ui.component.KsErrorView;
 import com.kt.coffee.cat.ktPlay.ui.component.KsGestureView;
 import com.kt.coffee.cat.ktPlay.ui.component.KsIncompletionView;
 import com.kt.coffee.cat.ktPlay.ui.component.KsPlayerSpeedView;
 import com.kt.coffee.cat.ktPlay.ui.component.KsPrepareView;
+import com.kt.coffee.cat.ktPlay.ui.component.KsTitleMoreView;
 import com.kt.coffee.cat.ktPlay.ui.component.KsTitleView;
 import com.kt.coffee.cat.ktPlay.ui.component.KsVodControlView;
 import com.kt.coffee.cat.utils.PlayerVideoEntity;
@@ -30,11 +32,11 @@ public class PlayerActivity extends AppCompatActivity {
     private final static String TAG = "PlayerActivity";
 
     VideoView mVideoView;
-    KsTitleView ksTitleView;
+//    KsTitleMoreView ksTitleMoreView;
     KsPrepareView prepareView;
     ImageView thumb;
     KsIncompletionView ksIncompletionView;
-    KsVodControlView ksVodControlView;
+//    KsVodControlView ksVodControlView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,7 +70,7 @@ public class PlayerActivity extends AppCompatActivity {
             String JSON = Tool.inputStreamToString(getResources().getAssets().open("Video.json"));
             PlayerVideoEntity playerVideoEntity = new Gson().fromJson(JSON,PlayerVideoEntity.class);
 
-            ksTitleView.setTitle(playerVideoEntity.getVideoName());
+//            ksTitleMoreView.setTitle(playerVideoEntity.getVideoName());
             Glide.with(this).load(playerVideoEntity.getVideoThumb()).into(thumb);
             mVideoView.setUrl(playerVideoEntity.getVideoUrl());
 
@@ -88,10 +90,12 @@ public class PlayerActivity extends AppCompatActivity {
         KsStandardVideoController controller = new KsStandardVideoController(this);
         controller.setEnableOrientation(true);
 
-        ksIncompletionView = new KsIncompletionView(this);
-        controller.addControlComponent(new KsPlayerSpeedView(this));
-        controller.addControlComponent(ksIncompletionView);
+//        ksTitleMoreView = new KsTitleMoreView(this);
+//        controller.addControlComponent(ksTitleMoreView);
 
+
+        ksIncompletionView = new KsIncompletionView(this);
+        controller.addControlComponent(ksIncompletionView);
         prepareView = new KsPrepareView(this);
         prepareView.setClickStart();
         thumb = prepareView.findViewById(R.id.thumb);
@@ -100,14 +104,17 @@ public class PlayerActivity extends AppCompatActivity {
 
         controller.addControlComponent(new CompleteView(this));
         controller.addControlComponent(new KsErrorView(this));//错误界面
-        ksTitleView = new KsTitleView(this);
-        controller.addControlComponent(ksTitleView);
+
 //        ksVodControlView = new KsVodControlView(this);
 //        controller.addControlComponent(ksVodControlView);
         controller.addControlComponent(new KsGestureView(this));
-
+//        controller.addControlComponent(new KsPlayerSpeedView(this));
 
 //        controller.addControlComponent(new KsLeftRightGestureView(this));
+
+
+        controller.addControlComponent(new KsLandscapeView(this));
+
         mVideoView.setVideoController(controller);
 
 //        mVideoView.addOnStateChangeListener(mOnStateChangeListener);

@@ -21,27 +21,27 @@
                 android:id="@+id/sys_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:text="12:00"
                 android:textColor="@color/white"
-                android:textSize="13sp"
-                android:layout_centerInParent="true"/>
+                android:textSize="13sp" />
 
-            <com.sjx.batteryviewlibrary.BatteryView
-                android:id="@+id/battery"
-                android:layout_width="26dp"
-                android:layout_height="12dp"
-                app:bv_orientation="horizontal_right"
-                app:bv_power_color_low="@color/error"
-                app:bv_power_color_high="@color/high"
-                app:bv_no_charging_color_high="@color/white"
-                app:bv_border_color="@color/white"
-                app:bv_border_padding="1.5dp"
-                app:bv_border_width="1dp"
-                app:bv_header_width="2dp"
-                app:bv_radis="1dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:layout_marginEnd="20dp"/>
+<!--            <com.sjx.batteryviewlibrary.BatteryView-->
+<!--                android:id="@+id/battery"-->
+<!--                android:layout_width="26dp"-->
+<!--                android:layout_height="12dp"-->
+<!--                app:bv_orientation="horizontal_right"-->
+<!--                app:bv_power_color_low="@color/error"-->
+<!--                app:bv_power_color_high="@color/high"-->
+<!--                app:bv_no_charging_color_high="@color/white"-->
+<!--                app:bv_border_color="@color/white"-->
+<!--                app:bv_border_padding="1.5dp"-->
+<!--                app:bv_border_width="1dp"-->
+<!--                app:bv_header_width="2dp"-->
+<!--                app:bv_radis="1dp"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:layout_marginEnd="20dp"/>-->
 
 
         </RelativeLayout>

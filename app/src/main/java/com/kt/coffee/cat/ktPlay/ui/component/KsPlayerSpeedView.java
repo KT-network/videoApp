@@ -61,7 +61,9 @@ public class KsPlayerSpeedView extends KsVodControlView{
     public void onVisibilityChanged(boolean isVisible, Animation anim) {
         super.onVisibilityChanged(isVisible, anim);
         if (mSpeedContainer.getVisibility() == VISIBLE){
+//            mControlWrapper.hide();
             mSpeedContainer.setVisibility(GONE);
+
         }
         /*if (isVisible){
             mSpeedContainer.setVisibility(GONE);
@@ -72,7 +74,9 @@ public class KsPlayerSpeedView extends KsVodControlView{
     public void onPlayerStateChanged(int playerState) {
         super.onPlayerStateChanged(playerState);
         if (mSpeedContainer.getVisibility() == VISIBLE){
+//            mControlWrapper.toggleShowState();
             mSpeedContainer.setVisibility(GONE);
+
         }
     }
 

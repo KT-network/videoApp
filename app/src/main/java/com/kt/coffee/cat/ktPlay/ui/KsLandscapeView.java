@@ -1,4 +1,4 @@
-package com.kt.coffee.cat.ktPlay.ui.component;
+package com.kt.coffee.cat.ktPlay.ui;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,8 +18,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.kt.coffee.cat.R;
+import com.sjx.batteryviewlibrary.BatteryView;
 
 import xyz.doikki.videoplayer.controller.ControlWrapper;
 import xyz.doikki.videoplayer.controller.IControlComponent;
@@ -28,17 +30,16 @@ import xyz.doikki.videoplayer.util.PlayerUtils;
 
 import static xyz.doikki.videoplayer.util.PlayerUtils.stringForTime;
 
-public class KsVodControlView extends FrameLayout implements IControlComponent, View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+public class KsLandscapeView extends FrameLayout implements IControlComponent {
 
     protected ControlWrapper mControlWrapper;
+    private final LinearLayout mTitleContainer, mBottomContainer;
+    private final TextView mSysTime, mTitle, mCurrTime, mTotalTime, mTcpSpeed;
+    private final BatteryView mBattery;
+    protected final ImageView mMore, mPlayButton, mForward;
 
-    private final LinearLayout mBottomContainer;
-    private final TextView mCurrTime, mTotalTime;
-    private final ImageView mPlayButton, mForward;
-    private final TextView mTcpSpeed;
     protected final TextView mPlaySpeed, mPlayForward;
 
-    //    private final IndicatorSeekBar mVideoProgress;
     private final SeekBar mVideoProgress;
 
     private final ProgressBar mBottomProgress;
@@ -46,66 +47,59 @@ public class KsVodControlView extends FrameLayout implements IControlComponent, 
     private boolean mIsDragging;
 
     private boolean mIsShowBottomProgress = true;
-    private final static String TAG = "KsVodControlView";
+    private final static String TAG = "KsLandscapeView";
 
 
-    public KsVodControlView(@NonNull Context context) {
+    public KsLandscapeView(@NonNull Context context) {
         super(context);
     }
 
-    public KsVodControlView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public KsLandscapeView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public KsVodControlView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public KsLandscapeView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
-
-    public KsVodControlView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
 
 
     {
         setVisibility(GONE);
-        LayoutInflater.from(getContext()).inflate(getLayoutId(), this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.ktplayer_layout_landscape_all_view, this, true);
+
+        mTitleContainer = findViewById(R.id.title_container);
+        ImageView back = findViewById(R.id.back);
+        mMore = findViewById(R.id.more);
+
+        mTitle = findViewById(R.id.title);
+        mSysTime = findViewById(R.id.sys_time);
+        mBattery = findViewById(R.id.battery);
+        mBattery.setLifecycleOwner((LifecycleOwner) getContext());
+
+
+        /*========================================================================*/
         mBottomContainer = findViewById(R.id.bottom_container);
         mCurrTime = findViewById(R.id.curr_time);
         mTotalTime = findViewById(R.id.total_time);
         mForward = findViewById(R.id.forward);
-        mForward.setOnClickListener(this);
+//        mForward.setOnClickListener(this);
 
         mPlayButton = findViewById(R.id.play);
-        mPlayButton.setOnClickListener(this);
+//        mPlayButton.setOnClickListener(this);
 
         mPlaySpeed = findViewById(R.id.play_speed);
-        Log.i(TAG, "instance initializer: "+mPlaySpeed);
+        Log.i(TAG, "instance initializer: " + mPlaySpeed);
 
         mPlayForward = findViewById(R.id.play_forward_select);
 
         mTcpSpeed = findViewById(R.id.play_tcp_speed);
         mVideoProgress = findViewById(R.id.seekBar);
-        mVideoProgress.setOnSeekBarChangeListener(this);
+        mVideoProgress.setOnSeekBarChangeListener(this.onSeekBarChangeListener);
 
         mBottomProgress = findViewById(R.id.bottom_progress);
+
     }
 
-    protected int getLayoutId() {
-        return R.layout.ktplayer_layout_vod_control_view;
-    }
-
-    protected void setSpeedText(int id){
-        mPlaySpeed.setText(getResources().getString(id));
-        Log.i(TAG, "setSpeedText: ");
-    }
-
-    /**
-     * 是否显示底部进度条，默认显示
-     */
-    public void showBottomProgress(boolean isShow) {
-        mIsShowBottomProgress = isShow;
-    }
 
     @Override
     public void attach(@NonNull ControlWrapper controlWrapper) {
@@ -120,28 +114,33 @@ public class KsVodControlView extends FrameLayout implements IControlComponent, 
 
     @Override
     public void onVisibilityChanged(boolean isVisible, Animation anim) {
-
-        /*
-         * 需求：
-         * 竖屏状态下显示，isVisible为true 显示拖动条 否则 显示小进度条
-         * 横屏状态下什么都不显示
-         * */
-
-        if (!mControlWrapper.isFullScreen()){
+        if (!mControlWrapper.isFullScreen()) {
             setVisibility(GONE);
-        }else {
+        } else {
             if (isVisible) {
-                mBottomContainer.setVisibility(VISIBLE);
+//                mBottomContainer.setVisibility(VISIBLE);
+                mSysTime.setText(PlayerUtils.getCurrentSystemTime());
+                setVisibility(VISIBLE);
                 if (anim != null) {
                     mBottomContainer.startAnimation(anim);
+                    mTitleContainer.startAnimation(anim);
                 }
                 if (mIsShowBottomProgress) {
                     mBottomProgress.setVisibility(GONE);
                 }
+
+                /*if (getVisibility() == GONE) {
+                    mSysTime.setText(PlayerUtils.getCurrentSystemTime());
+                    setVisibility(VISIBLE);
+                    if (anim != null) {
+                        startAnimation(anim);
+                    }
+                }*/
             } else {
-                mBottomContainer.setVisibility(GONE);
+                setVisibility(GONE);
                 if (anim != null) {
                     mBottomContainer.startAnimation(anim);
+                    mTitleContainer.startAnimation(anim);
                 }
                 if (mIsShowBottomProgress) {
                     mBottomProgress.setVisibility(VISIBLE);
@@ -149,17 +148,15 @@ public class KsVodControlView extends FrameLayout implements IControlComponent, 
                     animation.setDuration(300);
                     mBottomProgress.startAnimation(animation);
                 }
+
             }
+
         }
-
-
 
     }
 
     @Override
     public void onPlayStateChanged(int playState) {
-        Log.i(TAG, "onPlayStateChanged: "+playState);
-//        if (!mControlWrapper.isFullScreen()) return;
 
         switch (playState) {
             case VideoView.STATE_IDLE:
@@ -213,10 +210,9 @@ public class KsVodControlView extends FrameLayout implements IControlComponent, 
 
     @Override
     public void onPlayerStateChanged(int playerState) {
-
-        if (playerState == VideoView.PLAYER_FULL_SCREEN){
+        if (playerState == VideoView.PLAYER_FULL_SCREEN) {
             setVisibility(VISIBLE);
-        }else {
+        } else {
             setVisibility(GONE);
         }
 
@@ -227,24 +223,19 @@ public class KsVodControlView extends FrameLayout implements IControlComponent, 
             if (orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
                 mBottomContainer.setPadding(0, 0, 0, 0);
                 mBottomProgress.setPadding(0, 0, 0, 0);
+                mTitleContainer.setPadding(0, 0, 0, 0);
             } else if (orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
                 mBottomContainer.setPadding(cutoutHeight, 0, 0, 0);
                 mBottomProgress.setPadding(cutoutHeight, 0, 0, 0);
+                mTitleContainer.setPadding(cutoutHeight, 0, 0, 0);
+
             } else if (orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE) {
                 mBottomContainer.setPadding(0, 0, cutoutHeight, 0);
                 mBottomProgress.setPadding(0, 0, cutoutHeight, 0);
+                mTitleContainer.setPadding(0, 0, cutoutHeight, 0);
+
             }
         }
-        /*switch (playerState) {
-            case VideoView.PLAYER_NORMAL:
-                setVisibility(GONE);
-                break;
-            case VideoView.PLAYER_FULL_SCREEN:
-                setVisibility(VISIBLE);
-//                mFullScreen.setSelected(true);
-                break;
-        }*/
-
 
     }
 
@@ -278,89 +269,57 @@ public class KsVodControlView extends FrameLayout implements IControlComponent, 
         if (mCurrTime != null)
             mCurrTime.setText(stringForTime(position));
 
-        if (mTcpSpeed != null){
+        if (mTcpSpeed != null) {
             long tcpSpeed = mControlWrapper.getTcpSpeed();
 
-            if (tcpSpeed != 0){
+            if (tcpSpeed != 0) {
                 mTcpSpeed.setVisibility(VISIBLE);
-                String tcp = String.format("%.2f", (float) tcpSpeed /1024 /1024);
+                String tcp = String.format("%.2f", (float) tcpSpeed / 1024 / 1024);
                 mTcpSpeed.setText(tcp.concat(" Mb/s"));
-            }else {
+            } else {
                 mTcpSpeed.setVisibility(GONE);
             }
         }
-
-
     }
 
     @Override
     public void onLockStateChanged(boolean isLocked) {
+
         onVisibilityChanged(!isLocked, null);
+
     }
 
 
-    /*private OnClickListener onClick = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int id = v.getId();
-
-        }
-    };*/
-
-
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        if (id == R.id.play) {
-            mControlWrapper.togglePlay();
-        }
-    }
-
-
-   /* private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+    private SeekBar.OnSeekBarChangeListener onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+            if (!fromUser) {
+                return;
+            }
+            long duration = mControlWrapper.getDuration();
+            long newPosition = (duration * progress) / mVideoProgress.getMax();
+            if (mCurrTime != null)
+                mCurrTime.setText(stringForTime((int) newPosition));
         }
 
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
 
+            mIsDragging = true;
+            mControlWrapper.stopProgress();
+            mControlWrapper.stopFadeOut();
         }
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-
+            long duration = mControlWrapper.getDuration();
+            long newPosition = (duration * seekBar.getProgress()) / mVideoProgress.getMax();
+            mControlWrapper.seekTo((int) newPosition);
+            mIsDragging = false;
+            mControlWrapper.startProgress();
+            mControlWrapper.startFadeOut();
         }
-    };*/
+    };
 
 
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (!fromUser) {
-            return;
-        }
-        long duration = mControlWrapper.getDuration();
-        long newPosition = (duration * progress) / mVideoProgress.getMax();
-        if (mCurrTime != null)
-            mCurrTime.setText(stringForTime((int) newPosition));
-
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-        mIsDragging = true;
-        mControlWrapper.stopProgress();
-        mControlWrapper.stopFadeOut();
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-        long duration = mControlWrapper.getDuration();
-        long newPosition = (duration * seekBar.getProgress()) / mVideoProgress.getMax();
-        mControlWrapper.seekTo((int) newPosition);
-        mIsDragging = false;
-        mControlWrapper.startProgress();
-        mControlWrapper.startFadeOut();
-    }
 }

@@ -25,13 +25,13 @@ import xyz.doikki.videoplayer.controller.IControlComponent;
 import xyz.doikki.videoplayer.player.VideoView;
 import xyz.doikki.videoplayer.util.PlayerUtils;
 
-public class KsTitleView extends FrameLayout implements IControlComponent {
+public class KsTitleView extends FrameLayout implements IControlComponent, View.OnClickListener {
 
-    private ControlWrapper mControlWrapper;
-    protected LinearLayout mTitleContainer;
-    protected TextView mSysTime,mTitle;
-    protected BatteryView mBattery;
-
+    protected ControlWrapper mControlWrapper;
+    private final LinearLayout mTitleContainer;
+    private final TextView mSysTime, mTitle;
+    private final BatteryView mBattery;
+    protected final ImageView mMore;
 
 
     public KsTitleView(@NonNull Context context) {
@@ -51,12 +51,12 @@ public class KsTitleView extends FrameLayout implements IControlComponent {
     }
 
 
-
     {
         setVisibility(GONE);
         LayoutInflater.from(getContext()).inflate(R.layout.ktplayer_layout_title_view, this, true);
         mTitleContainer = findViewById(R.id.title_container);
         ImageView back = findViewById(R.id.back);
+        mMore = findViewById(R.id.more);
         back.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,15 +68,6 @@ public class KsTitleView extends FrameLayout implements IControlComponent {
             }
         });
 
-        ImageView more = findViewById(R.id.more);
-        more.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-
 
         mTitle = findViewById(R.id.title);
         mSysTime = findViewById(R.id.sys_time);
@@ -85,6 +76,7 @@ public class KsTitleView extends FrameLayout implements IControlComponent {
 
 
     }
+
     public void setTitle(String title) {
         mTitle.setText(title);
     }
@@ -185,6 +177,11 @@ public class KsTitleView extends FrameLayout implements IControlComponent {
             setVisibility(VISIBLE);
             mSysTime.setText(PlayerUtils.getCurrentSystemTime());
         }
+
+    }
+
+    @Override
+    public void onClick(View v) {
 
     }
 }

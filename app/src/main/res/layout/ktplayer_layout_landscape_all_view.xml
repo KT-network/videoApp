@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/title_container"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_gravity="top"
+        android:background="@drawable/ktplayer_shape_standard_controller_top_bg"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp">
+
+            <TextView
+                android:id="@+id/sys_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="12:00"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+
+            <com.sjx.batteryviewlibrary.BatteryView
+                android:id="@+id/battery"
+                app:bv_border_color="@color/white"
+                app:bv_border_padding="1.5dp"
+                app:bv_border_width="1dp"
+                app:bv_header_width="2dp"
+                app:bv_no_charging_color_high="@color/white"
+                app:bv_orientation="horizontal_right"
+                app:bv_power_color_high="@color/high"
+                app:bv_power_color_low="@color/error"
+                app:bv_radis="1dp"
+                android:layout_width="26dp"
+                android:layout_height="12dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="20dp" />
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:src="@drawable/ic_baseline_arrow_back_24" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:singleLine="true"
+                android:text="@string/app_name"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+            <ImageView
+                android:id="@+id/more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/ic_baseline_more_horiz_24" />
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_container"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/item_episode_jb"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/curr_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="10dp"
+                android:text="59:59:59"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:max="1000"
+                android:maxHeight="2dp"
+                android:minHeight="2dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:progressDrawable="@drawable/ktplayer_layer_progress_bar"
+                android:thumb="@drawable/ktplayer_seekbar_thumb"
+                android:thumbOffset="0dp" />
+
+            <!--<com.warkiz.widget.IndicatorSeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:isb_indicator_color="@color/ThemeColor"
+                app:isb_show_indicator="none"
+                android:layout_weight="1"
+                app:isb_max="1000"
+                app:isb_progress="550"
+                app:isb_track_progress_color="@color/ThemeColor"
+                app:isb_track_progress_size="2dp"
+                app:isb_thumb_drawable="@drawable/cat"
+                app:isb_thumb_size="15dp"
+                />-->
+
+
+
+
+            <TextView
+                android:id="@+id/total_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="15dp"
+                android:text="59:59:59"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/play"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ktplayer_selector_play_button" />
+
+            <ImageView
+                android:id="@+id/forward"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@id/play"
+                android:src="@drawable/forward" />
+
+            <TextView
+                android:id="@+id/play_tcp_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@+id/forward"
+                android:text="1024 kb/s"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/play_speed"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="15dp"
+                android:background="#00ffffff"
+                android:gravity="center"
+                android:text="@string/play_speed_default"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/play_forward_select"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:layout_toStartOf="@id/play_speed"
+                android:gravity="center"
+                android:text="@string/play_forward_select"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+    <ProgressBar
+        android:id="@+id/bottom_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:max="1000"
+        android:progressDrawable="@drawable/ktplayer_layer_progress_bar"
+        android:visibility="gone" />
+
+
+</FrameLayout>

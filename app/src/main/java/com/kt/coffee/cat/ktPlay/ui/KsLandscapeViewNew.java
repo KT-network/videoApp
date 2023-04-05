@@ -1,4 +1,6 @@
-package com.kt.coffee.cat.ktPlay.ui.component;
+package com.kt.coffee.cat.ktPlay.ui;
+
+import static xyz.doikki.videoplayer.util.PlayerUtils.stringForTime;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,65 +21,98 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.kt.coffee.cat.R;
+import com.sjx.batteryviewlibrary.BatteryView;
 
 import xyz.doikki.videoplayer.controller.ControlWrapper;
 import xyz.doikki.videoplayer.controller.IControlComponent;
 import xyz.doikki.videoplayer.player.VideoView;
 import xyz.doikki.videoplayer.util.PlayerUtils;
 
-import static xyz.doikki.videoplayer.util.PlayerUtils.stringForTime;
+public class KsLandscapeViewNew extends FrameLayout implements IControlComponent, View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
-// 竖屏状态下的播放器ui
-public class KsIncompletionView extends FrameLayout implements IControlComponent,View.OnClickListener,SeekBar.OnSeekBarChangeListener{
-
-    private static final String TAG = "KsIncompletionView";
     protected ControlWrapper mControlWrapper;
 
-    private final RelativeLayout mBottomContainer;
-    private final TextView mAllTime;
-    private final ImageView mPlayButton, mFullScreen;
+    // 三种控制器（,选集，播放速度）
+    private final RelativeLayout mLandscapeControl,mLCForwardSelect,mLCPlaySpeed;
+
+    // 时间，标题，当前播放时间，总时间，缓冲速度
+    private final TextView mSysTime, mTitle, mCurrTime, mTotalTime, mTcpSpeed;
+    // 电量
+    private final BatteryView mBattery;
+    // 右上角，播放，下一集，返回
+    protected final ImageView mMore, mPlayButton, mForward, mBack;
+
+    // 播放速度，选集
+    protected final TextView mPlaySpeed, mPlayForward;
+
+    // 拖动条
     private final SeekBar mVideoProgress;
+
+    // 小进度条
     private final ProgressBar mBottomProgress;
 
-    private boolean mIsShowBottomProgress = true;
+    // 拖动条标志
     private boolean mIsDragging;
 
-    public KsIncompletionView(@NonNull Context context) {
+    // 是否显示小进度条
+    private boolean mIsShowBottomProgress = true;
+
+    private final static String TAG = "KsLandscapeViewNew";
+
+    public KsLandscapeViewNew(@NonNull Context context) {
         super(context);
     }
 
-    public KsIncompletionView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public KsLandscapeViewNew(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public KsIncompletionView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public KsLandscapeViewNew(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
+
     {
         setVisibility(GONE);
-        LayoutInflater.from(getContext()).inflate(R.layout.ktplayer_layout_incompletion_view, this, true);
 
-        mBottomContainer = findViewById(R.id.bottom_container);
+        LayoutInflater.from(getContext()).inflate(R.layout.ktplayer_layout_landscape_view_new, this, true);
+
+        mLandscapeControl = findViewById(R.id.landscape_control);
+        mLCForwardSelect = findViewById(R.id.landscape_control_forward_select);
+        mLCPlaySpeed = findViewById(R.id.landscape_control_play_speed);
+
+        mBack = findViewById(R.id.back);
+        mBack.setOnClickListener(this);
+        mMore = findViewById(R.id.more);
+        mTitle = findViewById(R.id.title);
+        mSysTime = findViewById(R.id.sys_time);
+        mBattery = findViewById(R.id.battery);
+        mBattery.setLifecycleOwner((LifecycleOwner) getContext());
+
+        //===========================================================================
+
+        mCurrTime = findViewById(R.id.curr_time);
+        mTotalTime = findViewById(R.id.total_time);
+        mForward = findViewById(R.id.forward);
+//        mForward.setOnClickListener(this);
+
         mPlayButton = findViewById(R.id.play);
-        mFullScreen = findViewById(R.id.fullscreen);
-        mAllTime = findViewById(R.id.allTime);
-        mVideoProgress = findViewById(R.id.seekBar);
-        mBottomProgress = findViewById(R.id.bottom_progress);
-
         mPlayButton.setOnClickListener(this);
-        mFullScreen.setOnClickListener(this);
+
+        mPlaySpeed = findViewById(R.id.play_speed);
+
+
+        mPlayForward = findViewById(R.id.play_forward_select);
+
+        mTcpSpeed = findViewById(R.id.play_tcp_speed);
+        mVideoProgress = findViewById(R.id.seekBar);
         mVideoProgress.setOnSeekBarChangeListener(this);
 
-    }
+        mBottomProgress = findViewById(R.id.bottom_progress);
 
-    /**
-     * 是否显示底部进度条，默认显示
-     */
-    public void showBottomProgress(boolean isShow) {
-        mIsShowBottomProgress = isShow;
     }
 
 
@@ -94,30 +129,32 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
 
     @Override
     public void onVisibilityChanged(boolean isVisible, Animation anim) {
-
-        /*
-        * 需求：
-        * 竖屏状态下显示，isVisible为true 显示拖动条 否则 显示小进度条
-        * 横屏状态下什么都不显示
-        * */
-        if (mControlWrapper.isFullScreen()){
+        Log.i(TAG, "onVisibilityChanged: "+isVisible);
+        if (!mControlWrapper.isFullScreen()) {
             setVisibility(GONE);
-            return;
-        }else {
-            // 点击 true
-            if (isVisible){
-                mBottomContainer.setVisibility(VISIBLE);
-                if (anim != null){
-                    mBottomContainer.startAnimation(anim);
+        } else {
+
+            if (isVisible) {
+                mLandscapeControl.setVisibility(VISIBLE);
+                mSysTime.setText(PlayerUtils.getCurrentSystemTime());
+                if (anim != null) {
+                    mLandscapeControl.startAnimation(anim);
                 }
-                if (mIsShowBottomProgress){
+                if (mIsShowBottomProgress) {
                     mBottomProgress.setVisibility(GONE);
                 }
 
-            }else {
-                mBottomContainer.setVisibility(GONE);
-                if (anim != null){
-                    mBottomContainer.startAnimation(anim);
+                /*if (getVisibility() == GONE) {
+                    mSysTime.setText(PlayerUtils.getCurrentSystemTime());
+                    setVisibility(VISIBLE);
+                    if (anim != null) {
+                        startAnimation(anim);
+                    }
+                }*/
+            } else {
+                mLandscapeControl.setVisibility(GONE);
+                if (anim != null) {
+                    mLandscapeControl.startAnimation(anim);
                 }
                 if (mIsShowBottomProgress) {
                     mBottomProgress.setVisibility(VISIBLE);
@@ -125,16 +162,15 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
                     animation.setDuration(300);
                     mBottomProgress.startAnimation(animation);
                 }
-            }
 
+            }
         }
+
+
     }
 
     @Override
     public void onPlayStateChanged(int playState) {
-        Log.i(TAG, "onPlayStateChanged: "+playState);
-//        if (mControlWrapper.isFullScreen()) return;
-
         switch (playState) {
             case VideoView.STATE_IDLE:
             case VideoView.STATE_PLAYBACK_COMPLETED:
@@ -153,16 +189,16 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
             case VideoView.STATE_PLAYING:
                 mPlayButton.setSelected(true);
                 if (mIsShowBottomProgress) {
-                    if (mControlWrapper.isFullScreen()) return;
+                    if (!mControlWrapper.isFullScreen()) return;
                     if (mControlWrapper.isShowing()) {
                         mBottomProgress.setVisibility(GONE);
-                        mBottomContainer.setVisibility(VISIBLE);
+                        mLandscapeControl.setVisibility(VISIBLE);
                     } else {
-                        mBottomContainer.setVisibility(GONE);
+                        mLandscapeControl.setVisibility(GONE);
                         mBottomProgress.setVisibility(VISIBLE);
                     }
                 } else {
-                    mBottomContainer.setVisibility(GONE);
+                    mLandscapeControl.setVisibility(GONE);
                 }
                 setVisibility(VISIBLE);
                 //开始刷新进度
@@ -187,43 +223,35 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
 
     @Override
     public void onPlayerStateChanged(int playerState) {
-
-        if (playerState == VideoView.PLAYER_NORMAL){
+        if (playerState == VideoView.PLAYER_FULL_SCREEN) {
+            Log.i(TAG, "onPlayerStateChanged: h");
             setVisibility(VISIBLE);
-        }else {
+        } else {
+            Log.i(TAG, "onPlayerStateChanged: x");
             setVisibility(GONE);
         }
+
         Activity activity = PlayerUtils.scanForActivity(getContext());
         if (activity != null && mControlWrapper.hasCutout()) {
             int orientation = activity.getRequestedOrientation();
             int cutoutHeight = mControlWrapper.getCutoutHeight();
             if (orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
-                mBottomContainer.setPadding(0, 0, 0, 0);
+                mLandscapeControl.setPadding(0, 0, 0, 0);
                 mBottomProgress.setPadding(0, 0, 0, 0);
             } else if (orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-                mBottomContainer.setPadding(cutoutHeight, 0, 0, 0);
+                mLandscapeControl.setPadding(cutoutHeight, 0, 0, 0);
                 mBottomProgress.setPadding(cutoutHeight, 0, 0, 0);
             } else if (orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE) {
-                mBottomContainer.setPadding(0, 0, cutoutHeight, 0);
+                mLandscapeControl.setPadding(0, 0, cutoutHeight, 0);
                 mBottomProgress.setPadding(0, 0, cutoutHeight, 0);
             }
         }
-        /*switch (playerState) {
-            case VideoView.PLAYER_NORMAL:
-                setVisibility(VISIBLE);
-                break;
-            case VideoView.PLAYER_FULL_SCREEN:
-                setVisibility(GONE);
-//                mFullScreen.setSelected(true);
-                break;
-        }*/
-
-
 
     }
 
     @Override
     public void setProgress(int duration, int position) {
+
         if (mIsDragging) {
             return;
         }
@@ -247,59 +275,61 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
             }
         }
 
-        if (mAllTime != null){
-            mAllTime.setText(stringForTime(position)+"/"+stringForTime(duration));
+        if (mTotalTime != null)
+            mTotalTime.setText(stringForTime(duration));
+        if (mCurrTime != null)
+            mCurrTime.setText(stringForTime(position));
+
+        if (mTcpSpeed != null) {
+            long tcpSpeed = mControlWrapper.getTcpSpeed();
+
+            if (tcpSpeed != 0) {
+                mTcpSpeed.setVisibility(VISIBLE);
+                String tcp = String.format("%.2f", (float) tcpSpeed / 1024 / 1024);
+                mTcpSpeed.setText(tcp.concat(" Mb/s"));
+            } else {
+                mTcpSpeed.setVisibility(GONE);
+            }
         }
-
-
     }
 
     @Override
     public void onLockStateChanged(boolean isLocked) {
-
+        onVisibilityChanged(!isLocked, null);
     }
 
-
     @Override
-    public void onClick(View v) {
-        int id = v.getId();
-
-        if (id == R.id.play){
+    public void onClick(View view) {
+        int id = view.getId();
+        if (id == R.id.back) {
+            Activity activity = PlayerUtils.scanForActivity(getContext());
+            if (activity != null && mControlWrapper.isFullScreen()) {
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                mControlWrapper.stopFullScreen();
+            }
+        } else if (id == R.id.play) {
             mControlWrapper.togglePlay();
         }
-        if (id == R.id.fullscreen){
-            toggleFullScreen();
-        }
-
     }
 
-
-    /**
-     * 横竖屏切换
-     */
-    private void toggleFullScreen() {
-        Activity activity = PlayerUtils.scanForActivity(getContext());
-        mControlWrapper.toggleFullScreen(activity);
-        // 下面方法会根据适配宽高决定是否旋转屏幕
-//        mControlWrapper.toggleFullScreenByVideoSize(activity);
-    }
-
+    /*
+     *
+     * seekBar
+     * */
     @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (!fromUser) {
+    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+        if (!b) {
             return;
         }
         long duration = mControlWrapper.getDuration();
-        long newPosition = (duration * progress) / mVideoProgress.getMax();
-
-
-
-        if (mAllTime != null)
-            mAllTime.setText(stringForTime((int) newPosition)+"/"+stringForTime((int) duration));
+        long newPosition = (duration * i) / mVideoProgress.getMax();
+        if (mCurrTime != null)
+            mCurrTime.setText(stringForTime((int) newPosition));
     }
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
+
         mIsDragging = true;
         mControlWrapper.stopProgress();
         mControlWrapper.stopFadeOut();

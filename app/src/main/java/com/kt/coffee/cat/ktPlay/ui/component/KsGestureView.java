@@ -25,6 +25,7 @@ import xyz.doikki.videoplayer.player.VideoView;
 
 import static xyz.doikki.videoplayer.util.PlayerUtils.stringForTime;
 
+// 手势控制
 public class KsGestureView extends FrameLayout implements IGestureComponent {
 
     private ControlWrapper mControlWrapper;

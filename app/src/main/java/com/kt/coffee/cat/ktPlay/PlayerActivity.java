@@ -1,6 +1,7 @@
 package com.kt.coffee.cat.ktPlay;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -9,7 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.kt.coffee.cat.R;
+import com.kt.coffee.cat.ktPlay.ui.KsIncompletionViewNew;
 import com.kt.coffee.cat.ktPlay.ui.KsLandscapeView;
+import com.kt.coffee.cat.ktPlay.ui.KsLandscapeViewNew;
 import com.kt.coffee.cat.ktPlay.ui.KsStandardVideoController;
 import com.kt.coffee.cat.ktPlay.ui.component.KsErrorView;
 import com.kt.coffee.cat.ktPlay.ui.component.KsGestureView;
@@ -32,11 +35,8 @@ public class PlayerActivity extends AppCompatActivity {
     private final static String TAG = "PlayerActivity";
 
     VideoView mVideoView;
-//    KsTitleMoreView ksTitleMoreView;
-    KsPrepareView prepareView;
-    ImageView thumb;
-    KsIncompletionView ksIncompletionView;
-//    KsVodControlView ksVodControlView;
+
+    KsIncompletionViewNew ksIncompletionViewNew;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,11 +71,10 @@ public class PlayerActivity extends AppCompatActivity {
             PlayerVideoEntity playerVideoEntity = new Gson().fromJson(JSON,PlayerVideoEntity.class);
 
 //            ksTitleMoreView.setTitle(playerVideoEntity.getVideoName());
-            Glide.with(this).load(playerVideoEntity.getVideoThumb()).into(thumb);
+//            Glide.with(this).load(playerVideoEntity.getVideoThumb()).into(thumb);
             mVideoView.setUrl(playerVideoEntity.getVideoUrl());
 
             mVideoView.start();
-
 
 
         } catch (IOException e) {
@@ -87,77 +86,42 @@ public class PlayerActivity extends AppCompatActivity {
 
     private void initView(){
         mVideoView = findViewById(R.id.player);
+
         KsStandardVideoController controller = new KsStandardVideoController(this);
-        controller.setEnableOrientation(true);
-
-//        ksTitleMoreView = new KsTitleMoreView(this);
-//        controller.addControlComponent(ksTitleMoreView);
+        controller.setEnableOrientation(false);  // 设置是否自动旋转屏幕
 
 
-        ksIncompletionView = new KsIncompletionView(this);
-        controller.addControlComponent(ksIncompletionView);
-        prepareView = new KsPrepareView(this);
-        prepareView.setClickStart();
-        thumb = prepareView.findViewById(R.id.thumb);
-//        Glide.with(this).load(THUMB).into(thumb);
-        controller.addControlComponent(prepareView);
+        ksIncompletionViewNew = new KsIncompletionViewNew(this);
+        controller.addControlComponent(ksIncompletionViewNew);
+        ksIncompletionViewNew.setBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+
+//        prepareView = new KsPrepareView(this);
+//        prepareView.setClickStart();
+//        thumb = prepareView.findViewById(R.id.thumb);
+////        Glide.with(this).load(THUMB).into(thumb);
+//        controller.addControlComponent(prepareView);
 
         controller.addControlComponent(new CompleteView(this));
         controller.addControlComponent(new KsErrorView(this));//错误界面
 
-//        ksVodControlView = new KsVodControlView(this);
-//        controller.addControlComponent(ksVodControlView);
         controller.addControlComponent(new KsGestureView(this));
-//        controller.addControlComponent(new KsPlayerSpeedView(this));
-
-//        controller.addControlComponent(new KsLeftRightGestureView(this));
 
 
-        controller.addControlComponent(new KsLandscapeView(this));
+
+        controller.addControlComponent(new KsLandscapeViewNew(this));
 
         mVideoView.setVideoController(controller);
 
-//        mVideoView.addOnStateChangeListener(mOnStateChangeListener);
     }
 
 
-    /*private VideoView.OnStateChangeListener mOnStateChangeListener = new VideoView.SimpleOnStateChangeListener() {
-        @Override
-        public void onPlayerStateChanged(int playerState) {
-            Log.i(TAG, "onPlayerStateChanged: "+playerState);
 
-            switch (playerState) {
-                case VideoView.PLAYER_NORMAL://小屏
-                    break;
-                case VideoView.PLAYER_FULL_SCREEN://全屏
-                    break;
-            }
-        }
-    };*/
-
-/*
-    private BaseVideoView.OnStateChangeListener mOnStateChangeListener = new BaseVideoView.OnStateChangeListener() {
-        @Override
-        public void onPlayerStateChanged(int playerState) {
-            switch (playerState){
-                case VideoView.PLAYER_NORMAL:
-
-                    ksIncompletionView.setVisibility(View.VISIBLE);
-                    ksVodControlView.setVisibility(View.GONE);
-                    break;
-                case VideoView.PLAYER_FULL_SCREEN://全屏
-                    ksIncompletionView.setVisibility(View.GONE);
-                    ksVodControlView.setVisibility(View.VISIBLE);
-                    break;
-            }
-        }
-
-        @Override
-        public void onPlayStateChanged(int playState) {
-
-        }
-    };
-*/
 
 
 

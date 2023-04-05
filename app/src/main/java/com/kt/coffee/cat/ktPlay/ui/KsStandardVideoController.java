@@ -68,28 +68,6 @@ public class KsStandardVideoController extends GestureVideoController implements
     }
 
 
-    /**
-     * 快速添加各个组件
-     * @param title  标题
-     * @param isLive 是否为直播
-     */
-    public void addDefaultControlComponent(String title, boolean isLive) {
-        KsCompleteView completeView = new KsCompleteView(getContext());
-        KsErrorView errorView = new KsErrorView(getContext());
-        KsPrepareView prepareView = new KsPrepareView(getContext());
-        prepareView.setClickStart();
-        KsTitleView titleView = new KsTitleView(getContext());
-        titleView.setTitle(title);
-        addControlComponent(completeView, errorView, prepareView, titleView);
-        if (isLive) {
-            addControlComponent(new LiveControlView(getContext()));
-        } else {
-            addControlComponent(new VodControlView(getContext()));
-        }
-        addControlComponent(new GestureView(getContext()));
-        setCanChangePosition(!isLive);
-    }
-
 
     @Override
     public void onClick(View v) {
@@ -244,5 +222,7 @@ public class KsStandardVideoController extends GestureVideoController implements
         }
         return super.onBackPressed();
     }
+
+
 
 }

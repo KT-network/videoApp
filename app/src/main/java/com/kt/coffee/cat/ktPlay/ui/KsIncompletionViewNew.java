@@ -1,4 +1,6 @@
-package com.kt.coffee.cat.ktPlay.ui.component;
+package com.kt.coffee.cat.ktPlay.ui;
+
+import static xyz.doikki.videoplayer.util.PlayerUtils.stringForTime;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,7 +13,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -27,46 +28,47 @@ import xyz.doikki.videoplayer.controller.IControlComponent;
 import xyz.doikki.videoplayer.player.VideoView;
 import xyz.doikki.videoplayer.util.PlayerUtils;
 
-import static xyz.doikki.videoplayer.util.PlayerUtils.stringForTime;
+public class KsIncompletionViewNew extends FrameLayout implements IControlComponent, View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
-// 竖屏状态下的播放器ui
-public class KsIncompletionView extends FrameLayout implements IControlComponent,View.OnClickListener,SeekBar.OnSeekBarChangeListener{
-
-    private static final String TAG = "KsIncompletionView";
     protected ControlWrapper mControlWrapper;
 
-    private final RelativeLayout mBottomContainer;
+    private final RelativeLayout mIncompletionControl;
     private final TextView mAllTime;
-    private final ImageView mPlayButton, mFullScreen;
+    private final ImageView mPlayButton, mFullScreen,mBack;
     private final SeekBar mVideoProgress;
     private final ProgressBar mBottomProgress;
 
     private boolean mIsShowBottomProgress = true;
     private boolean mIsDragging;
 
-    public KsIncompletionView(@NonNull Context context) {
+
+    private static final String TAG = "KsIncompletionViewNew";
+
+
+    public KsIncompletionViewNew(@NonNull Context context) {
         super(context);
     }
 
-    public KsIncompletionView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public KsIncompletionViewNew(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public KsIncompletionView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public KsIncompletionViewNew(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     {
         setVisibility(GONE);
-        LayoutInflater.from(getContext()).inflate(R.layout.ktplayer_layout_incompletion_view, this, true);
-
-        mBottomContainer = findViewById(R.id.bottom_container);
+        LayoutInflater.from(getContext()).inflate(R.layout.ktplayer_layout_incompletion_view_new, this, true);
+        mIncompletionControl = findViewById(R.id.incompletion_control);
+        mBack = findViewById(R.id.back);
         mPlayButton = findViewById(R.id.play);
         mFullScreen = findViewById(R.id.fullscreen);
         mAllTime = findViewById(R.id.allTime);
         mVideoProgress = findViewById(R.id.seekBar);
         mBottomProgress = findViewById(R.id.bottom_progress);
 
+        mBack.setOnClickListener(this);
         mPlayButton.setOnClickListener(this);
         mFullScreen.setOnClickListener(this);
         mVideoProgress.setOnSeekBarChangeListener(this);
@@ -80,10 +82,10 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
         mIsShowBottomProgress = isShow;
     }
 
-
     @Override
     public void attach(@NonNull ControlWrapper controlWrapper) {
         mControlWrapper = controlWrapper;
+
     }
 
     @Nullable
@@ -96,28 +98,28 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
     public void onVisibilityChanged(boolean isVisible, Animation anim) {
 
         /*
-        * 需求：
-        * 竖屏状态下显示，isVisible为true 显示拖动条 否则 显示小进度条
-        * 横屏状态下什么都不显示
-        * */
+         * 需求：
+         * 竖屏状态下显示，isVisible为true 显示拖动条 否则 显示小进度条
+         * 横屏状态下什么都不显示
+         * */
         if (mControlWrapper.isFullScreen()){
             setVisibility(GONE);
             return;
         }else {
             // 点击 true
             if (isVisible){
-                mBottomContainer.setVisibility(VISIBLE);
+                mIncompletionControl.setVisibility(VISIBLE);
                 if (anim != null){
-                    mBottomContainer.startAnimation(anim);
+                    mIncompletionControl.startAnimation(anim);
                 }
                 if (mIsShowBottomProgress){
                     mBottomProgress.setVisibility(GONE);
                 }
 
             }else {
-                mBottomContainer.setVisibility(GONE);
+                mIncompletionControl.setVisibility(GONE);
                 if (anim != null){
-                    mBottomContainer.startAnimation(anim);
+                    mIncompletionControl.startAnimation(anim);
                 }
                 if (mIsShowBottomProgress) {
                     mBottomProgress.setVisibility(VISIBLE);
@@ -132,8 +134,8 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
 
     @Override
     public void onPlayStateChanged(int playState) {
-        Log.i(TAG, "onPlayStateChanged: "+playState);
-//        if (mControlWrapper.isFullScreen()) return;
+
+        if (mControlWrapper.isFullScreen()) return;
 
         switch (playState) {
             case VideoView.STATE_IDLE:
@@ -156,13 +158,13 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
                     if (mControlWrapper.isFullScreen()) return;
                     if (mControlWrapper.isShowing()) {
                         mBottomProgress.setVisibility(GONE);
-                        mBottomContainer.setVisibility(VISIBLE);
+                        mIncompletionControl.setVisibility(VISIBLE);
                     } else {
-                        mBottomContainer.setVisibility(GONE);
+                        mIncompletionControl.setVisibility(GONE);
                         mBottomProgress.setVisibility(VISIBLE);
                     }
                 } else {
-                    mBottomContainer.setVisibility(GONE);
+                    mIncompletionControl.setVisibility(GONE);
                 }
                 setVisibility(VISIBLE);
                 //开始刷新进度
@@ -198,28 +200,16 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
             int orientation = activity.getRequestedOrientation();
             int cutoutHeight = mControlWrapper.getCutoutHeight();
             if (orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
-                mBottomContainer.setPadding(0, 0, 0, 0);
+                mIncompletionControl.setPadding(0, 0, 0, 0);
                 mBottomProgress.setPadding(0, 0, 0, 0);
             } else if (orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-                mBottomContainer.setPadding(cutoutHeight, 0, 0, 0);
+                mIncompletionControl.setPadding(cutoutHeight, 0, 0, 0);
                 mBottomProgress.setPadding(cutoutHeight, 0, 0, 0);
             } else if (orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE) {
-                mBottomContainer.setPadding(0, 0, cutoutHeight, 0);
+                mIncompletionControl.setPadding(0, 0, cutoutHeight, 0);
                 mBottomProgress.setPadding(0, 0, cutoutHeight, 0);
             }
         }
-        /*switch (playerState) {
-            case VideoView.PLAYER_NORMAL:
-                setVisibility(VISIBLE);
-                break;
-            case VideoView.PLAYER_FULL_SCREEN:
-                setVisibility(GONE);
-//                mFullScreen.setSelected(true);
-                break;
-        }*/
-
-
-
     }
 
     @Override
@@ -251,7 +241,6 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
             mAllTime.setText(stringForTime(position)+"/"+stringForTime(duration));
         }
 
-
     }
 
     @Override
@@ -260,19 +249,23 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
     }
 
 
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
 
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
         if (id == R.id.play){
             mControlWrapper.togglePlay();
-        }
-        if (id == R.id.fullscreen){
+        } else if (id == R.id.fullscreen){
             toggleFullScreen();
         }
-
     }
 
+    // 设置 back 事件
+    public void setBack(OnClickListener onClickListener){
+        if (onClickListener != null){
+            mBack.setOnClickListener(onClickListener);
+        }
+    }
 
     /**
      * 横竖屏切换
@@ -285,12 +278,13 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
     }
 
     @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (!fromUser) {
+    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+        if (!b) {
             return;
         }
         long duration = mControlWrapper.getDuration();
-        long newPosition = (duration * progress) / mVideoProgress.getMax();
+        long newPosition = (duration * i) / mVideoProgress.getMax();
 
 
 
@@ -314,4 +308,5 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
         mControlWrapper.startProgress();
         mControlWrapper.startFadeOut();
     }
+
 }

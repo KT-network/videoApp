@@ -30,13 +30,14 @@ import xyz.doikki.videoplayer.util.PlayerUtils;
 
 import static xyz.doikki.videoplayer.util.PlayerUtils.stringForTime;
 
-public class KsLandscapeView extends FrameLayout implements IControlComponent {
+// 横屏状态下的播放器ui
+public class KsLandscapeView extends FrameLayout implements IControlComponent,View.OnClickListener,SeekBar.OnSeekBarChangeListener {
 
     protected ControlWrapper mControlWrapper;
     private final LinearLayout mTitleContainer, mBottomContainer;
     private final TextView mSysTime, mTitle, mCurrTime, mTotalTime, mTcpSpeed;
     private final BatteryView mBattery;
-    protected final ImageView mMore, mPlayButton, mForward;
+    protected final ImageView mMore, mPlayButton, mForward, mBack;
 
     protected final TextView mPlaySpeed, mPlayForward;
 
@@ -68,7 +69,9 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent {
         LayoutInflater.from(getContext()).inflate(R.layout.ktplayer_layout_landscape_all_view, this, true);
 
         mTitleContainer = findViewById(R.id.title_container);
-        ImageView back = findViewById(R.id.back);
+        mBack = findViewById(R.id.back);
+        mBack.setOnClickListener(this);
+
         mMore = findViewById(R.id.more);
 
         mTitle = findViewById(R.id.title);
@@ -85,16 +88,16 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent {
 //        mForward.setOnClickListener(this);
 
         mPlayButton = findViewById(R.id.play);
-//        mPlayButton.setOnClickListener(this);
+        mPlayButton.setOnClickListener(this);
 
         mPlaySpeed = findViewById(R.id.play_speed);
-        Log.i(TAG, "instance initializer: " + mPlaySpeed);
+
 
         mPlayForward = findViewById(R.id.play_forward_select);
 
         mTcpSpeed = findViewById(R.id.play_tcp_speed);
         mVideoProgress = findViewById(R.id.seekBar);
-        mVideoProgress.setOnSeekBarChangeListener(this.onSeekBarChangeListener);
+        mVideoProgress.setOnSeekBarChangeListener(this);
 
         mBottomProgress = findViewById(R.id.bottom_progress);
 
@@ -174,9 +177,12 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent {
                 setVisibility(GONE);
                 break;
             case VideoView.STATE_PLAYING:
+                Log.i(TAG, "onPlayStateChanged: .........");
                 mPlayButton.setSelected(true);
                 if (mIsShowBottomProgress) {
+                    Log.i(TAG, "onPlayStateChanged: 。。，。。。。");
                     if (!mControlWrapper.isFullScreen()) return;
+                    Log.i(TAG, "onPlayStateChanged: ,,,,,,,");
                     if (mControlWrapper.isShowing()) {
                         mBottomProgress.setVisibility(GONE);
                         mBottomContainer.setVisibility(VISIBLE);
@@ -211,8 +217,10 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent {
     @Override
     public void onPlayerStateChanged(int playerState) {
         if (playerState == VideoView.PLAYER_FULL_SCREEN) {
+            Log.i(TAG, "onPlayerStateChanged: h");
             setVisibility(VISIBLE);
         } else {
+            Log.i(TAG, "onPlayerStateChanged: x");
             setVisibility(GONE);
         }
 
@@ -241,6 +249,8 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent {
 
     @Override
     public void setProgress(int duration, int position) {
+
+
         if (mIsDragging) {
             return;
         }
@@ -280,6 +290,9 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent {
                 mTcpSpeed.setVisibility(GONE);
             }
         }
+
+
+
     }
 
     @Override
@@ -290,36 +303,58 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent {
     }
 
 
-    private SeekBar.OnSeekBarChangeListener onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            if (!fromUser) {
-                return;
+
+    /**
+     *
+     * 点击事件
+     * */
+    @Override
+    public void onClick(View view) {
+
+        int id = view.getId();
+        if (id == R.id.back){
+            Activity activity = PlayerUtils.scanForActivity(getContext());
+            if (activity != null && mControlWrapper.isFullScreen()) {
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                mControlWrapper.stopFullScreen();
             }
-            long duration = mControlWrapper.getDuration();
-            long newPosition = (duration * progress) / mVideoProgress.getMax();
-            if (mCurrTime != null)
-                mCurrTime.setText(stringForTime((int) newPosition));
+        } else if (id == R.id.play) {
+            mControlWrapper.togglePlay();
         }
 
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
 
-            mIsDragging = true;
-            mControlWrapper.stopProgress();
-            mControlWrapper.stopFadeOut();
+    }
+
+    /*
+    *
+    * seekBar
+    * */
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+        if (!b) {
+            return;
         }
+        long duration = mControlWrapper.getDuration();
+        long newPosition = (duration * i) / mVideoProgress.getMax();
+        if (mCurrTime != null)
+            mCurrTime.setText(stringForTime((int) newPosition));
+    }
 
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-            long duration = mControlWrapper.getDuration();
-            long newPosition = (duration * seekBar.getProgress()) / mVideoProgress.getMax();
-            mControlWrapper.seekTo((int) newPosition);
-            mIsDragging = false;
-            mControlWrapper.startProgress();
-            mControlWrapper.startFadeOut();
-        }
-    };
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
 
+        mIsDragging = true;
+        mControlWrapper.stopProgress();
+        mControlWrapper.stopFadeOut();
+    }
 
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        long duration = mControlWrapper.getDuration();
+        long newPosition = (duration * seekBar.getProgress()) / mVideoProgress.getMax();
+        mControlWrapper.seekTo((int) newPosition);
+        mIsDragging = false;
+        mControlWrapper.startProgress();
+        mControlWrapper.startFadeOut();
+    }
 }

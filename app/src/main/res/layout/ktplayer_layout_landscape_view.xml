@@ -230,6 +230,7 @@
 
     </RelativeLayout>
 
+<!--
     <RelativeLayout
         android:id="@+id/landscape_control_forward_select"
         android:layout_width="match_parent"
@@ -263,8 +264,10 @@
         </RelativeLayout>
 
     </RelativeLayout>
+-->
 
 
+<!--
     <RelativeLayout
         android:id="@+id/landscape_control_play_speed"
         android:layout_width="match_parent"
@@ -347,6 +350,7 @@
 
 
     </RelativeLayout>
+-->
 
 
     <ProgressBar

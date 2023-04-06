@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">咖啡猫</string>
-    
+
+
     <!--底部功能栏 名字-->
     <string name="home">Home</string>
     <string name="select">Select</string>

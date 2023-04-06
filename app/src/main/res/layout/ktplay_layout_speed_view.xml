@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/landscape_speed">
 
     <LinearLayout
-        android:id="@+id/speed_container"
         android:layout_width="150dp"
         android:layout_height="match_parent"
         android:layout_gravity="end"
@@ -13,9 +12,7 @@
         android:gravity="center_horizontal"
         android:background="@color/lucencyBlack_85"
         android:paddingTop="40dp"
-        android:paddingBottom="40dp"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:paddingBottom="40dp">
         
         <TextView
             android:id="@+id/play_speed_2_0"

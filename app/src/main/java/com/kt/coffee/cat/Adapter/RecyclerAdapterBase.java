@@ -54,9 +54,6 @@ public abstract class RecyclerAdapterBase extends RecyclerView.Adapter<RecyclerA
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             initView(itemView,getBindingAdapterPosition());
-
-
-
         }
     }
 

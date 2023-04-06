@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/landscape_select">
 
     <LinearLayout
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_gravity="end"
@@ -18,14 +19,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/play_forward_select"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:textColor="@color/lucencyGray_200"
             android:layout_marginBottom="5dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/play_select_RecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"/>
 
 
     </LinearLayout>

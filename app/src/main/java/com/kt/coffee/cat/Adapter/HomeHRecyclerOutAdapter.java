@@ -78,12 +78,12 @@ public class HomeHRecyclerOutAdapter extends RecyclerAdapterBase{
 
     private final ClickListener.OnClickListener onClickListener = new ClickListener.OnClickListener() {
         @Override
-        public void onClick(int position) {
+        public void onClick(int i) {
 
             Intent intent = new Intent(mContext, PlayerActivity.class);
             mContext.startActivity(intent);
 
-            Log.i(TAG, "onClick: "+position);
+            Log.i(TAG, "onClick: "+ i);
         }
     };
 

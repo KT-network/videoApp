@@ -1,6 +1,7 @@
 package com.kt.coffee.cat.utils;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,6 +45,11 @@ public class Tool {
             e.printStackTrace();
             return null;
         }
+    }
+
+
+    public static void KToast(Context context,String msg){
+        Toast.makeText(context, msg+"", Toast.LENGTH_SHORT).show();
     }
 
 

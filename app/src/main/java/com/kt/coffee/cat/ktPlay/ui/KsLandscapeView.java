@@ -1,5 +1,7 @@
 package com.kt.coffee.cat.ktPlay.ui;
 
+import static xyz.doikki.videoplayer.util.PlayerUtils.stringForTime;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -11,8 +13,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -28,28 +30,36 @@ import xyz.doikki.videoplayer.controller.IControlComponent;
 import xyz.doikki.videoplayer.player.VideoView;
 import xyz.doikki.videoplayer.util.PlayerUtils;
 
-import static xyz.doikki.videoplayer.util.PlayerUtils.stringForTime;
-
-// 横屏状态下的播放器ui
-public class KsLandscapeView extends FrameLayout implements IControlComponent,View.OnClickListener,SeekBar.OnSeekBarChangeListener {
+public class KsLandscapeView extends FrameLayout implements IControlComponent, View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
     protected ControlWrapper mControlWrapper;
-    private final LinearLayout mTitleContainer, mBottomContainer;
+
+    // 三种控制器（,选集，播放速度）
+    private final RelativeLayout mLandscapeControl;//,mLCForwardSelect,mLCPlaySpeed;
+
+    // 时间，标题，当前播放时间，总时间，缓冲速度
     private final TextView mSysTime, mTitle, mCurrTime, mTotalTime, mTcpSpeed;
+    // 电量
     private final BatteryView mBattery;
+    // 右上角，播放，下一集，返回
     protected final ImageView mMore, mPlayButton, mForward, mBack;
 
+    // 播放速度，选集
     protected final TextView mPlaySpeed, mPlayForward;
 
+    // 拖动条
     private final SeekBar mVideoProgress;
 
+    // 小进度条
     private final ProgressBar mBottomProgress;
 
+    // 拖动条标志
     private boolean mIsDragging;
 
+    // 是否显示小进度条
     private boolean mIsShowBottomProgress = true;
-    private final static String TAG = "KsLandscapeView";
 
+    private final static String TAG = "KsLandscapeViewNew";
 
     public KsLandscapeView(@NonNull Context context) {
         super(context);
@@ -66,22 +76,23 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent,Vi
 
     {
         setVisibility(GONE);
-        LayoutInflater.from(getContext()).inflate(R.layout.ktplayer_layout_landscape_all_view, this, true);
 
-        mTitleContainer = findViewById(R.id.title_container);
+        LayoutInflater.from(getContext()).inflate(R.layout.ktplayer_layout_landscape_view, this, true);
+
+        mLandscapeControl = findViewById(R.id.landscape_control);
+//        mLCForwardSelect = findViewById(R.id.landscape_control_forward_select);
+//        mLCPlaySpeed = findViewById(R.id.landscape_control_play_speed);
+
         mBack = findViewById(R.id.back);
         mBack.setOnClickListener(this);
-
         mMore = findViewById(R.id.more);
-
         mTitle = findViewById(R.id.title);
         mSysTime = findViewById(R.id.sys_time);
         mBattery = findViewById(R.id.battery);
         mBattery.setLifecycleOwner((LifecycleOwner) getContext());
 
+        //===========================================================================
 
-        /*========================================================================*/
-        mBottomContainer = findViewById(R.id.bottom_container);
         mCurrTime = findViewById(R.id.curr_time);
         mTotalTime = findViewById(R.id.total_time);
         mForward = findViewById(R.id.forward);
@@ -103,6 +114,22 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent,Vi
 
     }
 
+    public void setPlaySpeedText(int id){
+        mPlaySpeed.setText(getResources().getText(id));
+    }
+
+    public TextView getPlaySpeedView(){
+        return this.mPlaySpeed;
+    }
+
+    public TextView getPlayForwardView(){
+        return this.mPlayForward;
+    }
+
+    public void hide(){
+        mControlWrapper.hide();
+    }
+
 
     @Override
     public void attach(@NonNull ControlWrapper controlWrapper) {
@@ -117,16 +144,16 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent,Vi
 
     @Override
     public void onVisibilityChanged(boolean isVisible, Animation anim) {
+        Log.i(TAG, "onVisibilityChanged: "+isVisible);
         if (!mControlWrapper.isFullScreen()) {
             setVisibility(GONE);
         } else {
+
             if (isVisible) {
-//                mBottomContainer.setVisibility(VISIBLE);
+                mLandscapeControl.setVisibility(VISIBLE);
                 mSysTime.setText(PlayerUtils.getCurrentSystemTime());
-                setVisibility(VISIBLE);
                 if (anim != null) {
-                    mBottomContainer.startAnimation(anim);
-                    mTitleContainer.startAnimation(anim);
+                    mLandscapeControl.startAnimation(anim);
                 }
                 if (mIsShowBottomProgress) {
                     mBottomProgress.setVisibility(GONE);
@@ -140,10 +167,9 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent,Vi
                     }
                 }*/
             } else {
-                setVisibility(GONE);
+                mLandscapeControl.setVisibility(GONE);
                 if (anim != null) {
-                    mBottomContainer.startAnimation(anim);
-                    mTitleContainer.startAnimation(anim);
+                    mLandscapeControl.startAnimation(anim);
                 }
                 if (mIsShowBottomProgress) {
                     mBottomProgress.setVisibility(VISIBLE);
@@ -153,14 +179,13 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent,Vi
                 }
 
             }
-
         }
+
 
     }
 
     @Override
     public void onPlayStateChanged(int playState) {
-
         switch (playState) {
             case VideoView.STATE_IDLE:
             case VideoView.STATE_PLAYBACK_COMPLETED:
@@ -177,21 +202,18 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent,Vi
                 setVisibility(GONE);
                 break;
             case VideoView.STATE_PLAYING:
-                Log.i(TAG, "onPlayStateChanged: .........");
                 mPlayButton.setSelected(true);
                 if (mIsShowBottomProgress) {
-                    Log.i(TAG, "onPlayStateChanged: 。。，。。。。");
                     if (!mControlWrapper.isFullScreen()) return;
-                    Log.i(TAG, "onPlayStateChanged: ,,,,,,,");
                     if (mControlWrapper.isShowing()) {
                         mBottomProgress.setVisibility(GONE);
-                        mBottomContainer.setVisibility(VISIBLE);
+                        mLandscapeControl.setVisibility(VISIBLE);
                     } else {
-                        mBottomContainer.setVisibility(GONE);
+                        mLandscapeControl.setVisibility(GONE);
                         mBottomProgress.setVisibility(VISIBLE);
                     }
                 } else {
-                    mBottomContainer.setVisibility(GONE);
+                    mLandscapeControl.setVisibility(GONE);
                 }
                 setVisibility(VISIBLE);
                 //开始刷新进度
@@ -229,19 +251,14 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent,Vi
             int orientation = activity.getRequestedOrientation();
             int cutoutHeight = mControlWrapper.getCutoutHeight();
             if (orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
-                mBottomContainer.setPadding(0, 0, 0, 0);
+                mLandscapeControl.setPadding(0, 0, 0, 0);
                 mBottomProgress.setPadding(0, 0, 0, 0);
-                mTitleContainer.setPadding(0, 0, 0, 0);
             } else if (orientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-                mBottomContainer.setPadding(cutoutHeight, 0, 0, 0);
+                mLandscapeControl.setPadding(cutoutHeight, 0, 0, 0);
                 mBottomProgress.setPadding(cutoutHeight, 0, 0, 0);
-                mTitleContainer.setPadding(cutoutHeight, 0, 0, 0);
-
             } else if (orientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE) {
-                mBottomContainer.setPadding(0, 0, cutoutHeight, 0);
+                mLandscapeControl.setPadding(0, 0, cutoutHeight, 0);
                 mBottomProgress.setPadding(0, 0, cutoutHeight, 0);
-                mTitleContainer.setPadding(0, 0, cutoutHeight, 0);
-
             }
         }
 
@@ -249,7 +266,6 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent,Vi
 
     @Override
     public void setProgress(int duration, int position) {
-
 
         if (mIsDragging) {
             return;
@@ -290,29 +306,17 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent,Vi
                 mTcpSpeed.setVisibility(GONE);
             }
         }
-
-
-
     }
 
     @Override
     public void onLockStateChanged(boolean isLocked) {
-
         onVisibilityChanged(!isLocked, null);
-
     }
 
-
-
-    /**
-     *
-     * 点击事件
-     * */
     @Override
     public void onClick(View view) {
-
         int id = view.getId();
-        if (id == R.id.back){
+        if (id == R.id.back) {
             Activity activity = PlayerUtils.scanForActivity(getContext());
             if (activity != null && mControlWrapper.isFullScreen()) {
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -321,14 +325,12 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent,Vi
         } else if (id == R.id.play) {
             mControlWrapper.togglePlay();
         }
-
-
     }
 
     /*
-    *
-    * seekBar
-    * */
+     *
+     * seekBar
+     * */
     @Override
     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
         if (!b) {

@@ -16,14 +16,7 @@ import androidx.annotation.Nullable;
 
 import com.agrawalsuneet.loaderspack.loaders.PulseLoader;
 import com.kt.coffee.cat.R;
-import com.kt.coffee.cat.ktPlay.ui.component.KsCompleteView;
-import com.kt.coffee.cat.ktPlay.ui.component.KsErrorView;
-import com.kt.coffee.cat.ktPlay.ui.component.KsPrepareView;
-import com.kt.coffee.cat.ktPlay.ui.component.KsTitleView;
 
-import xyz.doikki.videocontroller.component.GestureView;
-import xyz.doikki.videocontroller.component.LiveControlView;
-import xyz.doikki.videocontroller.component.VodControlView;
 import xyz.doikki.videoplayer.controller.GestureVideoController;
 import xyz.doikki.videoplayer.player.VideoView;
 import xyz.doikki.videoplayer.util.PlayerUtils;

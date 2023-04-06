@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -28,7 +27,7 @@ import xyz.doikki.videoplayer.controller.IControlComponent;
 import xyz.doikki.videoplayer.player.VideoView;
 import xyz.doikki.videoplayer.util.PlayerUtils;
 
-public class KsIncompletionViewNew extends FrameLayout implements IControlComponent, View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+public class KsIncompletionView extends FrameLayout implements IControlComponent, View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
     protected ControlWrapper mControlWrapper;
 
@@ -45,21 +44,21 @@ public class KsIncompletionViewNew extends FrameLayout implements IControlCompon
     private static final String TAG = "KsIncompletionViewNew";
 
 
-    public KsIncompletionViewNew(@NonNull Context context) {
+    public KsIncompletionView(@NonNull Context context) {
         super(context);
     }
 
-    public KsIncompletionViewNew(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public KsIncompletionView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public KsIncompletionViewNew(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public KsIncompletionView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     {
         setVisibility(GONE);
-        LayoutInflater.from(getContext()).inflate(R.layout.ktplayer_layout_incompletion_view_new, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.ktplayer_layout_incompletion_view, this, true);
         mIncompletionControl = findViewById(R.id.incompletion_control);
         mBack = findViewById(R.id.back);
         mPlayButton = findViewById(R.id.play);

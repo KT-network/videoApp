@@ -90,6 +90,13 @@ dependencies {
     implementation 'xyz.doikki.android.dkplayer:videocache:3.3.7'
 
 
+
+
+    // b站弹幕库
+    implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
+    implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
+
+
     // 电池电量
 //    implementation 'com.sjx.batteryview:BatteryView:1.0.0'
     implementation project(path: ':batteryviewlibrary')

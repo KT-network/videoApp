@@ -153,6 +153,8 @@ import java.util.List;
 
 public class KsAnthologyAdapter extends RecyclerView.Adapter<KsAnthologyAdapter.ItemViewHolder> {
 
+
+
     private static final String TAG = "KsAnthologyAdapter";
     private Context mContext;
 
@@ -185,7 +187,6 @@ public class KsAnthologyAdapter extends RecyclerView.Adapter<KsAnthologyAdapter.
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.i(TAG, "onClick: 1");
                     if (selectedItemIndex == -1) {
                         holder.mAnthologyBg.setSelected(true);
                         mAnthologyBg_ = holder.mAnthologyBg;
@@ -203,7 +204,6 @@ public class KsAnthologyAdapter extends RecyclerView.Adapter<KsAnthologyAdapter.
                     mOnClickListener.onClick(position);
                 }
             });
-
         }
 
     }

@@ -10,5 +10,13 @@
         android:layout_height="250dp"/>
 
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发送弹幕"
+        android:textColor="@color/white"
+        android:id="@+id/send"/>
+
+
 
 </LinearLayout>

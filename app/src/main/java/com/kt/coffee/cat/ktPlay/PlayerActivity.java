@@ -10,10 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.kt.coffee.cat.R;
 import com.kt.coffee.cat.ktPlay.ui.AnthologyControl.KsAnthologyView;
+import com.kt.coffee.cat.ktPlay.ui.Danmuk.KsJsonParser;
+import com.kt.coffee.cat.ktPlay.ui.Danmuk.KsJsonLoader;
 import com.kt.coffee.cat.ktPlay.ui.KsIncompletionView;
 import com.kt.coffee.cat.ktPlay.ui.KsLandscapeView;
 import com.kt.coffee.cat.ktPlay.ui.KsStandardVideoController;
 import com.kt.coffee.cat.ktPlay.ui.PlayerSpeedControl.KsPlayerSpeedView;
+import com.kt.coffee.cat.ktPlay.ui.component.KsDanmakuView;
 import com.kt.coffee.cat.ktPlay.ui.component.KsErrorView;
 import com.kt.coffee.cat.ktPlay.ui.component.KsGestureView;
 import com.kt.coffee.cat.mInterface.ClickListener;
@@ -21,7 +24,12 @@ import com.kt.coffee.cat.utils.PlayerVideoEntity;
 import com.kt.coffee.cat.utils.Tool;
 
 import java.io.IOException;
+import java.io.InputStream;
 
+import master.flame.danmaku.danmaku.loader.ILoader;
+import master.flame.danmaku.danmaku.loader.IllegalDataException;
+import master.flame.danmaku.danmaku.parser.BaseDanmakuParser;
+import master.flame.danmaku.danmaku.parser.IDataSource;
 import xyz.doikki.videocontroller.component.CompleteView;
 import xyz.doikki.videoplayer.player.VideoView;
 
@@ -38,6 +46,7 @@ public class PlayerActivity extends AppCompatActivity {
     KsAnthologyView ksAnthologyView;
     KsPlayerSpeedView ksPlayerSpeedView;
     KsStandardVideoController controller;
+    KsDanmakuView ksDanmakuView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -127,6 +136,8 @@ public class PlayerActivity extends AppCompatActivity {
         ksAnthologyView = new KsAnthologyView(this);
         ksPlayerSpeedView = new KsPlayerSpeedView(this);
 
+        ksDanmakuView = new KsDanmakuView(this);
+
         controller.setEnableOrientation(false);  // 设置是否自动旋转屏幕
 
 
@@ -148,6 +159,9 @@ public class PlayerActivity extends AppCompatActivity {
         controller.addControlComponent(ksLandscapeView);
         controller.addControlComponent(ksAnthologyView);
         controller.addControlComponent(ksPlayerSpeedView);
+
+        controller.addControlComponent(ksDanmakuView);
+
         ksLandscapeView.getPlayForwardView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,7 +182,66 @@ public class PlayerActivity extends AppCompatActivity {
 
         mVideoView.setVideoController(controller);
 
+
+
+//        mVideoView.addOnStateChangeListener(new VideoView.SimpleOnStateChangeListener() {
+//            @Override
+//            public void onPlayStateChanged(int playState) {
+//                if (playState == VideoView.STATE_PREPARED) {
+//                    simulateDanmu();
+//                } else if (playState == VideoView.STATE_PLAYBACK_COMPLETED) {
+//                    mHandler.removeCallbacksAndMessages(null);
+//                }
+//            }
+//        });
+
+
+        findViewById(R.id.send).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ksDanmakuView.setDanmu(createParser(openDamu()));
+            }
+        });
+
+
     }
+
+
+    private InputStream openDamu(){
+        try {
+            return getResources().getAssets().open("danmuks.json");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
+    private BaseDanmakuParser createParser(InputStream stream) {
+        ILoader loader = KsJsonLoader.instance();
+        try {
+            loader.load(stream);
+        } catch (IllegalDataException e) {
+            e.printStackTrace();
+        }
+        KsJsonParser parser = new KsJsonParser();
+        IDataSource<?> dataSource = loader.getDataSource();
+        parser.load(dataSource);
+        return parser;
+
+    }
+
+    /*private Handler mHandler = new Handler();
+    private void simulateDanmu() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                ksDanmakuView.addDanmaku("破防了", false);
+                mHandler.postDelayed(this, 100);
+            }
+        });
+    }*/
 
 
     @Override

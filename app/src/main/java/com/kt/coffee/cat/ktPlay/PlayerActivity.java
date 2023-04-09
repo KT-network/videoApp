@@ -16,7 +16,7 @@ import com.kt.coffee.cat.ktPlay.ui.KsIncompletionView;
 import com.kt.coffee.cat.ktPlay.ui.KsLandscapeView;
 import com.kt.coffee.cat.ktPlay.ui.KsStandardVideoController;
 import com.kt.coffee.cat.ktPlay.ui.PlayerSpeedControl.KsPlayerSpeedView;
-import com.kt.coffee.cat.ktPlay.ui.component.KsDanmakuView;
+import com.kt.coffee.cat.ktPlay.ui.Danmuk.KsDanmakuView;
 import com.kt.coffee.cat.ktPlay.ui.component.KsErrorView;
 import com.kt.coffee.cat.ktPlay.ui.component.KsGestureView;
 import com.kt.coffee.cat.mInterface.ClickListener;
@@ -53,20 +53,6 @@ public class PlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            View decorView = getWindow().getDecorView();
-            decorView.setOnApplyWindowInsetsListener((v, insets) -> {
-                WindowInsets defaultInsets = v.onApplyWindowInsets(insets);
-                return defaultInsets.replaceSystemWindowInsets(
-                        defaultInsets.getSystemWindowInsetLeft(),
-                        0,
-                        defaultInsets.getSystemWindowInsetRight(),
-                        defaultInsets.getSystemWindowInsetBottom());
-            });
-            ViewCompat.requestApplyInsets(decorView);
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, android.R.color.transparent));
-        }*/
-
         initView();
         initData();
 
@@ -85,7 +71,7 @@ public class PlayerActivity extends AppCompatActivity {
 //            ksTitleMoreView.setTitle(playerVideoEntity.getVideoName());
 //            Glide.with(this).load(playerVideoEntity.getVideoThumb()).into(thumb);
 //            mVideoView.setUrl(playerVideoEntity.getVideoUrl());
-
+            ksDanmakuView.setDanmu(createParser(openDamu()));
             mVideoView.start();
 
             ksAnthologyView.setListItemClick(new ClickListener.OnClickListener() {
@@ -107,11 +93,10 @@ public class PlayerActivity extends AppCompatActivity {
 
                     if (i == 1) ksLandscapeView.setPlaySpeedText(R.string.play_speed_0_5);
                     else if (i == 2) ksLandscapeView.setPlaySpeedText(R.string.play_speed_0_75);
-                    else if (i == 3) ksLandscapeView.setPlaySpeedText(R.string.play_speed_1_0);
+                    else if (i == 3) ksLandscapeView.setPlaySpeedText(R.string.play_speed_default);
                     else if (i == 4) ksLandscapeView.setPlaySpeedText(R.string.play_speed_1_25);
                     else if (i == 5) ksLandscapeView.setPlaySpeedText(R.string.play_speed_1_5);
-                    else if (i == 2) ksLandscapeView.setPlaySpeedText(R.string.play_speed_2_0);
-
+                    else if (i == 6) ksLandscapeView.setPlaySpeedText(R.string.play_speed_2_0);
 
                 }
             });
@@ -184,24 +169,12 @@ public class PlayerActivity extends AppCompatActivity {
 
 
 
-//        mVideoView.addOnStateChangeListener(new VideoView.SimpleOnStateChangeListener() {
-//            @Override
-//            public void onPlayStateChanged(int playState) {
-//                if (playState == VideoView.STATE_PREPARED) {
-//                    simulateDanmu();
-//                } else if (playState == VideoView.STATE_PLAYBACK_COMPLETED) {
-//                    mHandler.removeCallbacksAndMessages(null);
-//                }
-//            }
-//        });
-
-
-        findViewById(R.id.send).setOnClickListener(new View.OnClickListener() {
+        /*findViewById(R.id.send).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ksDanmakuView.setDanmu(createParser(openDamu()));
             }
-        });
+        });*/
 
 
     }

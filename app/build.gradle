@@ -90,8 +90,6 @@ dependencies {
     implementation 'xyz.doikki.android.dkplayer:videocache:3.3.7'
 
 
-
-
     // b站弹幕库
     implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
     implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
@@ -107,6 +105,17 @@ dependencies {
 
 
 //    implementation 'com.agrawalsuneet.androidlibs:loaderspack:1.2.3'
+
+
+    // RXHttp 请求库
+    def rxhttp_version = '3.0.2'
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation "com.github.liujingxing.rxhttp:rxhttp:$rxhttp_version"
+    annotationProcessor "com.github.liujingxing.rxhttp:rxhttp-compiler:$rxhttp_version"
+
+
+    // mmkv 键值对写入读取
+    implementation 'com.tencent:mmkv:1.2.15'
 
 
 }

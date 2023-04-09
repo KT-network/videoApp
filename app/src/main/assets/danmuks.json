@@ -1,0 +1,727 @@
+{
+  "code": 200,
+  "danmu": [
+    {
+      "playTime": "0",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "10",
+      "text": "弹幕内容0"
+    },
+    {
+      "playTime": "1",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "11",
+      "text": "弹幕内容1"
+    },
+    {
+      "playTime": "2",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "12",
+      "text": "弹幕内容2"
+    },
+    {
+      "playTime": "3",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "13",
+      "text": "弹幕内容3"
+    },
+    {
+      "playTime": "4",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "14",
+      "text": "弹幕内容4"
+    },
+    {
+      "playTime": "5",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "15",
+      "text": "弹幕内容5"
+    },
+    {
+      "playTime": "6",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "16",
+      "text": "弹幕内容6"
+    },
+    {
+      "playTime": "7",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "17",
+      "text": "弹幕内容7"
+    },
+    {
+      "playTime": "8",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "18",
+      "text": "弹幕内容8"
+    },
+    {
+      "playTime": "9",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "19",
+      "text": "弹幕内容9"
+    },
+    {
+      "playTime": "10",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "20",
+      "text": "弹幕内容10"
+    },
+    {
+      "playTime": "11",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "21",
+      "text": "弹幕内容111"
+    },
+    {
+      "playTime": "11.3",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "21",
+      "text": "弹幕内容112"
+    },
+    {
+      "playTime": "11.5",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "21",
+      "text": "弹幕内容113"
+    },
+    {
+      "playTime": "11.8",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "21",
+      "text": "弹幕内容114"
+    },
+    {
+      "playTime": "12",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "22",
+      "text": "弹幕内容12"
+    },
+    {
+      "playTime": "13",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "23",
+      "text": "弹幕内容13"
+    },
+    {
+      "playTime": "14",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "24",
+      "text": "弹幕内容14"
+    },
+    {
+      "playTime": "15",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "25",
+      "text": "弹幕内容15"
+    },
+    {
+      "playTime": "16",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "26",
+      "text": "弹幕内容16"
+    },
+    {
+      "playTime": "17",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "27",
+      "text": "弹幕内容17"
+    },
+    {
+      "playTime": "18",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "28",
+      "text": "弹幕内容18"
+    },
+    {
+      "playTime": "19",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "29",
+      "text": "弹幕内容19"
+    },
+    {
+      "playTime": "20",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "30",
+      "text": "弹幕内容20"
+    },
+    {
+      "playTime": "21",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "31",
+      "text": "弹幕内容21"
+    },
+    {
+      "playTime": "22",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "32",
+      "text": "弹幕内容22"
+    },
+    {
+      "playTime": "23",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "33",
+      "text": "弹幕内容23"
+    },
+    {
+      "playTime": "24",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "34",
+      "text": "弹幕内容24"
+    },
+    {
+      "playTime": "25",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容25"
+    },
+    {
+      "playTime": "26",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "36",
+      "text": "弹幕内容26"
+    },
+    {
+      "playTime": "27",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "37",
+      "text": "弹幕内容27"
+    },
+    {
+      "playTime": "28",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "38",
+      "text": "弹幕内容28"
+    },
+    {
+      "playTime": "29",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "39",
+      "text": "弹幕内容29"
+    },
+    {
+      "playTime": "30",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "40",
+      "text": "弹幕内容30"
+    },
+    {
+      "playTime": "31",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容31"
+    },
+    {
+      "playTime": "32",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容32"
+    },
+    {
+      "playTime": "33",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容33"
+    },
+    {
+      "playTime": "34",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容34"
+    },
+    {
+      "playTime": "35",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容35"
+    },
+    {
+      "playTime": "36",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容36"
+    },
+    {
+      "playTime": "37",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容37"
+    },
+    {
+      "playTime": "38",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容38"
+    },
+    {
+      "playTime": "39",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容39"
+    },
+    {
+      "playTime": "40",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容40"
+    },
+    {
+      "playTime": "41",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容41"
+    },
+    {
+      "playTime": "42",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容42"
+    },
+    {
+      "playTime": "43",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容43"
+    },
+    {
+      "playTime": "44",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容44"
+    },
+    {
+      "playTime": "45",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容45"
+    },
+    {
+      "playTime": "46",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容46"
+    },
+    {
+      "playTime": "47",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容47"
+    },
+    {
+      "playTime": "48",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容48"
+    },
+    {
+      "playTime": "49",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容49"
+    },
+    {
+      "playTime": "50",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容50"
+    },
+    {
+      "playTime": "51",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容51"
+    },
+    {
+      "playTime": "52",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容52"
+    },
+    {
+      "playTime": "53",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容53"
+    },
+    {
+      "playTime": "54",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容54"
+    },
+    {
+      "playTime": "55",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容55"
+    },
+    {
+      "playTime": "56",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容56"
+    },
+    {
+      "playTime": "57",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容57"
+    },
+    {
+      "playTime": "58",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容58"
+    },
+    {
+      "playTime": "59",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容59"
+    },
+    {
+      "playTime": "60",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容60"
+    },
+    {
+      "playTime": "61",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容61"
+    },
+    {
+      "playTime": "62",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容62"
+    },
+    {
+      "playTime": "63",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容63"
+    },
+    {
+      "playTime": "64",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容64"
+    },
+    {
+      "playTime": "65",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容65"
+    },
+    {
+      "playTime": "66",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容66"
+    },
+    {
+      "playTime": "67",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容67"
+    },
+    {
+      "playTime": "68",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容68"
+    },
+    {
+      "playTime": "69",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容69"
+    },
+    {
+      "playTime": "70",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容70"
+    },
+    {
+      "playTime": "71",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容71"
+    },
+    {
+      "playTime": "72",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容72"
+    },
+    {
+      "playTime": "73",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容73"
+    },
+    {
+      "playTime": "74",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容74"
+    },
+    {
+      "playTime": "75",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容75"
+    },
+    {
+      "playTime": "76",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容76"
+    },
+    {
+      "playTime": "77",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容77"
+    },
+    {
+      "playTime": "78",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容78"
+    },
+    {
+      "playTime": "79",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容79"
+    },
+    {
+      "playTime": "80",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容80"
+    },
+    {
+      "playTime": "81",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容81"
+    },
+    {
+      "playTime": "82",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容82"
+    },
+    {
+      "playTime": "83",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容83"
+    },
+    {
+      "playTime": "84",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容84"
+    },
+    {
+      "playTime": "85",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容85"
+    },
+    {
+      "playTime": "86",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容86"
+    },
+    {
+      "playTime": "87",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容87"
+    },
+    {
+      "playTime": "88",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容88"
+    },
+    {
+      "playTime": "89",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容89"
+    },
+    {
+      "playTime": "90",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容90"
+    },
+    {
+      "playTime": "91",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容91"
+    },
+    {
+      "playTime": "92",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容92"
+    },
+    {
+      "playTime": "93",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容93"
+    },
+    {
+      "playTime": "94",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容94"
+    },
+    {
+      "playTime": "95",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容95"
+    },
+    {
+      "playTime": "96",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容96"
+    },
+    {
+      "playTime": "97",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容97"
+    },
+    {
+      "playTime": "98",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容98"
+    },
+    {
+      "playTime": "99",
+      "color": "16700215",
+      "pattern": 1,
+      "textSize": "35",
+      "text": "弹幕内容99"
+    }
+  ]
+}
+

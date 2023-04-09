@@ -15,8 +15,15 @@ import com.kt.coffee.cat.Fragment.MainPagerFragment.CollectFragment;
 import com.kt.coffee.cat.Fragment.MainPagerFragment.HomeFragment;
 import com.kt.coffee.cat.Fragment.MainPagerFragment.InfoFragment;
 import com.kt.coffee.cat.Fragment.MainPagerFragment.SelectFragment;
+import com.tencent.mmkv.MMKV;
+
+import java.io.IOException;
 
 import nl.joery.animatedbottombar.AnimatedBottomBar;
+import okhttp3.OkHttpClient;
+import rxhttp.RxHttpPlugins;
+import rxhttp.wrapper.callback.Function;
+import rxhttp.wrapper.param.RxHttp;
 import xyz.doikki.videoplayer.ijk.IjkPlayerFactory;
 import xyz.doikki.videoplayer.player.VideoViewConfig;
 import xyz.doikki.videoplayer.player.VideoViewManager;
@@ -26,8 +33,11 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
+    private static final MMKV mv = MMKV.defaultMMKV();
+
     FrameLayout frameLayout;
     AnimatedBottomBar bottom_bar;
+
 
 
     HomeFragment homeFragment;
@@ -71,6 +81,12 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+
+
+
 
 
     }

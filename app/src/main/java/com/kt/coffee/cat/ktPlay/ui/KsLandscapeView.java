@@ -239,10 +239,10 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent, V
     @Override
     public void onPlayerStateChanged(int playerState) {
         if (playerState == VideoView.PLAYER_FULL_SCREEN) {
-            Log.i(TAG, "onPlayerStateChanged: h");
+            mPlayButton.setSelected(mControlWrapper.isPlaying());
             setVisibility(VISIBLE);
         } else {
-            Log.i(TAG, "onPlayerStateChanged: x");
+
             setVisibility(GONE);
         }
 

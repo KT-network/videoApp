@@ -1,27 +1,33 @@
 package com.kt.coffee.cat.ktPlay.ui.Danmuk;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
 import android.view.animation.Animation;
 
 import androidx.annotation.NonNull;
 
 import java.util.HashMap;
 
+import master.flame.danmaku.controller.DrawHandler;
 import master.flame.danmaku.danmaku.model.BaseDanmaku;
-import master.flame.danmaku.danmaku.model.Danmaku;
-import master.flame.danmaku.danmaku.model.IDanmakus;
+import master.flame.danmaku.danmaku.model.DanmakuTimer;
 import master.flame.danmaku.danmaku.model.IDisplayer;
 import master.flame.danmaku.danmaku.model.android.DanmakuContext;
+import master.flame.danmaku.danmaku.model.android.SpannedCacheStuffer;
 import master.flame.danmaku.danmaku.parser.BaseDanmakuParser;
 import master.flame.danmaku.ui.widget.DanmakuView;
 import xyz.doikki.videoplayer.controller.ControlWrapper;
 import xyz.doikki.videoplayer.controller.IControlComponent;
+import xyz.doikki.videoplayer.player.VideoView;
+import xyz.doikki.videoplayer.util.PlayerUtils;
 
 public class KsDanmakuView extends DanmakuView implements IControlComponent {
 
     private final DanmakuContext mContext;
-    private final BaseDanmakuParser mParser;
+    private BaseDanmakuParser mParser;
 
     public KsDanmakuView(Context context) {
         super(context);
@@ -37,31 +43,65 @@ public class KsDanmakuView extends DanmakuView implements IControlComponent {
 
 
     {
-        HashMap<Integer,Integer> maxLinesPair = new HashMap<>();
-        maxLinesPair.put(BaseDanmaku.TYPE_SCROLL_RL,4);
+
+
+
+
+
+        // 设置最大显示行数
+        HashMap<Integer, Integer> maxLinesPair = new HashMap<>();
+        maxLinesPair.put(BaseDanmaku.TYPE_SCROLL_RL, 5); // 滚动弹幕最大显示5行
+
 
         mContext = DanmakuContext.create();
-        mContext.setDanmakuStyle(IDisplayer.DANMAKU_STYLE_STROKEN,3)
+        mContext.setDanmakuStyle(IDisplayer.DANMAKU_STYLE_STROKEN, 3)
                 .setDuplicateMergingEnabled(false)
                 .setScrollSpeedFactor(1.2f)
-                .setScaleTextSize(1.2f)
+                .setScrollSpeedFactor(1.2f)
                 .setMaximumLines(maxLinesPair)
-                .preventOverlapping(null)
                 .setDanmakuMargin(40);
-        mParser = new BaseDanmakuParser() {
+
+        /*mParser = new BaseDanmakuParser() {
             @Override
             protected IDanmakus parse() {
-                return null;
+                return new Danmakus();
             }
-        };
+        };*/
 
 
+        setCallback(new DrawHandler.Callback() {
+            @Override
+            public void prepared() {
+                start();
+            }
+
+            @Override
+            public void updateTimer(DanmakuTimer timer) {
+
+            }
+
+            @Override
+            public void danmakuShown(BaseDanmaku danmaku) {
+
+            }
+
+            @Override
+            public void drawingFinished() {
+
+            }
+        });
 
     }
+
 
     @Override
     public void attach(@NonNull ControlWrapper controlWrapper) {
 
+    }
+
+    @Override
+    public View getView() {
+        return this;
     }
 
     @Override
@@ -71,8 +111,35 @@ public class KsDanmakuView extends DanmakuView implements IControlComponent {
 
     @Override
     public void onPlayStateChanged(int playState) {
+        switch (playState) {
+            case VideoView.STATE_IDLE:
+                release();
+                break;
+            case VideoView.STATE_PREPARING:
+                if (isPrepared()) {
+                    restart();
+                }
+                prepare(mParser, mContext);
+                break;
+            case VideoView.STATE_PLAYING:
+                if (isPrepared() && isPaused()) {
+                    resume();
+                }
+                break;
+            case VideoView.STATE_PAUSED:
+                if (isPrepared()) {
+                    pause();
+                }
+                break;
+            case VideoView.STATE_PLAYBACK_COMPLETED:
+                clear();
+                clearDanmakusOnScreen();
+                break;
+        }
 
     }
+
+
 
     @Override
     public void onPlayerStateChanged(int playerState) {
@@ -88,4 +155,41 @@ public class KsDanmakuView extends DanmakuView implements IControlComponent {
     public void onLockStateChanged(boolean isLocked) {
 
     }
+
+    public void setDanmu(BaseDanmakuParser parser){
+
+        this.mParser = parser;
+
+    }
+
+
+    /**
+     * 发送文字弹幕
+     *
+     * @param text   弹幕文字
+     * @param isSelf 是不是自己发的
+     */
+    public void addDanmaku(String text, boolean isSelf) {
+        mContext.setCacheStuffer(new SpannedCacheStuffer(), null);
+        BaseDanmaku danmaku = mContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
+        if (danmaku == null) {
+            return;
+        }
+
+        danmaku.text = text;
+        danmaku.priority = 0;  // 可能会被各种过滤器过滤并隐藏显示
+        danmaku.isLive = false;
+        Log.i(TAG, "addDanmaku: "+getCurrentTime());
+        danmaku.setTime(getCurrentTime());
+        danmaku.textSize = PlayerUtils.sp2px(getContext(), 12);
+        danmaku.textColor = Color.WHITE;
+        danmaku.textShadowColor = Color.GRAY;
+        // danmaku.underlineColor = Color.GREEN;
+        danmaku.borderColor = isSelf ? Color.GREEN : Color.TRANSPARENT;
+        addDanmaku(danmaku);
+    }
+
+
+
+
 }

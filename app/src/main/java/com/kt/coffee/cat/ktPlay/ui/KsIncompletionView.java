@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 
 import com.kt.coffee.cat.R;
 
+import rxhttp.RxHttpPlugins;
 import xyz.doikki.videoplayer.controller.ControlWrapper;
 import xyz.doikki.videoplayer.controller.IControlComponent;
 import xyz.doikki.videoplayer.player.VideoView;
@@ -190,6 +191,7 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
     public void onPlayerStateChanged(int playerState) {
 
         if (playerState == VideoView.PLAYER_NORMAL){
+            mPlayButton.setSelected(mControlWrapper.isPlaying());
             setVisibility(VISIBLE);
         }else {
             setVisibility(GONE);

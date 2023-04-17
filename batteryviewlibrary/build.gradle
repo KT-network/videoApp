@@ -22,6 +22,7 @@ android {
         }
     }
 
+
 }
 
 dependencies {
@@ -33,6 +34,11 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
+
+
+
+
+//makeJar.dependsOn(build)
 
 //添加下面这句
 //apply plugin: 'com.novoda.bintray-release'

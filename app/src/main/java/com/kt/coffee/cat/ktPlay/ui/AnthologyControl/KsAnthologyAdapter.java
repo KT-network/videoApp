@@ -170,13 +170,15 @@ public class KsAnthologyAdapter extends RecyclerView.Adapter<KsAnthologyAdapter.
         this.mContext = context;
     }
 
+    private ItemViewHolder _holder = null;
 
     @NonNull
     @Override
     public KsAnthologyAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_anthology, parent, false);
-        return new ItemViewHolder(view);
+        _holder = new ItemViewHolder(view);
+        return _holder;
     }
 
     @Override
@@ -207,6 +209,10 @@ public class KsAnthologyAdapter extends RecyclerView.Adapter<KsAnthologyAdapter.
         }
 
     }
+
+
+
+
 
     @Override
     public int getItemCount() {
@@ -248,15 +254,13 @@ public class KsAnthologyAdapter extends RecyclerView.Adapter<KsAnthologyAdapter.
     }
 
     public void setData(List<PlayerVideoEntity.VideoUrlArray> data) {
-
         this.videoUrlArrays = data;
-
         notifyDataSetChanged();
+
 
     }
 
     public void addData(List<PlayerVideoEntity.VideoUrlArray> data) {
-
         if (videoUrlArrays != null) {
             this.videoUrlArrays.addAll(data);
             notifyItemRangeInserted(getItemCount(), data.size());

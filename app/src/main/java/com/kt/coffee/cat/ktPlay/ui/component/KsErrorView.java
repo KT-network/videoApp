@@ -72,7 +72,7 @@ public class KsErrorView extends LinearLayout implements IControlComponent {
     @Override
     public void onPlayStateChanged(int playState) {
         if (playState == VideoView.STATE_ERROR) {
-            bringToFront();
+//            bringToFront();
             setVisibility(VISIBLE);
         } else if (playState == VideoView.STATE_IDLE) {
             setVisibility(GONE);

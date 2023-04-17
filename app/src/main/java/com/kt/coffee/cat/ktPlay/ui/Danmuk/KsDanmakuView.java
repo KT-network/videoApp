@@ -44,10 +44,6 @@ public class KsDanmakuView extends DanmakuView implements IControlComponent {
 
     {
 
-
-
-
-
         // 设置最大显示行数
         HashMap<Integer, Integer> maxLinesPair = new HashMap<>();
         maxLinesPair.put(BaseDanmaku.TYPE_SCROLL_RL, 5); // 滚动弹幕最大显示5行

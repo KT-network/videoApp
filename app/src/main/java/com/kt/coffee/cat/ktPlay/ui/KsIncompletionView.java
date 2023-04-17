@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -22,6 +23,8 @@ import androidx.annotation.Nullable;
 
 import com.kt.coffee.cat.R;
 
+import java.util.List;
+
 import rxhttp.RxHttpPlugins;
 import xyz.doikki.videoplayer.controller.ControlWrapper;
 import xyz.doikki.videoplayer.controller.IControlComponent;
@@ -32,7 +35,7 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
 
     protected ControlWrapper mControlWrapper;
 
-    private final RelativeLayout mIncompletionControl;
+    private final RelativeLayout mIncompletionControl,mIncompletionControlBottom;
     private final TextView mAllTime;
     private final ImageView mPlayButton, mFullScreen,mBack;
     private final SeekBar mVideoProgress;
@@ -61,6 +64,7 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
         setVisibility(GONE);
         LayoutInflater.from(getContext()).inflate(R.layout.ktplayer_layout_incompletion_view, this, true);
         mIncompletionControl = findViewById(R.id.incompletion_control);
+        mIncompletionControlBottom = findViewById(R.id.incompletion_control_bottom);
         mBack = findViewById(R.id.back);
         mPlayButton = findViewById(R.id.play);
         mFullScreen = findViewById(R.id.fullscreen);
@@ -134,6 +138,7 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
 
     @Override
     public void onPlayStateChanged(int playState) {
+        Log.i(TAG, "onPlayStateChanged: "+playState);
 
         if (mControlWrapper.isFullScreen()) return;
 
@@ -148,9 +153,19 @@ public class KsIncompletionView extends FrameLayout implements IControlComponent
                 break;
             case VideoView.STATE_START_ABORT:
             case VideoView.STATE_PREPARING:
+                // 准备中隐藏底部控制器（视频未加载成功）
+                Log.i(TAG, "onPlayStateChanged: 加载中");
+                mIncompletionControlBottom.setVisibility(GONE);
+                break;
+
             case VideoView.STATE_PREPARED:
+                Log.i(TAG, "onPlayStateChanged: 加载完成");
+                mIncompletionControlBottom.setVisibility(VISIBLE);
+                break;
             case VideoView.STATE_ERROR:
-                setVisibility(GONE);
+                Log.i(TAG, "onPlayStateChanged: 加载失败");
+                mIncompletionControlBottom.setVisibility(GONE);
+                // setVisibility(GONE);
                 break;
             case VideoView.STATE_PLAYING:
                 mPlayButton.setSelected(true);

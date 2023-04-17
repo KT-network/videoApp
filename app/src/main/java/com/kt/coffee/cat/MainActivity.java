@@ -1,7 +1,10 @@
 package com.kt.coffee.cat;
 
 
+import android.media.metrics.PlaybackMetrics;
 import android.os.Bundle;
+import android.util.ArrayMap;
+import android.util.ArraySet;
 import android.util.Log;
 import android.widget.FrameLayout;
 
@@ -17,19 +20,12 @@ import com.kt.coffee.cat.Fragment.MainPagerFragment.InfoFragment;
 import com.kt.coffee.cat.Fragment.MainPagerFragment.SelectFragment;
 import com.tencent.mmkv.MMKV;
 
-import java.io.IOException;
 
 import nl.joery.animatedbottombar.AnimatedBottomBar;
-import okhttp3.OkHttpClient;
-import rxhttp.RxHttpPlugins;
-import rxhttp.wrapper.callback.Function;
-import rxhttp.wrapper.param.RxHttp;
-import xyz.doikki.videoplayer.ijk.IjkPlayerFactory;
-import xyz.doikki.videoplayer.player.VideoViewConfig;
-import xyz.doikki.videoplayer.player.VideoViewManager;
 
 
 public class MainActivity extends AppCompatActivity {
+
 
     private static final String TAG = "MainActivity";
 
@@ -39,12 +35,10 @@ public class MainActivity extends AppCompatActivity {
     AnimatedBottomBar bottom_bar;
 
 
-
     HomeFragment homeFragment;
     CollectFragment collectFragment;
     SelectFragment selectFragment;
     InfoFragment infoFragment;
-
 
 
     final FragmentManager supportFragmentManager = getSupportFragmentManager();
@@ -63,7 +57,11 @@ public class MainActivity extends AppCompatActivity {
 
         initEvent();
 
-        VideoViewManager.setConfig(VideoViewConfig.newBuilder().setPlayerFactory(IjkPlayerFactory.create()).build());
+
+
+
+
+
 
 
         bottom_bar.setOnTabSelectListener(new AnimatedBottomBar.OnTabSelectListener() {
@@ -81,12 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
-
 
 
     }
@@ -109,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
 
         MyFragmentManager();
     }
-
 
 
     private void MyFragmentManager() {

@@ -26,6 +26,7 @@ public class KsCompleteView extends FrameLayout implements IControlComponent{
     private ControlWrapper mControlWrapper;
 
     private final ImageView mStopFullscreen;
+    private int playIndex = -1;
 
     public KsCompleteView(@NonNull Context context) {
         super(context);
@@ -86,6 +87,8 @@ public class KsCompleteView extends FrameLayout implements IControlComponent{
 
     @Override
     public void onPlayStateChanged(int playState) {
+
+
         if (playState == VideoView.STATE_PLAYBACK_COMPLETED) {
             setVisibility(VISIBLE);
             mStopFullscreen.setVisibility(mControlWrapper.isFullScreen() ? VISIBLE : GONE);
@@ -126,6 +129,11 @@ public class KsCompleteView extends FrameLayout implements IControlComponent{
     @Override
     public void onLockStateChanged(boolean isLock) {
 
+    }
+
+
+    public void setPlayIndex(int index){
+        this.playIndex = index;
     }
     
 }

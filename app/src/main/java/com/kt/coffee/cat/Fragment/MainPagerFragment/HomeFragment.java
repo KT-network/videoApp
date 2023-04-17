@@ -63,7 +63,7 @@ public class HomeFragment extends NewLazyFragment {
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                Log.i(TAG, "onOffsetChanged: "+verticalOffset);
+//                Log.i(TAG, "onOffsetChanged: "+verticalOffset);
             }
         });
 

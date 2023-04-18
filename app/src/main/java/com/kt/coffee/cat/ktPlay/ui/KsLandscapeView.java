@@ -113,16 +113,29 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent, V
         mBottomProgress = findViewById(R.id.bottom_progress);
 
     }
+    /*
+    * 设置视频标题
+    * */
+    public void setTitle(String s){
+        mTitle.setText(s);
+    }
 
+    /*
+    * 设置速度文本
+    * */
     public void setPlaySpeedText(int id){
         mPlaySpeed.setText(getResources().getText(id));
     }
-
+    /*
+    * 返回速度文本对象
+    * */
     public TextView getPlaySpeedView(){
         return this.mPlaySpeed;
     }
-
-    public TextView getPlayForwardView(){
+    /*
+    * 返回选集文本对象
+    * */
+    public TextView getPlayAnthologyView(){
         return this.mPlayForward;
     }
 
@@ -182,6 +195,19 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent, V
         }
 
 
+    }
+
+
+    /*
+    *
+    * 播放完成ui
+    * */
+    public void playOver_ui(){
+        setVisibility(GONE);
+        mBottomProgress.setProgress(0);
+        mBottomProgress.setSecondaryProgress(0);
+        mVideoProgress.setProgress(0);
+        mVideoProgress.setSecondaryProgress(0);
     }
 
     @Override

@@ -203,5 +203,15 @@ public class KsPlayerSpeedView extends KsControlAbstract implements IControlComp
     }
 
 
+    public void showPlayerSpeed(){
+        mControlWrapper.hide();
+        show();
+    }
+
+    public void hidePlayerSpeed(){
+        hide();
+    }
+
+
 
 }

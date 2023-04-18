@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,12 +20,14 @@ import java.util.List;
 
 import xyz.doikki.videoplayer.controller.ControlWrapper;
 import xyz.doikki.videoplayer.controller.IControlComponent;
+import xyz.doikki.videoplayer.player.VideoView;
 
 public class KsAnthologyView extends KsControlAbstract implements IControlComponent {
 
 
     private ControlWrapper mControlWrapper;
     private KsAnthologyAdapter ksAnthologyAdapter;
+    private RecyclerView recyclerView;
 
     public KsAnthologyView(Context context) {
         super(context);
@@ -34,10 +37,11 @@ public class KsAnthologyView extends KsControlAbstract implements IControlCompon
     }
 
     private void initList(){
-        RecyclerView recyclerView = super.view.findViewById(R.id.play_select_RecyclerView);
+        recyclerView = super.view.findViewById(R.id.play_select_RecyclerView);
         ksAnthologyAdapter = new KsAnthologyAdapter(super.context);
         recyclerView.setLayoutManager(new LinearLayoutManager(super.context));
         recyclerView.setAdapter(ksAnthologyAdapter);
+
     }
 
     public void setListData(List<PlayerVideoEntity.VideoUrlArray> data){
@@ -103,4 +107,30 @@ public class KsAnthologyView extends KsControlAbstract implements IControlCompon
     public void onLockStateChanged(boolean isLocked) {
 
     }
+
+    /*
+    * 显示
+    * */
+    public void showAnthology(){
+        mControlWrapper.hide();
+        show();
+    }
+
+
+    public void hideAnthology(){
+        hide();
+    }
+
+    public void setNowPlayItem(int index){
+        View childAt = recyclerView.getChildAt(index);
+
+        TextView textView = childAt.findViewById(R.id.item_anthology_text);
+        textView.setText("11111");
+
+
+    }
+
+
+
+
 }

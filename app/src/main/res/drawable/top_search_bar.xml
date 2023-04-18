@@ -5,7 +5,7 @@
     <corners android:radius="25dp" />
 
     <size
-        android:width="230dp"
+        android:width="600dp"
         android:height="30dp" />
 
     <solid android:color="@color/top_search_bar" />

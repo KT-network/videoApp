@@ -1,9 +1,16 @@
 package com.kt.coffee.cat;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import com.tencent.mmkv.MMKV;
+
+import okhttp3.OkHttpClient;
+import rxhttp.RxHttpPlugins;
+import xyz.doikki.videoplayer.ijk.IjkPlayerFactory;
+import xyz.doikki.videoplayer.player.VideoViewConfig;
+import xyz.doikki.videoplayer.player.VideoViewManager;
 
 public class BaseApplication extends Application {
 
@@ -11,6 +18,17 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // 设置播放器内核
+        VideoViewManager.setConfig(
+                VideoViewConfig
+                        .newBuilder()
+                        .setPlayerFactory(
+                                IjkPlayerFactory.create()
+                        )
+                        .build()
+        );
+
 
         // 初始化mmkv
         MMKV.initialize(this);
@@ -21,19 +39,24 @@ public class BaseApplication extends Application {
         if (!mv.decodeBool("config")){
             mv.encode("config",true);
 
-
             // 弹幕默认开启
             mv.encode("danmuState",true);
 
             // 播放页默认不自动旋转
             mv.encode("playerRotate",false);
 
-
+            // 默认开启自动下一集
+            mv.encode("playAuto",true);
 
         }
 
 
+        // RXHttp 初始化
+        RxHttpPlugins.init(new OkHttpClient())
+                .setDebug(BuildConfig.DEBUG,true,2);
 
 
     }
+
+
 }

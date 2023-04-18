@@ -25,7 +25,6 @@ public class HomeHFragment extends NewLazyFragment {
     private final static String TAG = "HomeHFragment";
 
 
-
     XBanner xBanner;
     RecyclerView recyclerView;
     HomeHRecyclerOutAdapter homeHRecyclerOutAdapter;

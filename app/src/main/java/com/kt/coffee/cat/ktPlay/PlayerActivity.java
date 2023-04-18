@@ -20,33 +20,39 @@ import com.kt.coffee.cat.ktPlay.ui.Danmuk.KsDanmakuView;
 import com.kt.coffee.cat.ktPlay.ui.component.KsErrorView;
 import com.kt.coffee.cat.ktPlay.ui.component.KsGestureView;
 import com.kt.coffee.cat.mInterface.ClickListener;
+import com.kt.coffee.cat.utils.KsMmkv;
 import com.kt.coffee.cat.utils.PlayerVideoEntity;
 import com.kt.coffee.cat.utils.Tool;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import master.flame.danmaku.danmaku.loader.ILoader;
 import master.flame.danmaku.danmaku.loader.IllegalDataException;
 import master.flame.danmaku.danmaku.parser.BaseDanmakuParser;
 import master.flame.danmaku.danmaku.parser.IDataSource;
 import xyz.doikki.videocontroller.component.CompleteView;
+import xyz.doikki.videoplayer.ijk.IjkPlayerFactory;
 import xyz.doikki.videoplayer.player.VideoView;
+import xyz.doikki.videoplayer.player.VideoViewManager;
 
 public class PlayerActivity extends AppCompatActivity {
 
     private final static String TAG = "PlayerActivity";
-
+    private int playListIndex = 0;
     VideoView mVideoView;
-
     KsIncompletionView ksIncompletionView;
-
     KsLandscapeView ksLandscapeView;
-
     KsAnthologyView ksAnthologyView;
     KsPlayerSpeedView ksPlayerSpeedView;
     KsStandardVideoController controller;
     KsDanmakuView ksDanmakuView;
+    KsGestureView ksGestureView;
+    KsErrorView ksErrorView;
+    CompleteView completeView;
+
+    private List<PlayerVideoEntity.VideoUrlArray> videoUrlArrays;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,7 +60,22 @@ public class PlayerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_player);
 
         initView();
+        initEvent();
         initData();
+
+        Log.i(TAG, "onCreate: "+ VideoViewManager.getConfig().mPlayerFactory.toString());
+
+    }
+
+    private void initEvent() {
+
+        ksIncompletionView.setBack(onClickBack);
+
+        ksLandscapeView.getPlayAnthologyView().setOnClickListener(onClickShowPlayAnthologyView);
+        ksLandscapeView.getPlaySpeedView().setOnClickListener(onClickShowPlaySpeedView);
+
+        ksAnthologyView.setListItemClick(onClickPlayAnthology);
+        ksPlayerSpeedView.setOnClickListener(onClickPlaySpeed);
 
     }
 
@@ -63,43 +84,20 @@ public class PlayerActivity extends AppCompatActivity {
         try {
             String JSON = Tool.inputStreamToString(getResources().getAssets().open("Video.json"));
             PlayerVideoEntity playerVideoEntity = new Gson().fromJson(JSON, PlayerVideoEntity.class);
+            videoUrlArrays = playerVideoEntity.getVideoUrlArrays();
 
             Log.i(TAG, "initData: " + playerVideoEntity.getVideoUrlArrays().get(0).getName());
+
             ksAnthologyView.setListData(playerVideoEntity.getVideoUrlArrays());
+
             mVideoView.setUrl(playerVideoEntity.getVideoUrlArrays().get(0).getVideoUrl());
+            ksLandscapeView.setTitle(playerVideoEntity.getVideoName() +" "+ playerVideoEntity.getVideoUrlArrays().get(0).getName());
 
 //            ksTitleMoreView.setTitle(playerVideoEntity.getVideoName());
 //            Glide.with(this).load(playerVideoEntity.getVideoThumb()).into(thumb);
 //            mVideoView.setUrl(playerVideoEntity.getVideoUrl());
             ksDanmakuView.setDanmu(createParser(openDamu()));
             mVideoView.start();
-
-            ksAnthologyView.setListItemClick(new ClickListener.OnClickListener() {
-                @Override
-                public void onClick(int i) {
-                    mVideoView.release();
-                    mVideoView.setUrl(playerVideoEntity.getVideoUrlArrays().get(i).getVideoUrl());
-                    mVideoView.setVideoController(controller);
-                    mVideoView.start();
-
-
-                    Tool.KToast(getApplicationContext(), String.valueOf(i));
-                }
-            });
-
-            ksPlayerSpeedView.setOnClickListener(new ClickListener.OnClickListener() {
-                @Override
-                public void onClick(int i) {
-
-                    if (i == 1) ksLandscapeView.setPlaySpeedText(R.string.play_speed_0_5);
-                    else if (i == 2) ksLandscapeView.setPlaySpeedText(R.string.play_speed_0_75);
-                    else if (i == 3) ksLandscapeView.setPlaySpeedText(R.string.play_speed_default);
-                    else if (i == 4) ksLandscapeView.setPlaySpeedText(R.string.play_speed_1_25);
-                    else if (i == 5) ksLandscapeView.setPlaySpeedText(R.string.play_speed_1_5);
-                    else if (i == 6) ksLandscapeView.setPlaySpeedText(R.string.play_speed_2_0);
-
-                }
-            });
 
 
         } catch (IOException e) {
@@ -112,84 +110,51 @@ public class PlayerActivity extends AppCompatActivity {
     private void initView() {
         mVideoView = findViewById(R.id.player);
 
-
+        mVideoView.setPlayerFactory(IjkPlayerFactory.create());
+        // 控制器
         controller = new KsStandardVideoController(this);
-
+        // 全屏状态下的播放器ui
         ksLandscapeView = new KsLandscapeView(this);
+        // 普通状态下的播放器ui
         ksIncompletionView = new KsIncompletionView(this);
-
+        // 全屏状态下的选集列表ui
         ksAnthologyView = new KsAnthologyView(this);
+        // 全屏状态下的播放速度ui
         ksPlayerSpeedView = new KsPlayerSpeedView(this);
-
+        // 弹幕
         ksDanmakuView = new KsDanmakuView(this);
+        // 手势控制ui
+        completeView = new CompleteView(this);
+        // 播放错误ui
+        ksErrorView = new KsErrorView(this);
 
-        controller.setEnableOrientation(false);  // 设置是否自动旋转屏幕
+        // ksGestureView = new KsGestureView(this);
 
-
-        controller.addControlComponent(ksIncompletionView);
-        ksIncompletionView.setBack(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
-
-        controller.addControlComponent(new CompleteView(this));
-        controller.addControlComponent(new KsErrorView(this));//错误界面
-
-        controller.addControlComponent(new KsGestureView(this));
-
-
+        // 添加控制器
         controller.addControlComponent(ksLandscapeView);
+        controller.addControlComponent(ksIncompletionView);
         controller.addControlComponent(ksAnthologyView);
         controller.addControlComponent(ksPlayerSpeedView);
-
         controller.addControlComponent(ksDanmakuView);
+        controller.addControlComponent(completeView);
+        controller.addControlComponent(ksErrorView);
 
-        ksLandscapeView.getPlayForwardView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ksLandscapeView.hide();
-                ksAnthologyView.show();
-            }
-        });
-
-
-        ksLandscapeView.getPlaySpeedView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ksLandscapeView.hide();
-                ksPlayerSpeedView.show();
-            }
-        });
-
-
+        // 设置是否自动旋转屏幕
+        controller.setEnableOrientation(KsMmkv.mv.decodeBool("playerRotate"));
+        // 设置控制器
         mVideoView.setVideoController(controller);
-
-
-
-        /*findViewById(R.id.send).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ksDanmakuView.setDanmu(createParser(openDamu()));
-            }
-        });*/
-
 
     }
 
 
-    private InputStream openDamu(){
+    private InputStream openDamu() {
         try {
             return getResources().getAssets().open("danmuks.json");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-
     }
-
 
     private BaseDanmakuParser createParser(InputStream stream) {
         ILoader loader = KsJsonLoader.instance();
@@ -205,18 +170,74 @@ public class PlayerActivity extends AppCompatActivity {
 
     }
 
-    /*private Handler mHandler = new Handler();
-    private void simulateDanmu() {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                ksDanmakuView.addDanmaku("破防了", false);
-                mHandler.postDelayed(this, 100);
-            }
-        });
-    }*/
+
+    /*
+     * 播放速度的点击显示
+     * */
+    private View.OnClickListener onClickShowPlaySpeedView = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            ksPlayerSpeedView.showPlayerSpeed();
+        }
+    };
 
 
+    /*
+     * 播放速度列表的点击
+     * */
+    private ClickListener.OnClickListener onClickPlaySpeed = new ClickListener.OnClickListener() {
+        @Override
+        public void onClick(int i) {
+            if (i == 1) ksLandscapeView.setPlaySpeedText(R.string.play_speed_0_5);
+            else if (i == 2) ksLandscapeView.setPlaySpeedText(R.string.play_speed_0_75);
+            else if (i == 3) ksLandscapeView.setPlaySpeedText(R.string.play_speed_default);
+            else if (i == 4) ksLandscapeView.setPlaySpeedText(R.string.play_speed_1_25);
+            else if (i == 5) ksLandscapeView.setPlaySpeedText(R.string.play_speed_1_5);
+            else if (i == 6) ksLandscapeView.setPlaySpeedText(R.string.play_speed_2_0);
+        }
+    };
+
+    /*
+     * 选集列表的点击显示
+     * */
+    private View.OnClickListener onClickShowPlayAnthologyView = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            ksAnthologyView.showAnthology();
+//            ksAnthologyView.setNowPlayItem(1);
+        }
+    };
+
+    /*
+     * 选集列表的点击
+     * */
+    private ClickListener.OnClickListener onClickPlayAnthology = new ClickListener.OnClickListener() {
+        @Override
+        public void onClick(int i) {
+
+            playListIndex = i;
+            mVideoView.release();  // 释放播放器
+            mVideoView.setUrl(videoUrlArrays.get(i).getVideoUrl());  // 设置url
+            mVideoView.setVideoController(controller);  // 设置控制器
+            mVideoView.start();  // 开始
+
+        }
+    };
+
+    /*
+     *
+     * 普通播放器状态下 点击返回
+     * */
+    private View.OnClickListener onClickBack = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            finish();
+        }
+    };
+
+    /*
+     * 以下为生命周期事件
+     * */
     @Override
     protected void onResume() {
         super.onResume();

@@ -28,6 +28,7 @@ public class KsAnthologyView extends KsControlAbstract implements IControlCompon
     private ControlWrapper mControlWrapper;
     private KsAnthologyAdapter ksAnthologyAdapter;
     private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
 
     public KsAnthologyView(Context context) {
         super(context);
@@ -37,9 +38,15 @@ public class KsAnthologyView extends KsControlAbstract implements IControlCompon
     }
 
     private void initList(){
-        recyclerView = super.view.findViewById(R.id.play_select_RecyclerView);
-        ksAnthologyAdapter = new KsAnthologyAdapter(super.context);
-        recyclerView.setLayoutManager(new LinearLayoutManager(super.context));
+        recyclerView = this.view.findViewById(R.id.play_select_RecyclerView);
+
+        linearLayoutManager = new LinearLayoutManager(this.context);
+        ksAnthologyAdapter = new KsAnthologyAdapter(this.context);
+
+        ksAnthologyAdapter.setmRecyclerView(recyclerView);
+        ksAnthologyAdapter.setmLinearLayoutManager(linearLayoutManager);
+
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(ksAnthologyAdapter);
 
     }
@@ -56,9 +63,6 @@ public class KsAnthologyView extends KsControlAbstract implements IControlCompon
         ksAnthologyAdapter.setOnClick(onClickListener);
     }
 
-    public void setItemState(int position, LinearLayout linearLayout){
-        ksAnthologyAdapter.setItemState(position,linearLayout);
-    }
 
     @Override
     public int getBGID() {
@@ -111,9 +115,10 @@ public class KsAnthologyView extends KsControlAbstract implements IControlCompon
     /*
     * 显示
     * */
-    public void showAnthology(){
+    public void showAnthology(int position){
         mControlWrapper.hide();
         show();
+        ksAnthologyAdapter.setNowSelectState(position);
     }
 
 
@@ -121,14 +126,6 @@ public class KsAnthologyView extends KsControlAbstract implements IControlCompon
         hide();
     }
 
-    public void setNowPlayItem(int index){
-        View childAt = recyclerView.getChildAt(index);
-
-        TextView textView = childAt.findViewById(R.id.item_anthology_text);
-        textView.setText("11111");
-
-
-    }
 
 
 

@@ -139,10 +139,12 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent, V
         return this.mPlayForward;
     }
 
-    public void hide(){
-        mControlWrapper.hide();
+    /*
+    * 下一集图片对象
+    * */
+    public ImageView getmForward(){
+        return mForward;
     }
-
 
     @Override
     public void attach(@NonNull ControlWrapper controlWrapper) {

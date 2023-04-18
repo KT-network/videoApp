@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ConcatAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kt.coffee.cat.Adapter.RecyclerAdapterBase;
@@ -166,19 +167,20 @@ public class KsAnthologyAdapter extends RecyclerView.Adapter<KsAnthologyAdapter.
 
     private LinearLayout mAnthologyBg_ = null;
 
+    private LinearLayoutManager mLinearLayoutManager;
+    private RecyclerView mRecyclerView;
+
     public KsAnthologyAdapter(Context context) {
         this.mContext = context;
     }
 
-    private ItemViewHolder _holder = null;
 
     @NonNull
     @Override
     public KsAnthologyAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_anthology, parent, false);
-        _holder = new ItemViewHolder(view);
-        return _holder;
+        return new ItemViewHolder(view);
     }
 
     @Override
@@ -212,8 +214,6 @@ public class KsAnthologyAdapter extends RecyclerView.Adapter<KsAnthologyAdapter.
 
 
 
-
-
     @Override
     public int getItemCount() {
         return videoUrlArrays == null ? 0 : videoUrlArrays.size();
@@ -230,41 +230,72 @@ public class KsAnthologyAdapter extends RecyclerView.Adapter<KsAnthologyAdapter.
         }
     }
 
-
-
-    public void setItemState(int position, LinearLayout linearLayout) {
-        if (selectedItemIndex == -1) {
-            linearLayout.setSelected(true);
-            mAnthologyBg_ = linearLayout;
-            selectedItemIndex = position;
-        } else if (selectedItemIndex != position) {
-            mAnthologyBg_.setSelected(false);
-            selectedItemIndex = position;
-            linearLayout.setSelected(true);
-        } else {
-            linearLayout.setSelected(false);
-            mAnthologyBg_ = null;
-            selectedItemIndex = -1;
-        }
-    }
-
-
+    /*
+    * 点击接口
+    * */
     public void setOnClick(ClickListener.OnClickListener listener) {
         this.mOnClickListener = listener;
     }
 
+    /*
+    * 设置数据
+    * */
     public void setData(List<PlayerVideoEntity.VideoUrlArray> data) {
         this.videoUrlArrays = data;
         notifyDataSetChanged();
 
-
     }
 
+    /*
+    * 添加数据
+    * */
     public void addData(List<PlayerVideoEntity.VideoUrlArray> data) {
         if (videoUrlArrays != null) {
             this.videoUrlArrays.addAll(data);
             notifyItemRangeInserted(getItemCount(), data.size());
         }
-
     }
+
+
+    /*
+    * 获取item的viewHolder
+    * */
+    private ItemViewHolder getViewHolder(int position){
+        View childAt = mLinearLayoutManager.getChildAt(position);
+        if (childAt == null)return null;
+        ItemViewHolder childViewHolder = (ItemViewHolder) mRecyclerView.getChildViewHolder(childAt);
+        return childViewHolder;
+    }
+
+    public void setNowSelectState(int position){
+        if (position == selectedItemIndex) return;
+        if (selectedItemIndex != -1){
+            ItemViewHolder oldViewHolder = getViewHolder(selectedItemIndex);
+            if (oldViewHolder == null) return;
+            oldViewHolder.mAnthologyBg.setSelected(false);
+        }
+        ItemViewHolder nowViewHolder = getViewHolder(position);
+        if (nowViewHolder == null) return;
+        nowViewHolder.mAnthologyBg.setSelected(true);
+
+        selectedItemIndex = position;
+
+        mAnthologyBg_ = nowViewHolder.mAnthologyBg;
+    }
+
+
+    /*
+    * 设置mLinearLayoutManager
+    * */
+    public void setmLinearLayoutManager(LinearLayoutManager manager){
+        this.mLinearLayoutManager = manager;
+    }
+
+    /*
+    * 设置
+    * */
+    public void setmRecyclerView(RecyclerView recyclerView){
+        this.mRecyclerView = recyclerView;
+    }
+
 }

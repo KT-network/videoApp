@@ -7,18 +7,19 @@
     <RelativeLayout
         android:id="@+id/center_container"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_height="40dp"
         android:background="@drawable/ktplayer_shape_gesture_control_background"
-        android:layout_gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
         tools:visibility="visible"
         android:visibility="gone">
 
         <ImageView
             android:id="@+id/iv_icon"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             tools:src="@drawable/dkplayer_ic_action_volume_up"/>
 
@@ -31,7 +32,7 @@
             android:max="100"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@id/iv_icon"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="15dp"
             android:progressDrawable="@drawable/ktplayer_layer_progress_bar" />
 
         <TextView

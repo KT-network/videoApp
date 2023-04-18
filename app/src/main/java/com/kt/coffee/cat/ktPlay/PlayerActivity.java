@@ -63,8 +63,6 @@ public class PlayerActivity extends AppCompatActivity {
         initEvent();
         initData();
 
-        Log.i(TAG, "onCreate: "+ VideoViewManager.getConfig().mPlayerFactory.toString());
-
     }
 
     private void initEvent() {
@@ -73,6 +71,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         ksLandscapeView.getPlayAnthologyView().setOnClickListener(onClickShowPlayAnthologyView);
         ksLandscapeView.getPlaySpeedView().setOnClickListener(onClickShowPlaySpeedView);
+        ksLandscapeView.getmForward().setOnClickListener(onClickPlayForward);
 
         ksAnthologyView.setListItemClick(onClickPlayAnthology);
         ksPlayerSpeedView.setOnClickListener(onClickPlaySpeed);
@@ -86,12 +85,12 @@ public class PlayerActivity extends AppCompatActivity {
             PlayerVideoEntity playerVideoEntity = new Gson().fromJson(JSON, PlayerVideoEntity.class);
             videoUrlArrays = playerVideoEntity.getVideoUrlArrays();
 
-            Log.i(TAG, "initData: " + playerVideoEntity.getVideoUrlArrays().get(0).getName());
+            Log.i(TAG, "initData: " + playerVideoEntity.getVideoUrlArrays().get(playListIndex).getName());
 
             ksAnthologyView.setListData(playerVideoEntity.getVideoUrlArrays());
 
-            mVideoView.setUrl(playerVideoEntity.getVideoUrlArrays().get(0).getVideoUrl());
-            ksLandscapeView.setTitle(playerVideoEntity.getVideoName() +" "+ playerVideoEntity.getVideoUrlArrays().get(0).getName());
+            mVideoView.setUrl(playerVideoEntity.getVideoUrlArrays().get(playListIndex).getVideoUrl());
+            ksLandscapeView.setTitle(playerVideoEntity.getVideoName() + " " + playerVideoEntity.getVideoUrlArrays().get(playListIndex).getName());
 
 //            ksTitleMoreView.setTitle(playerVideoEntity.getVideoName());
 //            Glide.with(this).load(playerVideoEntity.getVideoThumb()).into(thumb);
@@ -124,11 +123,13 @@ public class PlayerActivity extends AppCompatActivity {
         // 弹幕
         ksDanmakuView = new KsDanmakuView(this);
         // 手势控制ui
+        ksGestureView = new KsGestureView(this);
+
+        // 播放完成ui
         completeView = new CompleteView(this);
         // 播放错误ui
         ksErrorView = new KsErrorView(this);
 
-        // ksGestureView = new KsGestureView(this);
 
         // 添加控制器
         controller.addControlComponent(ksLandscapeView);
@@ -138,6 +139,7 @@ public class PlayerActivity extends AppCompatActivity {
         controller.addControlComponent(ksDanmakuView);
         controller.addControlComponent(completeView);
         controller.addControlComponent(ksErrorView);
+        controller.addControlComponent(ksGestureView);
 
         // 设置是否自动旋转屏幕
         controller.setEnableOrientation(KsMmkv.mv.decodeBool("playerRotate"));
@@ -203,8 +205,7 @@ public class PlayerActivity extends AppCompatActivity {
     private View.OnClickListener onClickShowPlayAnthologyView = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            ksAnthologyView.showAnthology();
-//            ksAnthologyView.setNowPlayItem(1);
+            ksAnthologyView.showAnthology(playListIndex);
         }
     };
 
@@ -217,7 +218,7 @@ public class PlayerActivity extends AppCompatActivity {
 
             playListIndex = i;
             mVideoView.release();  // 释放播放器
-            mVideoView.setUrl(videoUrlArrays.get(i).getVideoUrl());  // 设置url
+            mVideoView.setUrl(videoUrlArrays.get(playListIndex).getVideoUrl());  // 设置url
             mVideoView.setVideoController(controller);  // 设置控制器
             mVideoView.start();  // 开始
 
@@ -235,8 +236,27 @@ public class PlayerActivity extends AppCompatActivity {
         }
     };
 
+
     /*
-     * 以下为生命周期事件
+     * 点击下一集
+     * */
+    private View.OnClickListener onClickPlayForward = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            playListIndex++;
+            if (playListIndex >= videoUrlArrays.size()) {
+                playListIndex = 0;
+            }
+            mVideoView.release();  // 释放播放器
+            mVideoView.setUrl(videoUrlArrays.get(playListIndex).getVideoUrl());  // 设置url
+            mVideoView.setVideoController(controller);  // 设置控制器
+            mVideoView.start();  // 开始
+        }
+    };
+
+
+    /*
+     * 以下为生命周期事件 ===================================分割线========================================
      * */
     @Override
     protected void onResume() {

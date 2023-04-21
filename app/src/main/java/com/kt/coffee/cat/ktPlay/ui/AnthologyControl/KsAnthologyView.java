@@ -37,7 +37,7 @@ public class KsAnthologyView extends KsControlAbstract implements IControlCompon
         initList();
     }
 
-    private void initList(){
+    private void initList() {
         recyclerView = this.view.findViewById(R.id.play_select_RecyclerView);
 
         linearLayoutManager = new LinearLayoutManager(this.context);
@@ -51,15 +51,15 @@ public class KsAnthologyView extends KsControlAbstract implements IControlCompon
 
     }
 
-    public void setListData(List<PlayerVideoEntity.VideoUrlArray> data){
+    public void setListData(List<PlayerVideoEntity.VideoUrlArray> data) {
         ksAnthologyAdapter.setData(data);
     }
 
-    public void setListAddData(){
+    public void setListAddData() {
 
     }
 
-    public void setListItemClick(ClickListener.OnClickListener onClickListener){
+    public void setListItemClick(ClickListener.OnClickListener onClickListener) {
         ksAnthologyAdapter.setOnClick(onClickListener);
     }
 
@@ -97,7 +97,7 @@ public class KsAnthologyView extends KsControlAbstract implements IControlCompon
 
     @Override
     public void onPlayerStateChanged(int playerState) {
-        if (playerState == 10){
+        if (playerState == 10) {
             super.view.setVisibility(View.GONE);
         }
     }
@@ -113,21 +113,23 @@ public class KsAnthologyView extends KsControlAbstract implements IControlCompon
     }
 
     /*
-    * 显示
-    * */
-    public void showAnthology(int position){
+     * 显示
+     * */
+    public void showAnthology(int position) {
         mControlWrapper.hide();
         show();
+        changeNowPlaying(position);
+    }
+
+
+    public void changeNowPlaying(int position) {
         ksAnthologyAdapter.setNowSelectState(position);
     }
 
 
-    public void hideAnthology(){
+    public void hideAnthology() {
         hide();
     }
-
-
-
 
 
 }

@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         bottom_bar.setOnTabSelectListener(new AnimatedBottomBar.OnTabSelectListener() {
             @Override
             public void onTabSelected(int i, @Nullable AnimatedBottomBar.Tab tab, int i1, @NonNull AnimatedBottomBar.Tab tab1) {

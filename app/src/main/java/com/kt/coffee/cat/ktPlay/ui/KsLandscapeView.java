@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.kt.coffee.cat.R;
+import com.kt.coffee.cat.utils.KsMmkv;
 import com.sjx.batteryviewlibrary.BatteryView;
 
 import xyz.doikki.videoplayer.controller.ControlWrapper;
@@ -144,6 +145,11 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent, V
     * */
     public ImageView getmForward(){
         return mForward;
+    }
+
+
+    public void getTime(){
+        Log.i(TAG, "getTime: "+mControlWrapper.getCurrentPosition());
     }
 
     @Override
@@ -323,17 +329,24 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent, V
         if (mCurrTime != null)
             mCurrTime.setText(stringForTime(position));
 
-        if (mTcpSpeed != null) {
-            long tcpSpeed = mControlWrapper.getTcpSpeed();
 
-            if (tcpSpeed != 0) {
-                mTcpSpeed.setVisibility(VISIBLE);
-                String tcp = String.format("%.2f", (float) tcpSpeed / 1024 / 1024);
-                mTcpSpeed.setText(tcp.concat(" Mb/s"));
-            } else {
-                mTcpSpeed.setVisibility(GONE);
+        if (KsMmkv.mv.decodeBool("playNowNetworkSpeed")){
+            if (mTcpSpeed != null) {
+                long tcpSpeed = mControlWrapper.getTcpSpeed();
+
+                if (tcpSpeed != 0) {
+                    mTcpSpeed.setVisibility(VISIBLE);
+                    String tcp = String.format("%.2f", (float) tcpSpeed / 1024 / 1024);
+                    mTcpSpeed.setText(tcp.concat(" Mb/s"));
+                } else {
+                    mTcpSpeed.setVisibility(GONE);
+                }
             }
+        }else {
+            mTcpSpeed.setVisibility(GONE);
         }
+
+
     }
 
     @Override

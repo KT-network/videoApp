@@ -52,6 +52,12 @@ public class PlayerActivity extends AppCompatActivity {
     KsErrorView ksErrorView;
     CompleteView completeView;
 
+
+    //blue
+    public int getPlayListIndex(){
+        return getPlayListIndex();
+    }
+
     private List<PlayerVideoEntity.VideoUrlArray> videoUrlArrays;
 
     @Override
@@ -107,6 +113,9 @@ public class PlayerActivity extends AppCompatActivity {
 
 
     private void initView() {
+
+
+
         mVideoView = findViewById(R.id.player);
 
         mVideoView.setPlayerFactory(IjkPlayerFactory.create());
@@ -243,6 +252,9 @@ public class PlayerActivity extends AppCompatActivity {
     private View.OnClickListener onClickPlayForward = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+
+//            ksLandscapeView.getTime();
+
             playListIndex++;
             if (playListIndex >= videoUrlArrays.size()) {
                 playListIndex = 0;
@@ -250,7 +262,8 @@ public class PlayerActivity extends AppCompatActivity {
             mVideoView.release();  // 释放播放器
             mVideoView.setUrl(videoUrlArrays.get(playListIndex).getVideoUrl());  // 设置url
             mVideoView.setVideoController(controller);  // 设置控制器
-            mVideoView.start();  // 开始
+            mVideoView.start();  // 开始*/
+            ksAnthologyView.changeNowPlaying(playListIndex);
         }
     };
 

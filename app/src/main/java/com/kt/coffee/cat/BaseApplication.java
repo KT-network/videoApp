@@ -48,6 +48,9 @@ public class BaseApplication extends Application {
             // 默认开启自动下一集
             mv.encode("playAuto",true);
 
+            // 默认横屏状态下显示实时网速
+            mv.encode("playNowNetworkSpeed",true);
+
         }
 
 

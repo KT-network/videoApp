@@ -20,13 +20,13 @@
     <com.agrawalsuneet.loaderspack.loaders.PulseLoader
         android:layout_gravity="center"
         android:id="@+id/loading"
-        android:layout_width="50dp"
-        android:layout_height="25dp"
-        app:pulse_LineThickness="4dp"
+        android:layout_width="40dp"
+        android:layout_height="15dp"
+        app:pulse_LineThickness="3dp"
         app:pulse_normalIncrementalValue="4.0"
         app:pulse_pulseColor="@color/white"
         app:pulse_pulseIncrementalValue="10.0"
-        app:pulse_sideLength="50dp" />
+        app:pulse_sideLength="30dp" />
 
     
 <!--    <LinearLayout-->

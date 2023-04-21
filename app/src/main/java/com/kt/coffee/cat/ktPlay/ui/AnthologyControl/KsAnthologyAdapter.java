@@ -7,18 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.ConcatAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kt.coffee.cat.Adapter.RecyclerAdapterBase;
 import com.kt.coffee.cat.R;
 import com.kt.coffee.cat.mInterface.ClickListener;
 import com.kt.coffee.cat.utils.PlayerVideoEntity;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -155,7 +152,6 @@ import java.util.List;
 public class KsAnthologyAdapter extends RecyclerView.Adapter<KsAnthologyAdapter.ItemViewHolder> {
 
 
-
     private static final String TAG = "KsAnthologyAdapter";
     private Context mContext;
 
@@ -184,8 +180,28 @@ public class KsAnthologyAdapter extends RecyclerView.Adapter<KsAnthologyAdapter.
     }
 
     @Override
+    public void onViewDetachedFromWindow(@NonNull ItemViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.mAnthologyBg.setSelected(false);
+
+    }
+
+
+    KsAnthologyAdapter.ItemViewHolder lastHolder = null;
+
+    @Override
     public void onBindViewHolder(@NonNull KsAnthologyAdapter.ItemViewHolder holder, int position) {
         holder.mAnthologyText.setText(videoUrlArrays.get(position).getName());
+
+
+
+
+        if (position == bSelectedItemIndex){
+//            Toast.makeText(mContext, "Shot!", Toast.LENGTH_SHORT).show();
+//            holder.mAnthologyText.append("get you ! !!!");
+            holder.mAnthologyBg.setSelected(true);
+            lastHolder = holder ;
+        }
 
         if (mOnClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -205,7 +221,12 @@ public class KsAnthologyAdapter extends RecyclerView.Adapter<KsAnthologyAdapter.
                         mAnthologyBg_ = null;
                         selectedItemIndex = -1;
                     }
-                    mOnClickListener.onClick(position);
+
+                    bSelectedItemIndex = position;
+                    mOnClickListener.onClick(bSelectedItemIndex);
+                    lastHolder.mAnthologyBg.setSelected(false);
+                    lastHolder = holder;
+
                 }
             });
         }
@@ -213,11 +234,15 @@ public class KsAnthologyAdapter extends RecyclerView.Adapter<KsAnthologyAdapter.
     }
 
 
-
     @Override
     public int getItemCount() {
         return videoUrlArrays == null ? 0 : videoUrlArrays.size();
     }
+
+    /*@Override
+    public int getItemViewType(int position) {
+        return position;
+    }*/
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout mAnthologyBg;
@@ -231,15 +256,15 @@ public class KsAnthologyAdapter extends RecyclerView.Adapter<KsAnthologyAdapter.
     }
 
     /*
-    * 点击接口
-    * */
+     * 点击接口
+     * */
     public void setOnClick(ClickListener.OnClickListener listener) {
         this.mOnClickListener = listener;
     }
 
     /*
-    * 设置数据
-    * */
+     * 设置数据
+     * */
     public void setData(List<PlayerVideoEntity.VideoUrlArray> data) {
         this.videoUrlArrays = data;
         notifyDataSetChanged();
@@ -247,8 +272,8 @@ public class KsAnthologyAdapter extends RecyclerView.Adapter<KsAnthologyAdapter.
     }
 
     /*
-    * 添加数据
-    * */
+     * 添加数据
+     * */
     public void addData(List<PlayerVideoEntity.VideoUrlArray> data) {
         if (videoUrlArrays != null) {
             this.videoUrlArrays.addAll(data);
@@ -258,43 +283,78 @@ public class KsAnthologyAdapter extends RecyclerView.Adapter<KsAnthologyAdapter.
 
 
     /*
-    * 获取item的viewHolder
-    * */
-    private ItemViewHolder getViewHolder(int position){
-        View childAt = mLinearLayoutManager.getChildAt(position);
-        if (childAt == null)return null;
+     * 获取item的viewHolder
+     * */
+    private ItemViewHolder getViewHolder(int position) {
+
+        int first = mLinearLayoutManager.findFirstVisibleItemPosition();
+        int acutalPos = (position - first) >= 0 ? position - first : 0;
+
+        Log.i(TAG, "getViewHolder: " + acutalPos);
+
+        View childAt = mLinearLayoutManager.getChildAt(acutalPos);
+        if (childAt == null) return null;
         ItemViewHolder childViewHolder = (ItemViewHolder) mRecyclerView.getChildViewHolder(childAt);
         return childViewHolder;
     }
 
-    public void setNowSelectState(int position){
-        if (position == selectedItemIndex) return;
-        if (selectedItemIndex != -1){
-            ItemViewHolder oldViewHolder = getViewHolder(selectedItemIndex);
-            if (oldViewHolder == null) return;
-            oldViewHolder.mAnthologyBg.setSelected(false);
-        }
-        ItemViewHolder nowViewHolder = getViewHolder(position);
-        if (nowViewHolder == null) return;
-        nowViewHolder.mAnthologyBg.setSelected(true);
+    //    public void setNowSelectState(int position) {
+//        if (position == selectedItemIndex) return;
+//        if (selectedItemIndex != -1) {
+//            ItemViewHolder oldViewHolder = getViewHolder(selectedItemIndex);
+//            if (oldViewHolder == null) return;
+//            oldViewHolder.mAnthologyBg.setSelected(false);
+//        }
+//        ItemViewHolder nowViewHolder = getViewHolder(position);
+//        if (nowViewHolder == null) return;
+//        nowViewHolder.mAnthologyBg.setSelected(true);
+//
+//        selectedItemIndex = position;
+//
+//        mAnthologyBg_ = nowViewHolder.mAnthologyBg;
+//    }
 
-        selectedItemIndex = position;
 
-        mAnthologyBg_ = nowViewHolder.mAnthologyBg;
+
+
+    // lyw changed
+    private String currentTitle = "";
+    private int bSelectedItemIndex = -1 ;
+    public void setNowSelectState(int position) {
+//        selectedItemIndex = position;
+//        notifyItemChanged(position);
+        bSelectedItemIndex = position;
+
+
+//        if (position == selectedItemIndex) return;
+//        if (selectedItemIndex != -1) {
+//            ItemViewHolder oldViewHolder = getViewHolder(selectedItemIndex);
+//            if (oldViewHolder == null) return;
+//            oldViewHolder.mAnthologyBg.setSelected(false);
+//        }
+//        ItemViewHolder nowViewHolder = getViewHolder(position);
+//        if (nowViewHolder == null) return;
+//        String tempTitle = nowViewHolder.mAnthologyText.getText().toString();
+//            nowViewHolder.mAnthologyBg.setSelected(true);
+//            currentTitle = tempTitle;
+//
+//        selectedItemIndex = position;
+//
+//        mAnthologyBg_ = nowViewHolder.mAnthologyBg;
     }
 
 
     /*
-    * 设置mLinearLayoutManager
-    * */
-    public void setmLinearLayoutManager(LinearLayoutManager manager){
+     * 设置mLinearLayoutManager
+     * */
+    public void setmLinearLayoutManager(LinearLayoutManager manager) {
         this.mLinearLayoutManager = manager;
     }
 
     /*
-    * 设置
-    * */
-    public void setmRecyclerView(RecyclerView recyclerView){
+     * 设置
+     * */
+    public void setmRecyclerView(RecyclerView recyclerView) {
         this.mRecyclerView = recyclerView;
     }
 

@@ -26,8 +26,10 @@ import xyz.doikki.videoplayer.util.PlayerUtils;
 
 public class KsDanmakuView extends DanmakuView implements IControlComponent {
 
+    protected ControlWrapper mControlWrapper;
     private final DanmakuContext mContext;
     private BaseDanmakuParser mParser;
+
 
     public KsDanmakuView(Context context) {
         super(context);
@@ -93,6 +95,7 @@ public class KsDanmakuView extends DanmakuView implements IControlComponent {
     @Override
     public void attach(@NonNull ControlWrapper controlWrapper) {
 
+        this.mControlWrapper = controlWrapper;
     }
 
     @Override
@@ -112,6 +115,7 @@ public class KsDanmakuView extends DanmakuView implements IControlComponent {
                 release();
                 break;
             case VideoView.STATE_PREPARING:
+                Log.i(TAG, "onPlayStateChanged: 加载完成了aaaaaaaaaa");
                 if (isPrepared()) {
                     restart();
                 }
@@ -131,6 +135,12 @@ public class KsDanmakuView extends DanmakuView implements IControlComponent {
                 clear();
                 clearDanmakusOnScreen();
                 break;
+            case VideoView.STATE_BUFFERED:
+                seekTo(mControlWrapper.getCurrentPosition());
+                break;
+            case VideoView.STATE_BUFFERING:
+                pause();
+                break;
         }
 
     }
@@ -142,9 +152,18 @@ public class KsDanmakuView extends DanmakuView implements IControlComponent {
 
     }
 
+    // private int recordPlayProgress = 1000;  // 记录上一秒的进度（判断是否快进或快退）
     @Override
     public void setProgress(int duration, int position) {
 
+        /*if (position <= 1000) return;
+        Log.i(TAG, "setProgress: "+recordPlayProgress);
+        if (position - recordPlayProgress < 1500){
+        }else {
+            seekTo((long) position);
+        }
+
+        recordPlayProgress = position;*/
     }
 
     @Override

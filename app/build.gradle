@@ -117,5 +117,7 @@ dependencies {
     // mmkv 键值对写入读取
     implementation 'com.tencent:mmkv:1.2.15'
 
+    // m3u8下载
+//    implementation 'com.jwkj:M3U8Manger:v2.3.0'
 
 }

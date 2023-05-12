@@ -22,6 +22,9 @@ import xyz.doikki.videoplayer.controller.ControlWrapper;
 import xyz.doikki.videoplayer.controller.IControlComponent;
 import xyz.doikki.videoplayer.player.VideoView;
 
+/*
+* 选集列表
+* */
 public class KsAnthologyView extends KsControlAbstract implements IControlComponent {
 
 
@@ -43,8 +46,6 @@ public class KsAnthologyView extends KsControlAbstract implements IControlCompon
         linearLayoutManager = new LinearLayoutManager(this.context);
         ksAnthologyAdapter = new KsAnthologyAdapter(this.context);
 
-        ksAnthologyAdapter.setmRecyclerView(recyclerView);
-        ksAnthologyAdapter.setmLinearLayoutManager(linearLayoutManager);
 
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(ksAnthologyAdapter);
@@ -130,6 +131,8 @@ public class KsAnthologyView extends KsControlAbstract implements IControlCompon
     public void hideAnthology() {
         hide();
     }
+
+
 
 
 }

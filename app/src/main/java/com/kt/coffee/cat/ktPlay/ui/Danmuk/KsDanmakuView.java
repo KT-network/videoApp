@@ -45,7 +45,6 @@ public class KsDanmakuView extends DanmakuView implements IControlComponent {
 
 
     {
-
         // 设置最大显示行数
         HashMap<Integer, Integer> maxLinesPair = new HashMap<>();
         maxLinesPair.put(BaseDanmaku.TYPE_SCROLL_RL, 5); // 滚动弹幕最大显示5行
@@ -114,7 +113,7 @@ public class KsDanmakuView extends DanmakuView implements IControlComponent {
             case VideoView.STATE_IDLE:
                 release();
                 break;
-            case VideoView.STATE_PREPARING:
+            case VideoView.STATE_PREPARED:
                 Log.i(TAG, "onPlayStateChanged: 加载完成了aaaaaaaaaa");
                 if (isPrepared()) {
                     restart();
@@ -172,9 +171,7 @@ public class KsDanmakuView extends DanmakuView implements IControlComponent {
     }
 
     public void setDanmu(BaseDanmakuParser parser){
-
         this.mParser = parser;
-
     }
 
 
@@ -203,8 +200,5 @@ public class KsDanmakuView extends DanmakuView implements IControlComponent {
         danmaku.borderColor = isSelf ? Color.GREEN : Color.TRANSPARENT;
         addDanmaku(danmaku);
     }
-
-
-
 
 }

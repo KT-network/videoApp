@@ -3,6 +3,8 @@ package com.kt.coffee.cat.utils;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.kt.coffee.cat.BaseApplication;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;

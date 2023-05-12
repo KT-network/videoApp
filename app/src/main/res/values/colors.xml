@@ -3,6 +3,7 @@
 
     <color name="ThemeColor">#FF5187F4</color>
     <color name="ThemeColor_200">#9DBBF7</color>
+    <color name="ThemeColor_50">#805187F4</color>
     <color name="GrayColor">#FF757575</color>
     <color name="AppbarColor">#FFFFFF</color>
     <color name="BackgroundColor">#FFFFFF</color>
@@ -15,6 +16,7 @@
 
     <color name="lucency">#00FFFFFF</color> // 透明色
     <color name="lucencyGray_200">#B2FFFFFF</color>
+    <color name="lucencyGray_600">#9A9C9C9C</color>
 
     <color name="success">#FF4CAF50</color>
     <color name="error">#FFF44336</color>

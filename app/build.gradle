@@ -120,4 +120,10 @@ dependencies {
     // m3u8下载
 //    implementation 'com.jwkj:M3U8Manger:v2.3.0'
 
+    // 阴影
+//    implementation 'com.h6ah4i.android.materialshadowninepatch:materialshadowninepatch:1.0.0'
+
+    // 二级菜单布局
+    implementation "com.github.skydoves:expandablelayout:1.0.7"
+
 }

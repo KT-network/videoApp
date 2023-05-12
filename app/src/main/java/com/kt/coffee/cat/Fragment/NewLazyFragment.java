@@ -16,8 +16,6 @@ import java.io.IOException;
 * Fragment 懒加载基类
 * */
 public abstract class NewLazyFragment extends Fragment {
-
-
     private Context mContext;
     private boolean isFirstLoad = true; // 是否第一次加载
 

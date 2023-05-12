@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_selected="true" android:drawable="@drawable/ktplayer_incompletion_anthology_control_item_pitch_on"/>
+    <item android:drawable="@drawable/ktplayer_incompletion_anthology_control_item_unselected"/>
+
+</selector>

@@ -6,7 +6,9 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.kt.coffee.cat.R;
 import com.kt.coffee.cat.ktPlay.ui.AnthologyControl.KsAnthologyView;
@@ -19,6 +21,10 @@ import com.kt.coffee.cat.ktPlay.ui.PlayerSpeedControl.KsPlayerSpeedView;
 import com.kt.coffee.cat.ktPlay.ui.Danmuk.KsDanmakuView;
 import com.kt.coffee.cat.ktPlay.ui.component.KsErrorView;
 import com.kt.coffee.cat.ktPlay.ui.component.KsGestureView;
+import com.kt.coffee.cat.ktPlay.ui.videoInfoView.Adapter.PlayerFragmentPagerAdapter;
+import com.kt.coffee.cat.ktPlay.ui.videoInfoView.Fragment.VideoCommentFragment;
+import com.kt.coffee.cat.ktPlay.ui.videoInfoView.Fragment.VideoInfoFragment;
+import com.kt.coffee.cat.ktPlay.ui.videoInfoView.Fragment.PlayerFragmentPagerAndTabsBase;
 import com.kt.coffee.cat.mInterface.ClickListener;
 import com.kt.coffee.cat.utils.KsMmkv;
 import com.kt.coffee.cat.utils.PlayerVideoEntity;
@@ -26,6 +32,7 @@ import com.kt.coffee.cat.utils.Tool;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import master.flame.danmaku.danmaku.loader.ILoader;
@@ -35,18 +42,28 @@ import master.flame.danmaku.danmaku.parser.IDataSource;
 import xyz.doikki.videocontroller.component.CompleteView;
 import xyz.doikki.videoplayer.ijk.IjkPlayerFactory;
 import xyz.doikki.videoplayer.player.VideoView;
-import xyz.doikki.videoplayer.player.VideoViewManager;
 
 public class PlayerActivity extends AppCompatActivity {
 
     private final static String TAG = "PlayerActivity";
     private int playListIndex = 0;
     VideoView mVideoView;
+
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    List<PlayerFragmentPagerAndTabsBase> playerFragmentPagerAndTabsBases = new ArrayList<>();
+    VideoInfoFragment videoInfoFragment;
+    VideoCommentFragment videoCommentFragment;
+
+    /*
+     * 控制器
+     * */
+    KsStandardVideoController controller;
+
     KsIncompletionView ksIncompletionView;
     KsLandscapeView ksLandscapeView;
     KsAnthologyView ksAnthologyView;
     KsPlayerSpeedView ksPlayerSpeedView;
-    KsStandardVideoController controller;
     KsDanmakuView ksDanmakuView;
     KsGestureView ksGestureView;
     KsErrorView ksErrorView;
@@ -54,7 +71,7 @@ public class PlayerActivity extends AppCompatActivity {
 
 
     //blue
-    public int getPlayListIndex(){
+    public int getPlayListIndex() {
         return getPlayListIndex();
     }
 
@@ -64,11 +81,9 @@ public class PlayerActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
-
         initView();
-        initEvent();
         initData();
-
+        initEvent();
     }
 
     private void initEvent() {
@@ -82,6 +97,19 @@ public class PlayerActivity extends AppCompatActivity {
         ksAnthologyView.setListItemClick(onClickPlayAnthology);
         ksPlayerSpeedView.setOnClickListener(onClickPlaySpeed);
 
+        videoInfoFragment.setListItemClick(onClickIncompletionPlayAnthology);
+
+        playerFragmentPagerAndTabsBases.add(new PlayerFragmentPagerAndTabsBase(videoInfoFragment, "视频"));
+        playerFragmentPagerAndTabsBases.add(new PlayerFragmentPagerAndTabsBase(videoCommentFragment, "评论"));
+
+        PlayerFragmentPagerAdapter playerFragmentPagerAdapter = new PlayerFragmentPagerAdapter(getSupportFragmentManager(), playerFragmentPagerAndTabsBases);
+
+        viewPager.setAdapter(playerFragmentPagerAdapter);
+
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabTextColors(getResources().getColor(R.color.GrayColor), getResources().getColor(R.color.ThemeColor));
+
+
     }
 
     private void initData() {
@@ -94,6 +122,8 @@ public class PlayerActivity extends AppCompatActivity {
             Log.i(TAG, "initData: " + playerVideoEntity.getVideoUrlArrays().get(playListIndex).getName());
 
             ksAnthologyView.setListData(playerVideoEntity.getVideoUrlArrays());
+            videoInfoFragment.setListData(playerVideoEntity.getVideoUrlArrays());
+
 
             mVideoView.setUrl(playerVideoEntity.getVideoUrlArrays().get(playListIndex).getVideoUrl());
             ksLandscapeView.setTitle(playerVideoEntity.getVideoName() + " " + playerVideoEntity.getVideoUrlArrays().get(playListIndex).getName());
@@ -114,11 +144,16 @@ public class PlayerActivity extends AppCompatActivity {
 
     private void initView() {
 
-
-
         mVideoView = findViewById(R.id.player);
 
+        tabLayout = findViewById(R.id.player_tab);
+        viewPager = findViewById(R.id.player_info_pager);
+
+        videoInfoFragment = new VideoInfoFragment();
+        videoCommentFragment = new VideoCommentFragment();
+
         mVideoView.setPlayerFactory(IjkPlayerFactory.create());
+
         // 控制器
         controller = new KsStandardVideoController(this);
         // 全屏状态下的播放器ui
@@ -231,8 +266,21 @@ public class PlayerActivity extends AppCompatActivity {
             mVideoView.setVideoController(controller);  // 设置控制器
             mVideoView.start();  // 开始
 
+            ksLandscapeView.setTitle(videoUrlArrays.get(i).getName());
+
         }
     };
+
+    /*
+    *
+    * */
+    private ClickListener.OnClickListener onClickIncompletionPlayAnthology = new ClickListener.OnClickListener() {
+        @Override
+        public void onClick(int i) {
+
+        }
+    };
+
 
     /*
      *
@@ -252,9 +300,6 @@ public class PlayerActivity extends AppCompatActivity {
     private View.OnClickListener onClickPlayForward = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
-//            ksLandscapeView.getTime();
-
             playListIndex++;
             if (playListIndex >= videoUrlArrays.size()) {
                 playListIndex = 0;
@@ -262,8 +307,10 @@ public class PlayerActivity extends AppCompatActivity {
             mVideoView.release();  // 释放播放器
             mVideoView.setUrl(videoUrlArrays.get(playListIndex).getVideoUrl());  // 设置url
             mVideoView.setVideoController(controller);  // 设置控制器
-            mVideoView.start();  // 开始*/
-            ksAnthologyView.changeNowPlaying(playListIndex);
+            mVideoView.start();  // 开始
+            ksAnthologyView.changeNowPlaying(playListIndex);  // 改变选集列表的选中状态
+
+            ksLandscapeView.setTitle(videoUrlArrays.get(playListIndex).getName());  // 设置标题
         }
     };
 

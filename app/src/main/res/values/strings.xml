@@ -59,5 +59,9 @@
     <string name="play_more_play_frames_size_original">原始</string>
 
 
+    <string name="play_info_title">视频名称</string>
+    <string name="play_info_synopsis">简介</string>
+    <string name="play_info_label">2022/电影/动作</string>
+
 
 </resources>

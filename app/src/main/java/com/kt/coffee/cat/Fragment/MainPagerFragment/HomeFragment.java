@@ -66,11 +66,6 @@ public class HomeFragment extends NewLazyFragment {
 //                Log.i(TAG, "onOffsetChanged: "+verticalOffset);
             }
         });
-
-
-
-
-
         homeFragmentPagerAndTabsBases.add(new HomeFragmentPagerAndTabsBase(new HomeHFragment(),"首页"));
         homeFragmentPagerAndTabsBases.add(new HomeFragmentPagerAndTabsBase(new HomeHFragment(),"热播"));
         homeFragmentPagerAndTabsBases.add(new HomeFragmentPagerAndTabsBase(new HomeHFragment(),"电影"));
@@ -86,7 +81,6 @@ public class HomeFragment extends NewLazyFragment {
         home_tabs.setupWithViewPager(home_vp);
 
         home_tabs.setTabTextColors(getResources().getColor(R.color.lucencyGray_200),getResources().getColor(R.color.white));
-
 
     }
 

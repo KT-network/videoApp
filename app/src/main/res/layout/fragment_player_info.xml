@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <com.skydoves.expandablelayout.ExpandableLayout
+            android:id="@+id/play_info_expandable_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:expandable_animation="normal"
+            app:expandable_duration="200"
+            app:expandable_isExpanded="false"
+            app:expandable_parentLayout="@layout/expandable_layout_play_info_title_parent"
+            app:expandable_secondLayout="@layout/expandable_layout_play_info_title_second"
+            app:expandable_spinner_color="@color/lucencyGray_600" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/play_info_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

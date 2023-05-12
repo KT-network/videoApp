@@ -6,9 +6,9 @@ import java.util.List;
 
 
 /*
-* Home中的Home 轮播图数据实体类
-* */
-public class HomeBannerEntity{
+ * Home中的Home 轮播图数据实体类
+ * */
+public class HomeBannerEntity {
 
 
     /*private List<String> list;
@@ -29,7 +29,7 @@ public class HomeBannerEntity{
     }
 
 
-    public static class FeedBase implements BaseBannerInfo{
+    public static class FeedBase implements BaseBannerInfo {
 
         private String url;
 
@@ -91,8 +91,6 @@ public class HomeBannerEntity{
         }
 
     }*/
-
-
 
 
 }

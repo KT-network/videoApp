@@ -24,7 +24,7 @@ import java.util.List;
 public class KsIncompletionVideoInfoAdapter extends RecyclerView.Adapter<KsIncompletionVideoInfoAdapter.ItemViewHolder> {
 
 
-    private static final String TAG = "KsIncompletionVideoInfoAdapter";
+    private static final String TAG = "IncompletionInfoAdapter";
     private Context mContext;
 
     private List<PlayerVideoEntity.VideoUrlArray> videoUrlArrays;
@@ -46,7 +46,6 @@ public class KsIncompletionVideoInfoAdapter extends RecyclerView.Adapter<KsIncom
     @Override
     public KsIncompletionVideoInfoAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        Log.i(TAG, "onCreateViewHolder: ");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_incompletion_anthology, parent, false);
         ItemViewHolder itemViewHolder = new ItemViewHolder(view);
         ItemClickEvent(itemViewHolder);
@@ -77,13 +76,11 @@ public class KsIncompletionVideoInfoAdapter extends RecyclerView.Adapter<KsIncom
 
         holder.mAnthologyText.setText(videoUrlArrays.get(position).getName());
         if (firstLoad) {
-            Log.i(TAG, "onBindViewHolder: "+firstLoad);
             setCurrentPosition(defaultSelectedItemIndex != -1 ? defaultSelectedItemIndex : 0, true);
             firstLoad = false;
         }
 
         if (getCurrentPosition() == position && isClick) {
-            Log.i(TAG, "onBindViewHolder: "+1111);
             holder.mAnthologyBg.setSelected(true);
         } else {
             holder.mAnthologyBg.setSelected(false);
@@ -158,7 +155,6 @@ public class KsIncompletionVideoInfoAdapter extends RecyclerView.Adapter<KsIncom
      * */
     public void setCurrentPosition(int currentPosition, boolean isClick) {
 
-        Log.i(TAG, "setCurrentPosition: "+currentPosition);
         this.isClick = isClick;
         if (currentPosition >= getItemCount()) {
             this.currentPosition = 0;
@@ -168,6 +164,11 @@ public class KsIncompletionVideoInfoAdapter extends RecyclerView.Adapter<KsIncom
 
     }
 
-
+    /*
+     * 设置默认选中
+     * */
+    public void setDefaultSelectedItemIndex(int position) {
+        this.defaultSelectedItemIndex = position;
+    }
 
 }

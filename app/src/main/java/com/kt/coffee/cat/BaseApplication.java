@@ -54,6 +54,7 @@ public class BaseApplication extends Application {
         }
 
 
+
         // RXHttp 初始化
         RxHttpPlugins.init(new OkHttpClient())
                 .setDebug(BuildConfig.DEBUG,true,2);

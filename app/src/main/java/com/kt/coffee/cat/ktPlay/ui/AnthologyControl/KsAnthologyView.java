@@ -127,6 +127,13 @@ public class KsAnthologyView extends KsControlAbstract implements IControlCompon
         ksAnthologyAdapter.setNowSelectState(position);
     }
 
+    /*
+     * 设置默认选中
+     * */
+    public void setDefaultSelectedItemIndex(int position) {
+        ksAnthologyAdapter.setDefaultSelectedItemIndex(position);
+    }
+
 
     public void hideAnthology() {
         hide();

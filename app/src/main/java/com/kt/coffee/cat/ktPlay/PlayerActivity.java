@@ -47,6 +47,9 @@ public class PlayerActivity extends AppCompatActivity {
 
     private final static String TAG = "PlayerActivity";
     private int playListIndex = 0;
+
+    private String VIDEO_ID;
+
     VideoView mVideoView;
 
     TabLayout tabLayout;
@@ -69,12 +72,7 @@ public class PlayerActivity extends AppCompatActivity {
     KsErrorView ksErrorView;
     CompleteView completeView;
 
-
-    //blue
-    public int getPlayListIndex() {
-        return getPlayListIndex();
-    }
-
+    // 剧集数据
     private List<PlayerVideoEntity.VideoUrlArray> videoUrlArrays;
 
     @Override
@@ -113,16 +111,25 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
     private void initData() {
-
         try {
             String JSON = Tool.inputStreamToString(getResources().getAssets().open("Video.json"));
             PlayerVideoEntity playerVideoEntity = new Gson().fromJson(JSON, PlayerVideoEntity.class);
             videoUrlArrays = playerVideoEntity.getVideoUrlArrays();
 
-            Log.i(TAG, "initData: " + playerVideoEntity.getVideoUrlArrays().get(playListIndex).getName());
+            VIDEO_ID = playerVideoEntity.getVideoID();
+            // 以视频id为标识，获取此视频的播放index
+            playListIndex = KsMmkv.mv.decodeInt(playerVideoEntity.getVideoID());
+
 
             ksAnthologyView.setListData(playerVideoEntity.getVideoUrlArrays());
             videoInfoFragment.setListData(playerVideoEntity.getVideoUrlArrays());
+
+
+            videoInfoFragment.setTitle(playerVideoEntity.getVideoName());
+
+            // 设置选集列表默认选中的状态
+            videoInfoFragment.setDefaultSelectedItemIndex(playListIndex);
+            ksAnthologyView.setDefaultSelectedItemIndex(playListIndex);
 
 
             mVideoView.setUrl(playerVideoEntity.getVideoUrlArrays().get(playListIndex).getVideoUrl());
@@ -272,11 +279,18 @@ public class PlayerActivity extends AppCompatActivity {
     };
 
     /*
-    *
+    * 小屏状态下（普通模式下）的选集列表点击回调
     * */
     private ClickListener.OnClickListener onClickIncompletionPlayAnthology = new ClickListener.OnClickListener() {
         @Override
         public void onClick(int i) {
+
+            playListIndex = i;
+            mVideoView.release();  // 释放播放器
+            mVideoView.setUrl(videoUrlArrays.get(playListIndex).getVideoUrl());  // 设置url
+            mVideoView.setVideoController(controller);  // 设置控制器
+            mVideoView.start();  // 开始
+            ksLandscapeView.setTitle(videoUrlArrays.get(i).getName());
 
         }
     };
@@ -318,11 +332,19 @@ public class PlayerActivity extends AppCompatActivity {
     /*
      * 以下为生命周期事件 ===================================分割线========================================
      * */
+
+    // 记录剧集播放的index
+    private void writeAnthologyIndex(){
+        if (VIDEO_ID != null && playListIndex != -1){
+            KsMmkv.mv.encode(VIDEO_ID,playListIndex);
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-
         if (mVideoView != null) {
+            writeAnthologyIndex();
             mVideoView.resume();
         }
     }
@@ -333,6 +355,7 @@ public class PlayerActivity extends AppCompatActivity {
         super.onPause();
 
         if (mVideoView != null) {
+            writeAnthologyIndex();
             mVideoView.pause();
         }
     }
@@ -341,6 +364,7 @@ public class PlayerActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (mVideoView != null) {
+            writeAnthologyIndex();
             mVideoView.release();
         }
     }
@@ -348,6 +372,7 @@ public class PlayerActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (mVideoView == null || !mVideoView.onBackPressed()) {
+            writeAnthologyIndex();
             super.onBackPressed();
         }
     }

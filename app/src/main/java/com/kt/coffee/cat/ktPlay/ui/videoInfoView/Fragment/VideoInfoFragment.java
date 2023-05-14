@@ -24,6 +24,7 @@ public class VideoInfoFragment extends NewLazyFragment {
 
     private static final String TAG = "VideoInfoFragment";
     ExpandableLayout titleExpandable;
+    TextView title;
     RecyclerView recyclerView;
     KsIncompletionVideoInfoAdapter incompletionVideoInfoAdapter;
 
@@ -42,18 +43,22 @@ public class VideoInfoFragment extends NewLazyFragment {
     protected void initView(View view) {
         super.initView(view);
         titleExpandable = view.findViewById(R.id.play_info_expandable_title);
+        title = titleExpandable.parentLayout.findViewById(R.id.expandable_parent_play_title);
+
         recyclerView = view.findViewById(R.id.play_info_recycler);
 
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
         recyclerView.setAdapter(incompletionVideoInfoAdapter);
+
+        title.setText(titleStr);
+
+
 
     }
 
     @Override
     protected void initData() {
         super.initData();
-        TextView title = titleExpandable.parentLayout.findViewById(R.id.expandable_parent_play_title);
-
 
     }
 
@@ -71,18 +76,37 @@ public class VideoInfoFragment extends NewLazyFragment {
 
 
 
+
     }
 
     public void addListData(){
 
     }
 
+    // 设置剧集数据
     public void setListData(List<PlayerVideoEntity.VideoUrlArray> data) {
         incompletionVideoInfoAdapter.setData(data);
     }
 
+    // 设置剧集上次播放的位置(设置默认选中)
+    public void setDefaultSelectedItemIndex(int position) {
+        incompletionVideoInfoAdapter.setDefaultSelectedItemIndex(position);
+    }
+
     public void setListItemClick(ClickListener.OnClickListener onClickListener) {
         incompletionVideoInfoAdapter.setOnClick(onClickListener);
+    }
+
+    private String titleStr;
+    public void setTitle(String s){
+
+        if (title != null){
+            title.setText(s);
+            return;
+        }
+        this.titleStr = s;
+        Log.i(TAG, "setTitle: ");
+
     }
 
 

@@ -6,6 +6,7 @@ public class PlayerVideoEntity {
 
     private String videoName;
     private String videoThumb;
+    private String videoID;
 
     private List<VideoUrlArray> videoUrlArray;
 
@@ -31,6 +32,14 @@ public class PlayerVideoEntity {
 
     public void setVideoUrlArrays(List<VideoUrlArray> videoUrlArrays) {
         this.videoUrlArray = videoUrlArrays;
+    }
+
+    public String getVideoID() {
+        return videoID;
+    }
+
+    public void setVideoID(String videoID) {
+        this.videoID = videoID;
     }
 
 

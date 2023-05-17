@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kt.coffee.cat.R;
@@ -44,7 +43,7 @@ public class KsAnthologyAdapter extends RecyclerView.Adapter<KsAnthologyAdapter.
     @Override
     public KsAnthologyAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_landscape_anthology, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_player_landscape_anthology, parent, false);
         ItemViewHolder itemViewHolder = new ItemViewHolder(view);
         ItemClickEvent(itemViewHolder);
         return itemViewHolder;

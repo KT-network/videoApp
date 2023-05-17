@@ -7,8 +7,8 @@
     <string name="select">Select</string>
     <string name="collect">Collect</string>
     <string name="info">Info</string>
-    
-    
+
+
     <!--home-home 轮播图下功能文字-->
     <string name="home_home_banner_below_1">值得看</string>
     <string name="home_home_banner_below_2">资讯</string>
@@ -33,24 +33,43 @@
     <string name="play_speed_2_0">2.0X</string>
 
 
-
     <string name="player_unlocked">已解锁</string>
     <string name="player_locked">已锁定</string>
     <string name="player_lock_tip">请先解锁屏幕！</string>
     <string name="play_forward_select">选集</string>
 
 
-    <string name="play_more_play_setting">播放设置</string>
+    <string name="play_more_play_setting">播放设置 </string>
+    <string-array name="play_more_play_setting_array">
+        <item>镜像反转</item>
+        <item>悬浮小窗</item>
+        <item>电视投屏</item>
+    </string-array>
     <string name="play_more_play_setting_mirror_reversal">镜像反转</string>
     <string name="play_more_play_setting_fenestrule">悬浮小窗</string>
     <string name="play_more_play_setting_projection_screen">电视投屏</string>
-    
-    <string name="play_more_play_method">播放方式</string>
+
+    <string name="play_more_play_method">播放方式 </string>
+    <string-array name="play_more_play_method_array">
+        <item>列表循环</item>
+        <item>单集循环</item>
+        <item>播完暂停</item>
+    </string-array>
     <string name="play_more_play_method_list">列表循环</string>
     <string name="play_more_play_method_single">单集循环</string>
     <string name="play_more_play_method_suspend">播完暂停</string>
 
-    <string name="play_more_play_frames_size">画面尺寸</string>
+    <string name="play_more_play_frames_size">画面尺寸 </string>
+    <string-array name="play_more_play_frames_size_array">
+
+        <item>默认</item>
+        <item>16:9</item>
+        <item>4:3</item>
+        <item>原始</item>
+        <item>填充</item>
+        <item>裁剪</item>
+
+    </string-array>
     <string name="play_more_play_frames_size_adapt">适应</string>
     <string name="play_more_play_frames_size_stretch">拉伸</string>
     <string name="play_more_play_frames_size_fill">填充</string>
@@ -59,9 +78,23 @@
     <string name="play_more_play_frames_size_original">原始</string>
 
 
+    <string name="play_more_play_player_core">播放内核 </string>
+    <string-array name="play_more_play_player_core_array">
+        <item>IJK</item>
+        <item>Media</item>
+        <item>EXO</item>
+    </string-array>
+    <string name="play_more_play_player_core_ijk">IJK</string>
+    <string name="play_more_play_player_core_Media">Media</string>
+    <string name="play_more_play_player_core_exo">EXO</string>
+
+    <string name="play_more_player_now_net_speed_txt">实时网速</string>
+    <string name="play_more_play_player_rotate">自动旋转</string>
+
     <string name="play_info_title">视频名称</string>
     <string name="play_info_synopsis">简介</string>
     <string name="play_info_label">2022/电影/动作</string>
+    
 
 
 </resources>

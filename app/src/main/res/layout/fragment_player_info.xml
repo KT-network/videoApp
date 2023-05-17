@@ -22,6 +22,14 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/play_forward_select"
+        android:textSize="18sp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/play_info_recycler"
         android:layout_width="match_parent"

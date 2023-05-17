@@ -2,22 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:padding="15dp">
 
-    <TextView
+    <!--<TextView
         android:id="@+id/expandable_second_play_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/play_info_label"/>
+        android:text="@string/play_info_label"/>-->
 
     <TextView
         android:id="@+id/expandable_second_play_synopsis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/play_info_synopsis"
-        android:textSize="14sp"
-        android:layout_marginTop="15dp"
-        android:layout_below="@id/expandable_second_play_label"/>
+        android:textSize="14sp"/>
 
 
 </RelativeLayout>

@@ -114,42 +114,58 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent, V
         mBottomProgress = findViewById(R.id.bottom_progress);
 
     }
+
     /*
-    * 设置视频标题
-    * */
-    public void setTitle(String s){
+     * 设置视频标题
+     * */
+    public void setTitle(String s) {
         mTitle.setText(s);
     }
 
     /*
-    * 设置速度文本
-    * */
-    public void setPlaySpeedText(int id){
+     * 设置速度文本
+     * */
+    public void setPlaySpeedText(int id) {
         mPlaySpeed.setText(getResources().getText(id));
     }
+
     /*
-    * 返回速度文本对象
-    * */
-    public TextView getPlaySpeedView(){
+     * 返回速度文本对象
+     * */
+    public TextView getPlaySpeedView() {
         return this.mPlaySpeed;
     }
+
     /*
-    * 返回选集文本对象
-    * */
-    public TextView getPlayAnthologyView(){
+     * 返回选集文本对象
+     * */
+    public TextView getPlayAnthologyView() {
         return this.mPlayForward;
     }
 
     /*
-    * 下一集图片对象
-    * */
-    public ImageView getmForward(){
+     * 下一集图片对象
+     * */
+    public ImageView getmForward() {
         return mForward;
     }
 
 
-    public void getTime(){
-        Log.i(TAG, "getTime: "+mControlWrapper.getCurrentPosition());
+    /*
+     * 右上角更多
+     * */
+    public ImageView getmMore() {
+        return mMore;
+    }
+
+
+    public TextView getmTcpSpeed(){
+        return mTcpSpeed;
+    }
+
+
+    public void getTime() {
+        Log.i(TAG, "getTime: " + mControlWrapper.getCurrentPosition());
     }
 
     @Override
@@ -165,7 +181,7 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent, V
 
     @Override
     public void onVisibilityChanged(boolean isVisible, Animation anim) {
-        Log.i(TAG, "onVisibilityChanged: "+isVisible);
+        Log.i(TAG, "onVisibilityChanged: " + isVisible);
         if (!mControlWrapper.isFullScreen()) {
             setVisibility(GONE);
         } else {
@@ -207,10 +223,10 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent, V
 
 
     /*
-    *
-    * 播放完成ui
-    * */
-    public void playOver_ui(){
+     *
+     * 播放完成ui
+     * */
+    public void playOver_ui() {
         setVisibility(GONE);
         mBottomProgress.setProgress(0);
         mBottomProgress.setSecondaryProgress(0);
@@ -330,21 +346,20 @@ public class KsLandscapeView extends FrameLayout implements IControlComponent, V
             mCurrTime.setText(stringForTime(position));
 
 
-        if (KsMmkv.mv.decodeBool("playNowNetworkSpeed")){
-            if (mTcpSpeed != null) {
-                long tcpSpeed = mControlWrapper.getTcpSpeed();
-
-                if (tcpSpeed != 0) {
-                    mTcpSpeed.setVisibility(VISIBLE);
-                    String tcp = String.format("%.2f", (float) tcpSpeed / 1024 / 1024);
-                    mTcpSpeed.setText(tcp.concat(" Mb/s"));
-                } else {
-                    mTcpSpeed.setVisibility(GONE);
-                }
+        /*if (KsMmkv.mv.decodeBool("playNowNetworkSpeed")){*/
+        if (mTcpSpeed != null) {
+            long tcpSpeed = mControlWrapper.getTcpSpeed();
+            if (tcpSpeed != 0) {
+//                mTcpSpeed.setVisibility(VISIBLE);
+                String tcp = String.format("%.2f", (float) tcpSpeed / 1024 / 1024);
+                mTcpSpeed.setText(tcp.concat(" Mb/s"));
+            } else {
+//                mTcpSpeed.setVisibility(GONE);
             }
-        }else {
-            mTcpSpeed.setVisibility(GONE);
         }
+        /*}else {
+            mTcpSpeed.setVisibility(GONE);
+        }*/
 
 
     }

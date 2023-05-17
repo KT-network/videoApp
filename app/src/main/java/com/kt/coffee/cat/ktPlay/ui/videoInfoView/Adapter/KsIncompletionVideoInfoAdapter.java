@@ -1,7 +1,6 @@
 package com.kt.coffee.cat.ktPlay.ui.videoInfoView.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.kt.coffee.cat.R;
 import com.kt.coffee.cat.mInterface.ClickListener;
 import com.kt.coffee.cat.utils.PlayerVideoEntity;
-import com.kt.coffee.cat.utils.Tool;
 
 import java.util.List;
 
@@ -46,7 +44,7 @@ public class KsIncompletionVideoInfoAdapter extends RecyclerView.Adapter<KsIncom
     @Override
     public KsIncompletionVideoInfoAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_incompletion_anthology, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_player_incompletion_anthology, parent, false);
         ItemViewHolder itemViewHolder = new ItemViewHolder(view);
         ItemClickEvent(itemViewHolder);
         return itemViewHolder;
@@ -81,9 +79,11 @@ public class KsIncompletionVideoInfoAdapter extends RecyclerView.Adapter<KsIncom
         }
 
         if (getCurrentPosition() == position && isClick) {
-            holder.mAnthologyBg.setSelected(true);
+//            holder.mAnthologyBg.setSelected(true);
+            holder.mAnthologyText.setTextColor(mContext.getResources().getColor(R.color.ThemeColor));
         } else {
-            holder.mAnthologyBg.setSelected(false);
+            holder.mAnthologyText.setTextColor(mContext.getResources().getColor(R.color.GrayColor));
+//            holder.mAnthologyBg.setSelected(false);
         }
     }
 

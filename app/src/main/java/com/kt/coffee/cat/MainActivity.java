@@ -26,7 +26,6 @@ import nl.joery.animatedbottombar.AnimatedBottomBar;
 
 public class MainActivity extends AppCompatActivity {
 
-
     private static final String TAG = "MainActivity";
 
     private static final MMKV mv = MMKV.defaultMMKV();

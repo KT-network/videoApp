@@ -45,11 +45,17 @@ public class BaseApplication extends Application {
             // 播放页默认不自动旋转
             mv.encode("playerRotate",false);
 
-            // 默认开启自动下一集
-            mv.encode("playAuto",true);
-
             // 默认横屏状态下显示实时网速
             mv.encode("playNowNetworkSpeed",true);
+
+            // 默认播放内核
+            mv.encode("playerCore",0);
+            // 默认画面尺寸
+            mv.encode("playerFramesSize",0);
+            // 默认播放方式
+            mv.encode("playerPlayMode",0);
+            // 默认播放设置
+            mv.encode("playerSetting",0);
 
         }
 

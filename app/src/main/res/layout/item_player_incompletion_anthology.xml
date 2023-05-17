@@ -8,12 +8,13 @@
     android:paddingTop="5dp"
     android:paddingBottom="5dp">
     >
+    <!--        android:background="@drawable/ktplayer_incompletion_anthology_control_item_selector"-->
 
     <LinearLayout
         android:id="@+id/item_anthology_bg"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@drawable/ktplayer_incompletion_anthology_control_item_selector"
+        android:background="@drawable/ktplayer_incompletion_anthology_control_item_bj"
         android:orientation="vertical"
         android:gravity="center">
 
@@ -22,7 +23,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/play_forward_select"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textColor="@color/GrayColor"/>
 
 
 

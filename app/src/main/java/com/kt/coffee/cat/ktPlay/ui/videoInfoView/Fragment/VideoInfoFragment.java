@@ -1,5 +1,6 @@
 package com.kt.coffee.cat.ktPlay.ui.videoInfoView.Fragment;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -23,14 +24,17 @@ import java.util.List;
 public class VideoInfoFragment extends NewLazyFragment {
 
     private static final String TAG = "VideoInfoFragment";
+    private Context mContext;
     ExpandableLayout titleExpandable;
-    TextView title;
+    TextView title,videoLabel;
     RecyclerView recyclerView;
     KsIncompletionVideoInfoAdapter incompletionVideoInfoAdapter;
 
 
-    public VideoInfoFragment(){
-        incompletionVideoInfoAdapter = new KsIncompletionVideoInfoAdapter(getContext());
+    public VideoInfoFragment(Context context){
+        this.mContext = context;
+        incompletionVideoInfoAdapter = new KsIncompletionVideoInfoAdapter(context);
+
     }
 
 
@@ -45,12 +49,15 @@ public class VideoInfoFragment extends NewLazyFragment {
         titleExpandable = view.findViewById(R.id.play_info_expandable_title);
         title = titleExpandable.parentLayout.findViewById(R.id.expandable_parent_play_title);
 
+        videoLabel = titleExpandable.parentLayout.findViewById(R.id.expandable_parent_play_label);
+
         recyclerView = view.findViewById(R.id.play_info_recycler);
 
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
         recyclerView.setAdapter(incompletionVideoInfoAdapter);
 
         title.setText(titleStr);
+        videoLabel.setText(getContext().getText(R.string.play_info_label));
 
 
 

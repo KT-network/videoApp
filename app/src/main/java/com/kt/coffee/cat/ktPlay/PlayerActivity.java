@@ -3,6 +3,7 @@ package com.kt.coffee.cat.ktPlay;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import com.kt.coffee.cat.ktPlay.ui.PlayerSpeedControl.KsPlayerSpeedView;
 import com.kt.coffee.cat.ktPlay.ui.Danmuk.KsDanmakuView;
 import com.kt.coffee.cat.ktPlay.ui.component.KsErrorView;
 import com.kt.coffee.cat.ktPlay.ui.component.KsGestureView;
+import com.kt.coffee.cat.ktPlay.ui.more.KsMoreView;
 import com.kt.coffee.cat.ktPlay.ui.videoInfoView.Adapter.PlayerFragmentPagerAdapter;
 import com.kt.coffee.cat.ktPlay.ui.videoInfoView.Fragment.VideoCommentFragment;
 import com.kt.coffee.cat.ktPlay.ui.videoInfoView.Fragment.VideoInfoFragment;
@@ -71,6 +73,7 @@ public class PlayerActivity extends AppCompatActivity {
     KsGestureView ksGestureView;
     KsErrorView ksErrorView;
     CompleteView completeView;
+    KsMoreView ksMoreView;
 
     // 剧集数据
     private List<PlayerVideoEntity.VideoUrlArray> videoUrlArrays;
@@ -91,6 +94,12 @@ public class PlayerActivity extends AppCompatActivity {
         ksLandscapeView.getPlayAnthologyView().setOnClickListener(onClickShowPlayAnthologyView);
         ksLandscapeView.getPlaySpeedView().setOnClickListener(onClickShowPlaySpeedView);
         ksLandscapeView.getmForward().setOnClickListener(onClickPlayForward);
+        ksLandscapeView.getmMore().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ksMoreView.showMore();
+            }
+        });
 
         ksAnthologyView.setListItemClick(onClickPlayAnthology);
         ksPlayerSpeedView.setOnClickListener(onClickPlaySpeed);
@@ -106,6 +115,11 @@ public class PlayerActivity extends AppCompatActivity {
 
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabTextColors(getResources().getColor(R.color.GrayColor), getResources().getColor(R.color.ThemeColor));
+
+
+        ksMoreView.getmPlayNowNetSpeedSwitch().setOnCheckedChangeListener(onCheckedMoreNowNetSpeed);
+
+
 
 
     }
@@ -140,6 +154,7 @@ public class PlayerActivity extends AppCompatActivity {
 //            mVideoView.setUrl(playerVideoEntity.getVideoUrl());
             ksDanmakuView.setDanmu(createParser(openDamu()));
             mVideoView.start();
+            mVideoView.setScreenScaleType(KsMmkv.mv.decodeInt("playerFramesSize"));
 
 
         } catch (IOException e) {
@@ -156,7 +171,7 @@ public class PlayerActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.player_tab);
         viewPager = findViewById(R.id.player_info_pager);
 
-        videoInfoFragment = new VideoInfoFragment();
+        videoInfoFragment = new VideoInfoFragment(this);
         videoCommentFragment = new VideoCommentFragment();
 
         mVideoView.setPlayerFactory(IjkPlayerFactory.create());
@@ -180,6 +195,8 @@ public class PlayerActivity extends AppCompatActivity {
         completeView = new CompleteView(this);
         // 播放错误ui
         ksErrorView = new KsErrorView(this);
+        // 右上角更多
+        ksMoreView = new KsMoreView(this);
 
 
         // 添加控制器
@@ -191,9 +208,11 @@ public class PlayerActivity extends AppCompatActivity {
         controller.addControlComponent(completeView);
         controller.addControlComponent(ksErrorView);
         controller.addControlComponent(ksGestureView);
+        controller.addControlComponent(ksMoreView);
 
         // 设置是否自动旋转屏幕
         controller.setEnableOrientation(KsMmkv.mv.decodeBool("playerRotate"));
+        ksLandscapeView.getmTcpSpeed().setVisibility(KsMmkv.mv.decodeBool("playNowNetworkSpeed")?View.VISIBLE:View.GONE);
         // 设置控制器
         mVideoView.setVideoController(controller);
 
@@ -325,6 +344,26 @@ public class PlayerActivity extends AppCompatActivity {
             ksAnthologyView.changeNowPlaying(playListIndex);  // 改变选集列表的选中状态
 
             ksLandscapeView.setTitle(videoUrlArrays.get(playListIndex).getName());  // 设置标题
+        }
+    };
+
+
+    /*
+    *
+    * */
+
+
+    private CompoundButton.OnCheckedChangeListener onCheckedMoreNowNetSpeed = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            KsMmkv.mv.encode("playNowNetworkSpeed",b);
+            Log.i(TAG, "onCheckedChanged: "+b);
+            if (b){
+                ksLandscapeView.getmTcpSpeed().setVisibility(View.VISIBLE);
+            }else {
+                ksLandscapeView.getmTcpSpeed().setVisibility(View.GONE);
+            }
+
         }
     };
 

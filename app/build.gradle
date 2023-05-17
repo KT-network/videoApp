@@ -126,4 +126,7 @@ dependencies {
     // 二级菜单布局
     implementation "com.github.skydoves:expandablelayout:1.0.7"
 
+    // 滚动view（有回弹效果）
+    implementation 'io.github.everythingme:overscroll-decor-android:1.1.1'
+
 }

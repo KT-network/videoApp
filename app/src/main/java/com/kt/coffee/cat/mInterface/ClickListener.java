@@ -13,9 +13,4 @@ public class ClickListener {
         void onLongClick(int position);
     }
 
-    public interface OnAnthologyItemClickListener{
-        void onClick(LinearLayout linearLayout, TextView textView,int position);
-    }
-
-
 }

@@ -118,8 +118,7 @@ public class PlayerActivity extends AppCompatActivity {
 
 
         ksMoreView.getmPlayNowNetSpeedSwitch().setOnCheckedChangeListener(onCheckedMoreNowNetSpeed);
-
-
+        ksMoreView.getmPlayAutoRotateSwitch().setOnCheckedChangeListener(onCheckedMoreAutoRotate);
 
 
     }
@@ -212,7 +211,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         // 设置是否自动旋转屏幕
         controller.setEnableOrientation(KsMmkv.mv.decodeBool("playerRotate"));
-        ksLandscapeView.getmTcpSpeed().setVisibility(KsMmkv.mv.decodeBool("playNowNetworkSpeed")?View.VISIBLE:View.GONE);
+        ksLandscapeView.getmTcpSpeed().setVisibility(KsMmkv.mv.decodeBool("playNowNetworkSpeed") ? View.VISIBLE : View.GONE);
         // 设置控制器
         mVideoView.setVideoController(controller);
 
@@ -298,8 +297,8 @@ public class PlayerActivity extends AppCompatActivity {
     };
 
     /*
-    * 小屏状态下（普通模式下）的选集列表点击回调
-    * */
+     * 小屏状态下（普通模式下）的选集列表点击回调
+     * */
     private ClickListener.OnClickListener onClickIncompletionPlayAnthology = new ClickListener.OnClickListener() {
         @Override
         public void onClick(int i) {
@@ -349,33 +348,41 @@ public class PlayerActivity extends AppCompatActivity {
 
 
     /*
-    *
-    * */
-
-
+     * more 监听开关事件（设置横屏状态下是否显示实时缓冲网速）
+     * */
     private CompoundButton.OnCheckedChangeListener onCheckedMoreNowNetSpeed = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-            KsMmkv.mv.encode("playNowNetworkSpeed",b);
-            Log.i(TAG, "onCheckedChanged: "+b);
-            if (b){
+            KsMmkv.mv.encode("playNowNetworkSpeed", b);
+            if (b) {
                 ksLandscapeView.getmTcpSpeed().setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 ksLandscapeView.getmTcpSpeed().setVisibility(View.GONE);
             }
 
         }
     };
 
+    /*
+     * more 监听开关事件（设置屏幕是否自动旋转）
+     * */
+    private CompoundButton.OnCheckedChangeListener onCheckedMoreAutoRotate = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            KsMmkv.mv.encode("playerRotate", b);
+            controller.setEnableOrientation(b);
+
+        }
+    };
 
     /*
      * 以下为生命周期事件 ===================================分割线========================================
      * */
 
     // 记录剧集播放的index
-    private void writeAnthologyIndex(){
-        if (VIDEO_ID != null && playListIndex != -1){
-            KsMmkv.mv.encode(VIDEO_ID,playListIndex);
+    private void writeAnthologyIndex() {
+        if (VIDEO_ID != null && playListIndex != -1) {
+            KsMmkv.mv.encode(VIDEO_ID, playListIndex);
         }
     }
 
